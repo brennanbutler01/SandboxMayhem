@@ -24,6 +24,15 @@ public class CarControl : MonoBehaviour
         wheels = GetComponentsInChildren<WheelControl>();
     }
 
+        private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.CompareTag("PickUp"))
+        {
+            other.gameObject.SetActive(false);
+        }
+        
+    }
+
     // Update is called once per frame
     void Update()
     {
