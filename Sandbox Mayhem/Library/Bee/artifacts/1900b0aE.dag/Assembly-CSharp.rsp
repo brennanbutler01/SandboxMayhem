@@ -110,10 +110,13 @@
 -define:ENABLE_TERRAIN
 -define:ENABLE_TILEMAP
 -define:ENABLE_TIMELINE
+-define:ENABLE_INPUT_SYSTEM
 -define:ENABLE_LEGACY_INPUT_MANAGER
 -define:TEXTCORE_FONT_ENGINE_1_5_OR_NEWER
 -define:CSHARP_7_OR_LATER
 -define:CSHARP_7_3_OR_NEWER
+-r:"Assets/EasyRoads3D/lib/DelaunayER.dll"
+-r:"Assets/EasyRoads3D/lib/EasyRoads3Dv3.dll"
 -r:"C:/Users/Bjarn/OneDrive/Desktop/School/Game Design/Team Project/GonzoGames/Sandbox Mayhem/Library/PackageCache/com.unity.testtools.codecoverage@1.2.5/lib/ReportGenerator/ReportGeneratorMerged.dll"
 -r:"C:/Users/Bjarn/OneDrive/Desktop/School/Game Design/Team Project/GonzoGames/Sandbox Mayhem/Library/PackageCache/com.unity.visualscripting@1.9.4/Runtime/VisualScripting.Flow/Dependencies/NCalc/Unity.VisualScripting.Antlr3.Runtime.dll"
 -r:"D:/Unity/2021.3.38f1/Editor/Data/Managed/UnityEngine/UnityEditor.CoreModule.dll"
@@ -322,6 +325,8 @@
 -r:"D:/Unity/2021.3.38f1/Editor/Data/NetStandard/ref/2.1.0/netstandard.dll"
 -r:"D:/Unity/2021.3.38f1/Editor/Data/PlaybackEngines/MacStandaloneSupport/UnityEditor.iOS.Extensions.Xcode.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.EditorCoroutines.Editor.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Unity.InputSystem.ForUI.ref.dll"
+-r:"Library/Bee/artifacts/1900b0aE.dag/Unity.InputSystem.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Performance.Profile-Analyzer.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.PlasticSCM.Editor.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/Unity.Rider.Editor.ref.dll"
@@ -345,9 +350,16 @@
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/1900b0aE.dag/UnityEngine.UI.ref.dll"
 "Assets/ExampleScript.cs"
+"Assets/PolygonPi/FenceLayout/FenceLayout.cs"
 "Assets/Scripts/AudioManager.cs"
+"Assets/Scripts/CameraController.cs"
+"Assets/Scripts/CarControl.cs"
 "Assets/Scripts/MainMenu.cs"
 "Assets/Scripts/OptionsScreen.cs"
+"Assets/Scripts/Rotator.cs"
+"Assets/Scripts/WheelControl.cs"
+"Assets/Temp/Temp_CameraController.cs"
+"Assets/Temp/temp_PlayerController.cs"
 -langversion:9.0
 /deterministic
 /optimize+
