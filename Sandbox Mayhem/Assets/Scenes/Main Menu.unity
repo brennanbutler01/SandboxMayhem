@@ -690,7 +690,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5dcdb1c6f37f704d97e105b2050fb69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  firstLevel: SampleScene
+  firstLevel: pitch_track
   optionsScreen: {fileID: 661728088}
 --- !u!1 &373923140
 GameObject:
