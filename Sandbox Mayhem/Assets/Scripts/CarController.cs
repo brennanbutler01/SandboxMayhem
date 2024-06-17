@@ -12,6 +12,7 @@ public class CarController : MonoBehaviour {
     public float steeringAngleAtMaxSpeed = 15;
     public float brakeTorque = 1800;
     public float downforce = 1.0f;
+    public AudioEventManager audioEventManager;
 
     public float speed = 0;
     
@@ -57,5 +58,9 @@ public class CarController : MonoBehaviour {
             }
         }
         rigidBody.AddForce(-1 * speed * downforce * transform.up);
+        if (audioEventManager is not null)
+        {
+            audioEventManager.setEnginePitchAudio(speedFactor);
+        }
     }
 }
