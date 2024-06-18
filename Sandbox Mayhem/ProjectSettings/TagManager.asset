@@ -6,6 +6,7 @@ TagManager:
   tags:
   - PickUp
   - Coin
+  - Waypoint
   layers:
   - Default
   - TransparentFX
