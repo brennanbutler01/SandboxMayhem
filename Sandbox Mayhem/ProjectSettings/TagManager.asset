@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Coin
   - Waypoint
+  - Wheel
   layers:
   - Default
   - TransparentFX

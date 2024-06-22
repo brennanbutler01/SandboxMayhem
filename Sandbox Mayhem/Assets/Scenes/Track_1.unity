@@ -28745,13 +28745,25 @@ PrefabInstance:
       propertyPath: m_Name
       value: FRWheel
       objectReference: {fileID: 0}
+    - target: {fileID: 2233724295039351790, guid: ba2508e745fbca54485f666cc2525315, type: 3}
+      propertyPath: m_TagString
+      value: Wheel
+      objectReference: {fileID: 0}
     - target: {fileID: 3133711260939356437, guid: ba2508e745fbca54485f666cc2525315, type: 3}
       propertyPath: m_Name
       value: BLWheel
       objectReference: {fileID: 0}
+    - target: {fileID: 3133711260939356437, guid: ba2508e745fbca54485f666cc2525315, type: 3}
+      propertyPath: m_TagString
+      value: Wheel
+      objectReference: {fileID: 0}
     - target: {fileID: 3429740567060391210, guid: ba2508e745fbca54485f666cc2525315, type: 3}
       propertyPath: m_Name
       value: FLWheel
+      objectReference: {fileID: 0}
+    - target: {fileID: 3429740567060391210, guid: ba2508e745fbca54485f666cc2525315, type: 3}
+      propertyPath: m_TagString
+      value: Wheel
       objectReference: {fileID: 0}
     - target: {fileID: 3929717018431208560, guid: ba2508e745fbca54485f666cc2525315, type: 3}
       propertyPath: m_CastShadows
@@ -28960,6 +28972,10 @@ PrefabInstance:
     - target: {fileID: 8439764981199250160, guid: ba2508e745fbca54485f666cc2525315, type: 3}
       propertyPath: m_Name
       value: BRWheel
+      objectReference: {fileID: 0}
+    - target: {fileID: 8439764981199250160, guid: ba2508e745fbca54485f666cc2525315, type: 3}
+      propertyPath: m_TagString
+      value: Wheel
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba2508e745fbca54485f666cc2525315, type: 3}
@@ -48526,6 +48542,9 @@ MonoBehaviour:
   brakeForce: 0.9
   maxSpeed: 35
   accelerationForce: 0.025
+  prevPosition: {x: 0, y: 0, z: 0}
+  extraAccelerationForce: 0
+  climbSpeed: 0
 --- !u!114 &409587488 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6480085671490100395, guid: ba2508e745fbca54485f666cc2525315, type: 3}
