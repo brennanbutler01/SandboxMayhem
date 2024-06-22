@@ -83,12 +83,6 @@ public class OptionsScreen : MonoBehaviour
         sfxSlider.value = vol;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
     // Select the resolution option to the left
     public void ResLeft()
     {
@@ -96,7 +90,7 @@ public class OptionsScreen : MonoBehaviour
         // Stop when we get to the end of the list
         if(selectedResolution < 0)
         {
-            selectedResolution = 0;
+            selectedResolution = resolutions.Count - 1;
         }
 
         UpdateResLabel();
@@ -109,7 +103,7 @@ public class OptionsScreen : MonoBehaviour
         // Stop when we get to the end of the list
         if(selectedResolution > resolutions.Count - 1)
         {
-            selectedResolution = resolutions.Count - 1;
+            selectedResolution = 0;
         }
 
         UpdateResLabel();

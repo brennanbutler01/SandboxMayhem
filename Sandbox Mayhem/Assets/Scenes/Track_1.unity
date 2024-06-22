@@ -161781,6 +161781,22 @@ PrefabInstance:
       value: AudioEventManager
       objectReference: {fileID: 0}
     - target: {fileID: 6611523529875331362, guid: 6e55a471608c4bd4dab09621cad0d23b, type: 3}
+      propertyPath: mixer
+      value: 
+      objectReference: {fileID: 24100000, guid: cf1af733d3e32d345aebab21f13ce860, type: 2}
+    - target: {fileID: 6611523529875331362, guid: 6e55a471608c4bd4dab09621cad0d23b, type: 3}
+      propertyPath: sfxMixer
+      value: 
+      objectReference: {fileID: -946930092448238667, guid: cf1af733d3e32d345aebab21f13ce860, type: 2}
+    - target: {fileID: 6611523529875331362, guid: 6e55a471608c4bd4dab09621cad0d23b, type: 3}
+      propertyPath: audioMixer
+      value: 
+      objectReference: {fileID: 24300002, guid: cf1af733d3e32d345aebab21f13ce860, type: 2}
+    - target: {fileID: 6611523529875331362, guid: 6e55a471608c4bd4dab09621cad0d23b, type: 3}
+      propertyPath: musicMixer
+      value: 
+      objectReference: {fileID: 2691591172533634568, guid: cf1af733d3e32d345aebab21f13ce860, type: 2}
+    - target: {fileID: 6611523529875331362, guid: 6e55a471608c4bd4dab09621cad0d23b, type: 3}
       propertyPath: collectibleAudio
       value: 
       objectReference: {fileID: 8300000, guid: 718b8905e00af884b82690612746ca7c, type: 3}
