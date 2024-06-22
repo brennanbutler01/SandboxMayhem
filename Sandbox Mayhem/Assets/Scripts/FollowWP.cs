@@ -39,14 +39,13 @@ public class FollowWP : MonoBehaviour
         Array.Sort(waypoints, determineLarger);
         wheelControls = GetComponentsInChildren<WheelControl>();
         carController = GetComponent<CarController>();
+        humanController = FindObjectOfType<HumanController>().gameObject.GetComponent<PlayerController>();
+        aiController = GetComponent<PlayerController>();
     }
 
     // Determine AI position relative to human to set state accordingly
     void determinePosition()
     {
-        humanController = FindObjectOfType<HumanController>().gameObject.GetComponent<PlayerController>();
-        aiController = GetComponent<PlayerController>();
-
         //TODO set state
         if (humanController.currentLap == aiController.currentLap)
         {
@@ -102,7 +101,6 @@ public class FollowWP : MonoBehaviour
         {
             return;
         }
-
 
         rotateWheels();
         determinePosition();
