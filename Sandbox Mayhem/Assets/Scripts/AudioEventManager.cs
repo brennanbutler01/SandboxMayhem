@@ -11,24 +11,22 @@ public class AudioEventManager : MonoBehaviour
     public AudioMixerGroup sfxMixer;
     public EventSoundScript eventSoundScriptPrefabReference;
     public AudioClip collisionAudio;
-    public AudioClip raceStartAudio;
+    public AudioClip raceCountdownAudio;
     public AudioClip raceMusicAudio;
     public AudioClip drivingOnDirtAudio;
     public AudioClip engineAudio;
-
-    private bool countdownInProgress = false;
-    private AudioSource raceStartAudioSource; // To track if the race start sound finished playing
+    
     private AudioSource engineAudioSource;
     private AudioSource drivingOnDirtAudioSource; //Tracking
 
     private UnityAction<Vector3> collisionEventListener;
-    private UnityAction<GameObject> raceStartEventListener;
+    private UnityAction<GameObject> raceCountdownEventListener;
     private UnityAction<GameObject> raceMusicEventListener;
 
     private void Awake()
     {
         collisionEventListener = new UnityAction<Vector3>(collisionEventHandler);
-        raceStartEventListener = new UnityAction<GameObject>(raceStartEventHandler);
+        raceCountdownEventListener = new UnityAction<GameObject>(raceCountdownEventHandler);
         raceMusicEventListener = new UnityAction<GameObject>(raceMusicEventHandler);
 
         //float masterVolume = PlayerPrefs.GetFloat("MasterVol");
@@ -43,8 +41,6 @@ public class AudioEventManager : MonoBehaviour
 
     private void Start()
     {
-        // Playing the race start countdown (as one time event)
-        EventManager.TriggerEvent<RaceStartEvent, GameObject>(gameObject);
 
         // Preparing references for continuous audio or that requires stopping early
         drivingOnDirtAudioSource = gameObject.AddComponent<AudioSource>();
@@ -58,26 +54,17 @@ public class AudioEventManager : MonoBehaviour
         engineAudioSource.Play();
     }
 
-    private void Update()
-    {
-        // Starting the race music if the countdown started and the raceStart sound clip stopped playing (was destroyed)
-        if (countdownInProgress && (raceStartAudioSource == null))
-        {
-            EventManager.TriggerEvent<RaceMusicEvent, GameObject>(gameObject);
-            countdownInProgress = false;
-        }
-    }
     private void OnEnable()
     {
         EventManager.StartListening<CarCollisionEvent, Vector3>(collisionEventListener);
-        EventManager.StartListening<RaceStartEvent, GameObject>(raceStartEventListener);
+        EventManager.StartListening<RaceCountdownEvent, GameObject>(raceCountdownEventListener);
         EventManager.StartListening<RaceMusicEvent, GameObject>(raceMusicEventListener);
     }
 
     private void OnDisable()
     {
         EventManager.StopListening<CarCollisionEvent, Vector3>(collisionEventListener);
-        EventManager.StopListening<RaceStartEvent, GameObject>(raceStartEventListener);
+        EventManager.StopListening<RaceCountdownEvent, GameObject>(raceCountdownEventListener);
         EventManager.StopListening<RaceMusicEvent, GameObject>(raceMusicEventListener);
     }
 
@@ -98,23 +85,17 @@ public class AudioEventManager : MonoBehaviour
         }
     }
 
-    void raceStartEventHandler(GameObject go)
+    void raceCountdownEventHandler(GameObject go)
     {
         if (eventSoundScriptPrefabReference)
         {
             EventSoundScript snd = Instantiate(eventSoundScriptPrefabReference, go.transform);
 
-            snd.audioSource.clip = this.raceStartAudio;
+            snd.audioSource.clip = this.raceCountdownAudio;
             snd.audioSource.minDistance = 5f;
             snd.audioSource.maxDistance = 100f;
             snd.audioSource.outputAudioMixerGroup = sfxMixer;
             snd.audioSource.Play();
-            
-            countdownInProgress = true;
-
-            // raceStartAudioSource holds the raceStart audio so that we detect if the countdown stopped playing to start playing the background music
-            raceStartAudioSource = snd.audioSource;
-            raceStartAudioSource.outputAudioMixerGroup = sfxMixer;
         }
     }
 

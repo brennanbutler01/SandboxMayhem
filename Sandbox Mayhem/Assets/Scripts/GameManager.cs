@@ -13,6 +13,14 @@ public class GameManager : MonoBehaviour
     public Text lapsText,  wrongWayText,  rankingText,  pointsText;
     public bool  gameOver;
     public Text leaderboardText;
+
+    public Text countdownText;
+    public CarController carController;
+    private int countdownInt = 3;
+    private float countdownElapsedTime = 0;
+    private bool isCountDownInProgress = false;
+    private float COUNTDOWN_BEEP_DURATION_IN_SECONDS = 0.6f; // Depends on the chosen countdown audio
+
     private void Start()
     {
         pointsText.text = "Points: 0";
@@ -64,6 +72,25 @@ public class GameManager : MonoBehaviour
         leaderboardText.text = "";
         rankingText.text = "";
         InvokeRepeating(nameof(UpdateRanking), 1f, 0.1f);
+
+        startCountdown();
+    }
+
+    private void Update()
+    {
+        pointsText.text = "Points: " + _humanPlayer.coins;
+        lapsText.text = $"Lap: {_humanPlayer.currentLap}/{TotalLaps}";
+        wrongWayText.text = _humanPlayer.isGoingBackward ? "Going backwards! \n Turn around." : "";
+
+        if (gameOver)
+        {
+            leaderboardText.text = _players.OrderBy(x => x.ranking)
+                .Aggregate("", (current, player) => current + $"{player.ranking} - {(player.isHuman ? "Human" : "AI")}\n");
+        }
+        if (isCountDownInProgress)
+        {
+            updateCountdown();
+        }
     }
 
     private void UpdateRanking()
@@ -93,17 +120,60 @@ public class GameManager : MonoBehaviour
         // Update the ranking text for the human player
         rankingText.text = $"Ranked: {_humanPlayer.ranking}/{_players.Count}";
     }
-    
-    private void Update()
+
+    private void startCountdown()
     {
-        pointsText.text = "Points: " + _humanPlayer.coins;
-        lapsText.text = $"Lap: {_humanPlayer.currentLap}/{TotalLaps}";
-        wrongWayText.text = _humanPlayer.isGoingBackward ? "Going backwards! \n Turn around." : "";
-        
-        if (gameOver)
-        { 
-            leaderboardText.text =  _players.OrderBy(x => x.ranking)
-                .Aggregate("", (current, player) => current + $"{player.ranking} - {(player.isHuman ? "Human" : "AI")}\n");
+        // Trigger countdown sound
+        EventManager.TriggerEvent<RaceCountdownEvent, GameObject>(gameObject);
+
+        // Trigger UI countdown update
+        isCountDownInProgress = true;
+    }
+
+    private void updateCountdown()
+    {
+        countdownElapsedTime += Time.deltaTime;
+        for (int countdown = 3; countdown >= 0; countdown--)
+        {
+            // Transition from 3 to 2 seconds
+            if ((countdownInt == countdown) && (countdownElapsedTime >= (4 - countdown) * COUNTDOWN_BEEP_DURATION_IN_SECONDS))
+            {
+                countdownInt -= 1;
+                if (countdownInt > 0)
+                {
+                    countdownText.text = countdownInt.ToString();
+                }
+                else if (countdownInt == 0)
+                {
+                    // Finished countdown. Start the race.
+                    isCountDownInProgress = false;
+                    countdownText.text = "";
+                    startRace();
+                }
+            }
         }
+    }
+    private void startRaceMusic()
+    {
+        //This separate method is needed to allow a delayed music start using Invoke (otherwise it overlaps with the last beep of race countdown)
+        EventManager.TriggerEvent<RaceMusicEvent, GameObject>(gameObject);
+    }
+
+    
+    private void startRace()
+    {
+        // Starting the race after the countdown is finished
+
+        // Music starts a little delayed to avoid overlapping with race start beep
+        Invoke("startRaceMusic", 2);
+
+        // Hide countdown text
+        countdownText.enabled = false;
+
+        // Unblock the car
+        carController.isAccelerationEnabled = true;
+
+        // Start AI opponents
+        // TODO: Start AI opponents
     }
 }
