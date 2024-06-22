@@ -3,6 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+struct Behavior
+{
+    public float speed;
+    public float rotationSpeed;
+    public float minimumSpeed;
+    public float maxAngle;
+    public float brakeForce;
+    public float maxSpeed;
+    public float accelerationForce;
+}
+
 public class FollowWP : MonoBehaviour
 {
     public GameObject[] waypoints;
@@ -38,17 +49,15 @@ public class FollowWP : MonoBehaviour
         Array.Sort(waypoints, determineLarger);
         setBehaviors();
         wheelControls = GetComponentsInChildren<WheelControl>();
-        rotateWheels();
         carController = GetComponent<CarController>();
     }
 
     void determinePosition()
     {
         CarController[] cars = FindObjectsOfType<CarController>();
-        PlayerController humanController = cars[0].gameObject.GetComponent<PlayerController>();
+        PlayerController humanController = cars[1].gameObject.GetComponent<PlayerController>();
         PlayerController aiController = GetComponent<PlayerController>();
-        Debug.Log("aiController waypoint " + aiController.currentLap);
-        Debug.Log("humanController waypoint " + humanController.currentLap);
+
         if (humanController.currentLap == aiController.currentLap)
         {
             if (humanController.currentWaypoint > aiController.currentWaypoint)
@@ -94,6 +103,22 @@ public class FollowWP : MonoBehaviour
         aggressive.maxAngle = 20f;
 
         behaviors.Add("aggressive", aggressive);
+
+        Behavior passive = new Behavior();
+        passive.accelerationForce = .5f;
+        passive.brakeForce = 1f;
+        passive.maxSpeed = 30f;
+        passive.maxAngle = 22f;
+
+        behaviors.Add("passive", passive);
+
+        Behavior intermediate = new Behavior();
+        intermediate.accelerationForce = .75f;
+        intermediate.brakeForce = .95f;
+        intermediate.maxSpeed = 32.5f;
+        intermediate.maxAngle = 21f;
+
+        behaviors.Add("intermediate", intermediate);
     }
 
     void rotateWheels()
@@ -114,7 +139,8 @@ public class FollowWP : MonoBehaviour
             return;
         }
 
-        //Debug.Log("heading for " + waypoints[firstIndex]);
+
+        rotateWheels();
         determinePosition();
         if (Vector3.Distance(this.transform.position, waypoints[firstIndex].transform.position) < 3)
         {
@@ -137,7 +163,6 @@ public class FollowWP : MonoBehaviour
             firstIndex = (overallIndex * 3) + randIndex;
             if (firstIndex < waypoints.Length)
             {
-                //Debug.Log("height diff" + (prevPosition.y - waypoints[firstIndex].transform.position.y));
                 if ((prevPosition.y - waypoints[firstIndex].transform.position.y) < -1)
                 {
                     extraAccelerationForce = 0.3f;
@@ -156,7 +181,6 @@ public class FollowWP : MonoBehaviour
             prevPosition = waypoints[waypoints.Length - 1].transform.position;
             firstIndex = 0;
             overallIndex = 0;
-            //Debug.Log("height diff" + (prevPosition.y - waypoints[firstIndex].transform.position.y));
         }
 
         //this.transform.LookAt(waypoints[currentWP].transform);
@@ -211,15 +235,4 @@ public class FollowWP : MonoBehaviour
 
         this.transform.Translate(0, climbSpeed, speed * Time.deltaTime);
     }
-}
-
-struct Behavior
-{
-    public float speed;
-    public float rotationSpeed;
-    public float minimumSpeed;
-    public float maxAngle;
-    public float brakeForce;
-    public float maxSpeed;
-    public float accelerationForce;
 }
