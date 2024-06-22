@@ -48541,7 +48541,7 @@ MonoBehaviour:
   maxAngle: 20
   brakeForce: 0.9
   maxSpeed: 35
-  accelerationForce: 0.025
+  accelerationForce: 0.1
   prevPosition: {x: 0, y: 0, z: 0}
   extraAccelerationForce: 0
   climbSpeed: 0
