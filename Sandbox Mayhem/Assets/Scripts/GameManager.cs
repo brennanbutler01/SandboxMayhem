@@ -3,6 +3,17 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.UI;
 
+struct Behavior
+{
+    public float speed;
+    public float rotationSpeed;
+    public float minimumSpeed;
+    public float maxAngle;
+    public float brakeForce;
+    public float maxSpeed;
+    public float accelerationForce;
+}
+
 public class GameManager : MonoBehaviour
 {
     private List<PlayerController> _players;
@@ -21,6 +32,9 @@ public class GameManager : MonoBehaviour
     private float countdownElapsedTime = 0;
     private bool isCountDownInProgress = false;
     private float COUNTDOWN_BEEP_DURATION_IN_SECONDS = 0.6f; // Depends on the chosen countdown audio
+
+    private List<Behavior> behaviors;
+    //private readonly Random random;
 
     private void Start()
     {
@@ -76,6 +90,8 @@ public class GameManager : MonoBehaviour
 
         enableAllCars(false);
         startCountdown();
+        setBehaviors();
+        applyBehaviors();
     }
 
     private void Update()
@@ -171,6 +187,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    // Applies acceleration and braking values to AI opponents
+    private void applyBehaviors()
+    {
+        int behaviorIndex = 0;
+
+        foreach (CarController aiCar in aiCarController)
+        {
+            FollowWP followWP = aiCar.gameObject.GetComponent<FollowWP>();
+            Behavior behavior = behaviors[behaviorIndex];
+            followWP.accelerationForce = behavior.accelerationForce;
+            followWP.brakeForce = behavior.brakeForce;
+            followWP.maxSpeed = behavior.maxSpeed;
+            followWP.maxAngle = behavior.maxAngle;
+            behaviorIndex = (behaviorIndex + 1) % 3;
+        }
+    }
+
     private void startRace()
     {
         // Starting the race after the countdown is finished
@@ -183,5 +216,35 @@ public class GameManager : MonoBehaviour
 
         // Enabling all cars to move
         enableAllCars(true);
+    }
+
+    // Create acceleration and braking values for AI opponents
+    private void setBehaviors()
+    {
+        behaviors = new List<Behavior>();
+
+        Behavior aggressive = new Behavior();
+        aggressive.accelerationForce = .1f;
+        aggressive.brakeForce = .9f;
+        aggressive.maxSpeed = 32f;
+        aggressive.maxAngle = 20f;
+
+        behaviors.Add(aggressive);
+
+        Behavior passive = new Behavior();
+        passive.accelerationForce = .5f;
+        passive.brakeForce = 1f;
+        passive.maxSpeed = 30f;
+        passive.maxAngle = 22f;
+
+        behaviors.Add(passive);
+
+        Behavior intermediate = new Behavior();
+        intermediate.accelerationForce = .75f;
+        intermediate.brakeForce = .95f;
+        intermediate.maxSpeed = 31;
+        intermediate.maxAngle = 21f;
+
+        behaviors.Add(intermediate);
     }
 }

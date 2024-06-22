@@ -3,17 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-struct Behavior
-{
-    public float speed;
-    public float rotationSpeed;
-    public float minimumSpeed;
-    public float maxAngle;
-    public float brakeForce;
-    public float maxSpeed;
-    public float accelerationForce;
-}
-
 public class FollowWP : MonoBehaviour
 {
     public GameObject[] waypoints;
@@ -25,19 +14,20 @@ public class FollowWP : MonoBehaviour
     int firstIndex = 0;
     int overallIndex = 0;
     private CarController carController;
+    private PlayerController humanController;
+    private PlayerController aiController;
     int randIndex = 0;
 
     public float speed = 0f;
     public float rotationSpeed = 2.0f;
     public float minimumSpeed = 13f;
-    public float maxAngle = 20f;
-    public float brakeForce = 0.9f;
-    public float maxSpeed = 35f;
-    public float accelerationForce = .1f;
+    public float maxAngle = 0f;
+    public float brakeForce = 0f;
+    public float maxSpeed = 0f;
+    public float accelerationForce = 0f;
     public Vector3 prevPosition;
     public float extraAccelerationForce = 0f;
     public float climbSpeed = 0f;
-    private float rotateAmount = 0f;
     private RaycastHit objectHit;
 
     // Start is called before the first frame update
@@ -47,17 +37,17 @@ public class FollowWP : MonoBehaviour
         waypoints = GameObject.FindGameObjectsWithTag("Waypoint");
         wheels = GameObject.FindGameObjectsWithTag("Wheel");
         Array.Sort(waypoints, determineLarger);
-        setBehaviors();
         wheelControls = GetComponentsInChildren<WheelControl>();
         carController = GetComponent<CarController>();
     }
 
+    // Determine AI position relative to human to set state accordingly
     void determinePosition()
     {
-        CarController[] cars = FindObjectsOfType<CarController>();
-        PlayerController humanController = cars[1].gameObject.GetComponent<PlayerController>();
-        PlayerController aiController = GetComponent<PlayerController>();
+        humanController = FindObjectOfType<HumanController>().gameObject.GetComponent<PlayerController>();
+        aiController = GetComponent<PlayerController>();
 
+        //TODO set state
         if (humanController.currentLap == aiController.currentLap)
         {
             if (humanController.currentWaypoint > aiController.currentWaypoint)
@@ -83,6 +73,7 @@ public class FollowWP : MonoBehaviour
         }
     }
 
+    // Determine order of waypoints
     int determineLarger(GameObject nameX, GameObject nameY)
     {
         if (Int32.Parse(nameX.name.Substring(8)) < Int32.Parse(nameY.name.Substring(8)))
@@ -92,35 +83,7 @@ public class FollowWP : MonoBehaviour
         return 1;
     }
 
-    void setBehaviors()
-    {
-        behaviors = new SortedDictionary<string, Behavior>();
-
-        Behavior aggressive = new Behavior();
-        aggressive.accelerationForce = .1f;
-        aggressive.brakeForce = .9f;
-        aggressive.maxSpeed = 35f;
-        aggressive.maxAngle = 20f;
-
-        behaviors.Add("aggressive", aggressive);
-
-        Behavior passive = new Behavior();
-        passive.accelerationForce = .5f;
-        passive.brakeForce = 1f;
-        passive.maxSpeed = 30f;
-        passive.maxAngle = 22f;
-
-        behaviors.Add("passive", passive);
-
-        Behavior intermediate = new Behavior();
-        intermediate.accelerationForce = .75f;
-        intermediate.brakeForce = .95f;
-        intermediate.maxSpeed = 32.5f;
-        intermediate.maxAngle = 21f;
-
-        behaviors.Add("intermediate", intermediate);
-    }
-
+    // Apply basic torque to wheels so that they rotate
     void rotateWheels()
     {
         foreach (var wheel in wheelControls)
@@ -134,6 +97,7 @@ public class FollowWP : MonoBehaviour
 
     void FixedUpdate()
     {
+        // Don't let cars accelerate until race begins
         if (!carController.isMovementEnabled)
         {
             return;
@@ -183,12 +147,9 @@ public class FollowWP : MonoBehaviour
             overallIndex = 0;
         }
 
-        //this.transform.LookAt(waypoints[currentWP].transform);
-
         Quaternion lookatWP = Quaternion.LookRotation(waypoints[firstIndex].transform.position - this.transform.position);
 
-        //Debug.Log("Angle: " + Quaternion.Angle(this.transform.rotation, lookatWP));
-        //Debug.Log("X angle diff: " + ;
+        // Slow down the car if the next waypoint is past a reasonable angle to turn
         if (Quaternion.Angle(this.transform.rotation, lookatWP) > maxAngle)
         {
             if (speed > minimumSpeed)
@@ -198,10 +159,12 @@ public class FollowWP : MonoBehaviour
         }
         else
         {
+            // Accelerate until max speed is reached
             if (speed < maxSpeed)
             {
                 speed = speed + accelerationForce + extraAccelerationForce;
             }
+            // Add some speed for hill climbing
             float xAngle = (this.transform.rotation.x - lookatWP.x) * 100;
             if (xAngle < 3f)
             {
@@ -212,17 +175,19 @@ public class FollowWP : MonoBehaviour
                 speed = speed - .01f;
             }
         }
+
+        // Rotate AI car
         this.transform.rotation = Quaternion.Slerp(this.transform.rotation, lookatWP, rotationSpeed * Time.deltaTime);
 
         this.transform.rotation.Set(this.transform.rotation.x, this.transform.rotation.y, 0, this.transform.rotation.w);
 
-
+        // Check for possible collisions in front
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
         Debug.DrawRay(transform.position, fwd * 5, Color.green);
 
         if (Physics.Raycast(transform.position, fwd, out objectHit, 5))
         {
-            //do something if hit object ie
+            //Do something if hit object is a car
             if (objectHit.collider.name.Contains("Car"))
             {
                 if (speed > minimumSpeed)
@@ -233,6 +198,7 @@ public class FollowWP : MonoBehaviour
             }
         }
 
+        // Apply speed to AI car
         this.transform.Translate(0, climbSpeed, speed * Time.deltaTime);
     }
 }
