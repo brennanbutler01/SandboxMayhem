@@ -10751,6 +10751,18 @@ PrefabInstance:
       propertyPath: countdownText
       value: 
       objectReference: {fileID: 1770810609}
+    - target: {fileID: 208115506145799574, guid: 1e639881eb42a485ebf46f576397a95a, type: 3}
+      propertyPath: playerCarController
+      value: 
+      objectReference: {fileID: 1757055990}
+    - target: {fileID: 208115506145799574, guid: 1e639881eb42a485ebf46f576397a95a, type: 3}
+      propertyPath: aiCarController.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 208115506145799574, guid: 1e639881eb42a485ebf46f576397a95a, type: 3}
+      propertyPath: aiCarController.Array.data[0]
+      value: 
+      objectReference: {fileID: 409587488}
     - target: {fileID: 5418817523113849437, guid: 1e639881eb42a485ebf46f576397a95a, type: 3}
       propertyPath: car
       value: 
@@ -48482,6 +48494,17 @@ MonoBehaviour:
   brakeForce: 0.9
   maxSpeed: 35
   accelerationForce: 0.025
+--- !u!114 &409587488 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6480085671490100395, guid: ba2508e745fbca54485f666cc2525315, type: 3}
+  m_PrefabInstance: {fileID: 231599456}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 409587478}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2237f26413d4e77bb98c2ec778f429d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &410215065
 GameObject:
   m_ObjectHideFlags: 0

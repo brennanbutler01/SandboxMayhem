@@ -9,6 +9,7 @@ public class FollowWP : MonoBehaviour
 
     int firstIndex = 0;
     int overallIndex = 0;
+    private CarController carController;
 
     public float speed = 0f;
     public float rotationSpeed = 2.0f;
@@ -24,6 +25,7 @@ public class FollowWP : MonoBehaviour
         firstIndex = UnityEngine.Random.Range(0, 3);
         waypoints = GameObject.FindGameObjectsWithTag("Waypoint");
         Array.Sort(waypoints, determineLarger);
+        carController = GetComponent<CarController>();
     }
 
     int determineLarger(GameObject nameX, GameObject nameY)
@@ -37,6 +39,11 @@ public class FollowWP : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!carController.isMovementEnabled)
+        {
+            return;
+        }
+
         //Debug.Log("heading for " + waypoints[firstIndex]);
         if (Vector3.Distance(this.transform.position, waypoints[firstIndex].transform.position) < 3)
         {

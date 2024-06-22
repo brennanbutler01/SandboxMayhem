@@ -12,7 +12,7 @@ public class CarController : MonoBehaviour {
     public float steeringAngleAtMaxSpeed = 15;
     public float brakeTorque = 1800;
     public float downforce = 1.0f;
-    public bool isAccelerationEnabled = false; // So that the user can't accelerate before the countdown is finished
+    public bool isMovementEnabled = true;
     public AudioEventManager audioEventManager;
 
     public float speed = 0;
@@ -44,7 +44,7 @@ public class CarController : MonoBehaviour {
                 wheel.WheelCollider.steerAngle = horizontalInput * steering;
             }
             
-            if (isAccelerationEnabled && isAccelerating)
+            if (isMovementEnabled && isAccelerating)
             {
                 if (wheel.motorized)
                 {

@@ -15,7 +15,8 @@ public class GameManager : MonoBehaviour
     public Text leaderboardText;
 
     public Text countdownText;
-    public CarController carController;
+    public CarController playerCarController;
+    public CarController[] aiCarController;
     private int countdownInt = 3;
     private float countdownElapsedTime = 0;
     private bool isCountDownInProgress = false;
@@ -73,6 +74,7 @@ public class GameManager : MonoBehaviour
         rankingText.text = "";
         InvokeRepeating(nameof(UpdateRanking), 1f, 0.1f);
 
+        enableAllCars(false);
         startCountdown();
     }
 
@@ -159,7 +161,16 @@ public class GameManager : MonoBehaviour
         EventManager.TriggerEvent<RaceMusicEvent, GameObject>(gameObject);
     }
 
-    
+    private void enableAllCars(bool enable)
+    {
+        playerCarController.isMovementEnabled = enable;
+
+        foreach (CarController aiCar in aiCarController)
+        {
+            aiCar.isMovementEnabled = enable;
+        }
+    }
+
     private void startRace()
     {
         // Starting the race after the countdown is finished
@@ -170,10 +181,7 @@ public class GameManager : MonoBehaviour
         // Hide countdown text
         countdownText.enabled = false;
 
-        // Unblock the car
-        carController.isAccelerationEnabled = true;
-
-        // Start AI opponents
-        // TODO: Start AI opponents
+        // Enabling all cars to move
+        enableAllCars(true);
     }
 }
