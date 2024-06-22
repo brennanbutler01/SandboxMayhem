@@ -46,6 +46,7 @@ GameObject:
   - component: {fileID: 2661961256041654210}
   - component: {fileID: 6541982145963529582}
   - component: {fileID: 8987896825162452456}
+  - component: {fileID: 5064061493437607304}
   m_Layer: 0
   m_Name: CoinBody
   m_TagString: Coin
@@ -161,3 +162,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rotationVector: {x: 180, y: 0, z: 0}
+--- !u!114 &5064061493437607304
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2059671470199592142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef8e0ef15ebb473fb29c0fd28af8436b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

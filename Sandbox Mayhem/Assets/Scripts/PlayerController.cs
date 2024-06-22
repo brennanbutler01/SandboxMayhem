@@ -1,40 +1,75 @@
 using System;
+using System.Collections;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.Events;
 using Debug = UnityEngine.Debug;
 
 public class PlayerController : MonoBehaviour
 {
-    public bool isHuman;
-    public int Coins { get; private set; }
     public string Id { private set; get; }
     private CarController Car { get; set; }
-    public UnityEvent onPointsChanged = new (); // Event to notify points change
+    public int currentLap, currentWaypoint, lastWaypoint, coins, ranking;
+    private int _trailingWaypoint;
+    public bool isGoingBackward, isHalfway, isHuman, lapPenalty, hasFinished;
     private void Start()
     {
-        Coins = 0;
+        coins = 0;
+        currentLap = 0;
+        currentWaypoint = 0;
+        isHalfway = false;
+        hasFinished = false;
+        isGoingBackward = false;
+        lapPenalty = false;
         Id = Guid.NewGuid().ToString();
         Car = GetComponent<CarController>();
         if (Car == null)
         {
             Debug.LogError("PlayerController requires a car controller");
         }
-        
+
     }
 
-    private void OnTriggerEnter(Collider other)
+    public float GetDistanceToNextWaypoint(int index)
     {
-        if (other.CompareTag("Coin"))
+        // Debug.LogError($"index - {index} - count - {GameManager.Waypoints.Count}");
+        var nextWaypoint = index + 1 == GameManager.Waypoints.Count ? 0 : index + 1;
+        var wp = GameManager.Waypoints.Find(x => x.waypointIndex == nextWaypoint);
+        return Vector3.Distance(transform.position,
+            wp?.transform.position ?? Vector3.zero);
+    }
+
+    public void CollectCoin()
+    {
+        Debug.Log("Coins: " + coins);
+        coins++;
+    }
+
+    public void Update()
+    {   
+        
+        // if we started going forward
+        if (currentWaypoint > lastWaypoint)
         {
-            other.gameObject.SetActive(false);
-            
-            Coins++;
-            Debug.Log("Coins count is: " + Coins);
-            
-            if (isHuman)
-            {
-                onPointsChanged.Invoke();
-            }
+            StartCoroutine(_setTrailingWaypoint());
         }
+    
+        // if our last is in front of the trailing (it should be), we are going forward
+        if (lastWaypoint > _trailingWaypoint)
+        {
+            isGoingBackward = false;
+        }
+    
+        // if our last is behind the trailing, we are going backwards
+        if (lastWaypoint < _trailingWaypoint)
+        {
+            isGoingBackward = true;
+        }
+    }
+
+    private IEnumerator _setTrailingWaypoint()
+    {
+        // after a second, we will set our trailing wp
+        yield return new WaitForSeconds(1);
+        _trailingWaypoint = lastWaypoint;
     }
 }
