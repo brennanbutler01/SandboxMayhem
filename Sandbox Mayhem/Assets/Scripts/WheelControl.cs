@@ -4,22 +4,21 @@ public class WheelControl : MonoBehaviour
 {
     public Transform wheelModel;
 
-    [HideInInspector] public WheelCollider WheelCollider;
+    [HideInInspector] public WheelCollider wheelCollider;
 
     public bool steerable;
-    public bool motorized;
 
     Vector3 position;
     Quaternion rotation;
 
     private void Start()
     {
-        WheelCollider = GetComponent<WheelCollider>();
+        wheelCollider = GetComponent<WheelCollider>();
     }
 
     void Update()
     {
-        WheelCollider.GetWorldPose(out position, out rotation);
+        wheelCollider.GetWorldPose(out position, out rotation);
         wheelModel.transform.position = position;
         wheelModel.transform.rotation = rotation;
     }

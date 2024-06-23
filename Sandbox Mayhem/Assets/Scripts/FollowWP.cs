@@ -87,10 +87,7 @@ public class FollowWP : MonoBehaviour
     {
         foreach (var wheel in wheelControls)
         {
-            if (wheel.motorized)
-            {
-                wheel.WheelCollider.motorTorque = 100f;
-            }
+            wheel.wheelCollider.motorTorque = 100f;
         }
     }
 
