@@ -147,6 +147,9 @@ public class FollowWP : MonoBehaviour
 
         Quaternion lookatWP = Quaternion.LookRotation(waypoints[firstIndex].transform.position - this.transform.position);
 
+        //TODO add check to prevent AI from freaking out if it misses a waypoint
+        //could probably add another maximum angle that it doesn't even try to head towards if it's too extreme, just resets destination to the next one.
+
         // Slow down the car if the next waypoint is past a reasonable angle to turn
         if (Quaternion.Angle(this.transform.rotation, lookatWP) > maxAngle)
         {
