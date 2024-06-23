@@ -22,8 +22,11 @@ public class GameManager : MonoBehaviour
     public static int TotalLaps = 3;
     public static int HalfwayTriggerIndex;
     public Text lapsText,  wrongWayText,  rankingText,  pointsText;
-    public bool  gameOver;
+    public bool isGameOver;
     public Text leaderboardText;
+    public GameObject leaderboard;
+    public Text finishedText;
+    public bool debug_TriggerRaceEnd = false;
 
     public Text countdownText;
     public CarController playerCarController;
@@ -39,7 +42,7 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         pointsText.text = "Points: 0";
-        gameOver = false;
+        isGameOver = false;
         Waypoints = FindObjectsOfType<PositionWaypoint>().ToList();
         _players = FindObjectsOfType<PlayerController>().ToList();
         var humanPlayers = _players.Where(player => player.isHuman).ToList();
@@ -86,6 +89,8 @@ public class GameManager : MonoBehaviour
         wrongWayText.text = "";
         leaderboardText.text = "";
         rankingText.text = "";
+        leaderboard.SetActive(false);
+        finishedText.enabled = false;
         InvokeRepeating(nameof(UpdateRanking), 1f, 0.1f);
 
         enableAllCars(false);
@@ -96,23 +101,30 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        pointsText.text = "Points: " + _humanPlayer.coins;
-        lapsText.text = $"Lap: {_humanPlayer.currentLap}/{TotalLaps}";
-        wrongWayText.text = _humanPlayer.isGoingBackward ? "Going backwards! \n Turn around." : "";
+        if (!isGameOver)
+        {
+            pointsText.text = "Points: " + _humanPlayer.coins;
+            lapsText.text = $"Lap: {_humanPlayer.currentLap}/{TotalLaps}";
+            wrongWayText.text = _humanPlayer.isGoingBackward ? "Going backwards! \n Turn around." : "";
+           
+            if (isCountDownInProgress)
+            {
+                updateCountdown();
+            }
 
-        if (gameOver)
-        {
-            leaderboardText.text = _players.OrderBy(x => x.ranking)
-                .Aggregate("", (current, player) => current + $"{player.ranking} - {(player.isHuman ? "Human" : "AI")}\n");
         }
-        if (isCountDownInProgress)
+        if (debug_TriggerRaceEnd)
         {
-            updateCountdown();
+            endRace();
         }
     }
 
     private void UpdateRanking()
     {
+        if (isGameOver)
+        {
+            return;
+        }
         var finishedPlayers = _players.Where(x => x.hasFinished).OrderBy(x => x.ranking).ToList();
         var unfinishedPlayers = _players.Where(x => !x.hasFinished).ToList();
 
@@ -130,13 +142,36 @@ public class GameManager : MonoBehaviour
             rankedUnfinishedPlayers[i].ranking = startRank + i;
         }
         
-        if (finishedPlayers.Count == _players.Count)
-        {
-            gameOver = true;
-        }
 
         // Update the ranking text for the human player
-        rankingText.text = $"Ranked: {_humanPlayer.ranking}/{_players.Count}";
+        rankingText.text = $"Rank: {_humanPlayer.ranking}/{_players.Count}";
+        finishedText.text = "Finished " + positionToText(_humanPlayer.ranking);
+
+        if (finishedPlayers.Count == _players.Count)
+        {
+            endRace();
+        }
+    }
+
+    private string positionToText(int pos)
+    {
+        string result = pos.ToString();
+        switch (pos)
+        {
+            case 1:
+                result += "st";
+                break;
+            case 2:
+                result += "nd";
+                break;
+            case 3:
+                result += "rd";
+                break;
+            default:
+                result += "th";
+                break;
+        }
+        return result;
     }
 
     private void startCountdown()
@@ -220,6 +255,27 @@ public class GameManager : MonoBehaviour
         enableAllCars(true);
     }
 
+    private void endRace()
+    {
+        isGameOver = true;
+        finishedText.enabled = true;
+
+        Invoke("showLeaderboardAndFreezeGame", 3);
+    }
+
+    private void showLeaderboardAndFreezeGame()
+    {
+        finishedText.text = "";
+        finishedText.enabled = false;
+
+        // Show leaderboard
+        leaderboard.SetActive(true);
+        leaderboardText.text = _players.OrderBy(x => x.ranking)
+                .Aggregate("", (current, player) => current + $"{player.ranking} - {(player.isHuman ? "Human" : "AI")}\n");
+
+        Time.timeScale = 0f;
+    }
+
     // Create acceleration and braking values for AI opponents
     private void setBehaviors()
     {
@@ -249,4 +305,5 @@ public class GameManager : MonoBehaviour
 
         behaviors.Add(intermediate);
     }
+
 }
