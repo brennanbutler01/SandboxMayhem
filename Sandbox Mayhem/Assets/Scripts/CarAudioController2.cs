@@ -8,7 +8,8 @@ public class CarAudioController2 : MonoBehaviour
     private bool triggeredOffroad = false;
     private string TERRAIN_OBJECT_NAME_STRING = "Terrain";
     public AudioEventManager audioEventManager;
-
+    private PlayerController playerController;
+    
     private void OnCollisionEnter(Collision collision)
     {
 
@@ -22,10 +23,15 @@ public class CarAudioController2 : MonoBehaviour
     private void Start()
     {
         rb = GetComponent<Rigidbody>();
+        playerController = GetComponent<PlayerController>();
     }
 
     private void Update()
     {
+        if (!playerController.isHuman)
+        {
+            return;
+        }
 
         if (isOffRoad() && rb.velocity.magnitude > 2) // Adding a minimum velocity for better experience
         {
