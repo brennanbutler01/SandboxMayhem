@@ -1228,7 +1228,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: af37477c3b7f4435ab8f6d7ff61cd901, type: 2}
+  - {fileID: 2100000, guid: db63b45a401bc44319347608d33d3bc0, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1487,6 +1487,7 @@ MonoBehaviour:
   accelerationForce: 0
   prevPosition: {x: 0, y: 0, z: 0}
   extraAccelerationForce: 0
+  stateAccelerationBoost: 0
   climbSpeed: 0
 --- !u!1 &4279286039092074124
 GameObject:
