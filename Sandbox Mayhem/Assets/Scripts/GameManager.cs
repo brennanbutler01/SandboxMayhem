@@ -237,6 +237,7 @@ public class GameManager : MonoBehaviour
             followWP.brakeForce = behavior.brakeForce;
             followWP.maxSpeed = behavior.maxSpeed;
             followWP.maxAngle = behavior.maxAngle;
+            followWP.minimumSpeed = behavior.minimumSpeed;
             behaviorIndex = (behaviorIndex + 1) % 3;
         }
     }
@@ -286,6 +287,7 @@ public class GameManager : MonoBehaviour
         aggressive.brakeForce = .9f;
         aggressive.maxSpeed = 30f;
         aggressive.maxAngle = 20f;
+        aggressive.minimumSpeed = 10f;
 
         behaviors.Add(aggressive);
 
@@ -294,6 +296,7 @@ public class GameManager : MonoBehaviour
         passive.brakeForce = 1f;
         passive.maxSpeed = 28f;
         passive.maxAngle = 22f;
+        passive.minimumSpeed = 10f;
 
         behaviors.Add(passive);
 
@@ -302,6 +305,7 @@ public class GameManager : MonoBehaviour
         intermediate.brakeForce = .95f;
         intermediate.maxSpeed = 29f;
         intermediate.maxAngle = 21f;
+        intermediate.minimumSpeed = 10f;
 
         behaviors.Add(intermediate);
     }

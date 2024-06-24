@@ -38324,6 +38324,7 @@ MonoBehaviour:
   accelerationForce: 0
   prevPosition: {x: 0, y: 0, z: 0}
   extraAccelerationForce: 0
+  stateAccelerationBoost: 0
   climbSpeed: 0
 --- !u!136 &310524630
 CapsuleCollider:
@@ -48652,6 +48653,7 @@ MonoBehaviour:
   accelerationForce: 0
   prevPosition: {x: 0, y: 0, z: 0}
   extraAccelerationForce: 0
+  stateAccelerationBoost: 0
   climbSpeed: 0
 --- !u!1 &410215065
 GameObject:
@@ -56195,6 +56197,7 @@ MonoBehaviour:
   accelerationForce: 0
   prevPosition: {x: 0, y: 0, z: 0}
   extraAccelerationForce: 0
+  stateAccelerationBoost: 0
   climbSpeed: 0
 --- !u!136 &484196720
 CapsuleCollider:
@@ -91249,7 +91252,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6484311914656312820, guid: ba2508e745fbca54485f666cc2525315, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -16.6
+      value: -18.3
       objectReference: {fileID: 0}
     - target: {fileID: 6484311914656312820, guid: ba2508e745fbca54485f666cc2525315, type: 3}
       propertyPath: m_LocalPosition.y
@@ -214268,7 +214271,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4179146912956396631, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 405.14832
+      value: 400.27
       objectReference: {fileID: 0}
     - target: {fileID: 4179146912956396631, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
       propertyPath: m_LocalPosition.y

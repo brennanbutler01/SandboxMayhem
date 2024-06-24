@@ -6,37 +6,43 @@ using System;
 public class FollowWP : MonoBehaviour
 {
     public GameObject[] waypoints;
-    private SortedDictionary<string, Behavior> behaviors;
-
-    private GameObject[] wheels;
     WheelControl[] wheelControls;
 
     int firstIndex = 0;
     int overallIndex = 0;
+    int randIndex = 0;
     private CarController carController;
     private PlayerController humanController;
     private PlayerController aiController;
-    int randIndex = 0;
 
     public float speed = 0f;
     public float rotationSpeed = 2.0f;
-    public float minimumSpeed = 13f;
+    public float minimumSpeed = 10f;
     public float maxAngle = 0f;
     public float brakeForce = 0f;
     public float maxSpeed = 0f;
     public float accelerationForce = 0f;
     public Vector3 prevPosition;
     public float extraAccelerationForce = 0f;
+    public float stateAccelerationBoost = 0f;
     public float climbSpeed = 0f;
     private RaycastHit objectHit;
+
+    private const string normal = "normal";
+    private const string losing = "losing";
+    private const string winning = "winning";
+    private string state = normal;
 
     // Start is called before the first frame update
     void Start()
     {
+        // Randomly determine which waypoint to start driving towards
         firstIndex = UnityEngine.Random.Range(0, 3);
+
+        // Get waypoints and sort in order
         waypoints = GameObject.FindGameObjectsWithTag("Waypoint");
-        wheels = GameObject.FindGameObjectsWithTag("Wheel");
         Array.Sort(waypoints, determineLarger);
+
         wheelControls = GetComponentsInChildren<WheelControl>();
         carController = GetComponent<CarController>();
         humanController = FindObjectOfType<HumanController>().gameObject.GetComponent<PlayerController>();
@@ -51,23 +57,28 @@ public class FollowWP : MonoBehaviour
         {
             if (humanController.currentWaypoint > aiController.currentWaypoint)
             {
+                state = losing;
                 Debug.Log("AI is losing!");
             }
             else if (humanController.currentWaypoint < aiController.currentWaypoint)
             {
+                state = winning;
                 Debug.Log("AI is winning!");
             }
             else
             {
+                state = normal;
                 Debug.Log("It's too close to tell!");
             }
         }
         else if (humanController.currentLap > aiController.currentLap)
         {
+            state = losing;
             Debug.Log("AI is losing!");
         }
         else if (humanController.currentLap < aiController.currentLap)
         {
+            state = winning;
             Debug.Log("AI is winning!");
         }
     }
@@ -91,6 +102,24 @@ public class FollowWP : MonoBehaviour
         }
     }
 
+    void checkState()
+    {
+        switch (state)
+        {
+            case normal:
+                stateAccelerationBoost = 0f;
+                break;
+            case losing:
+                stateAccelerationBoost = 0.1f;
+                break;
+            case winning:
+                stateAccelerationBoost = -0.1f;
+                break;
+            default:
+                break;
+        }
+    }
+
     void FixedUpdate()
     {
         // Don't let cars accelerate until race begins
@@ -101,6 +130,8 @@ public class FollowWP : MonoBehaviour
 
         rotateWheels();
         determinePosition();
+
+        // Determine if a waypoint is close enough to collect
         if (Vector3.Distance(this.transform.position, waypoints[firstIndex].transform.position) < 3)
         {
             prevPosition = waypoints[firstIndex].transform.position;
@@ -122,10 +153,11 @@ public class FollowWP : MonoBehaviour
             firstIndex = (overallIndex * 3) + randIndex;
             if (firstIndex < waypoints.Length)
             {
+                // Add extra speed if there is a significant elevation change between waypoints
                 if ((prevPosition.y - waypoints[firstIndex].transform.position.y) < -1)
                 {
-                    extraAccelerationForce = 0.3f;
-                    climbSpeed = 0.05f;
+                    extraAccelerationForce = 0.5f;
+                    climbSpeed = 0.00f;
                 }
                 else
                 {
@@ -135,6 +167,7 @@ public class FollowWP : MonoBehaviour
             }
         }
 
+        // If we've reached the end of the waypoints, reset to the beginning
         if (firstIndex >= waypoints.Length)
         {
             prevPosition = waypoints[waypoints.Length - 1].transform.position;
@@ -146,6 +179,8 @@ public class FollowWP : MonoBehaviour
 
         //TODO add check to prevent AI from freaking out if it misses a waypoint
         //could probably add another maximum angle that it doesn't even try to head towards if it's too extreme, just resets destination to the next one.
+
+        checkState();
 
         // Slow down the car if the next waypoint is past a reasonable angle to turn
         if (Quaternion.Angle(this.transform.rotation, lookatWP) > maxAngle)
@@ -160,7 +195,7 @@ public class FollowWP : MonoBehaviour
             // Accelerate until max speed is reached
             if (speed < maxSpeed)
             {
-                speed = speed + accelerationForce + extraAccelerationForce;
+                speed = speed + accelerationForce + extraAccelerationForce + stateAccelerationBoost;
             }
             // Add some speed for hill climbing
             float xAngle = (this.transform.rotation.x - lookatWP.x) * 100;
@@ -190,7 +225,6 @@ public class FollowWP : MonoBehaviour
             {
                 if (speed > minimumSpeed)
                 {
-                    Debug.Log("Slowing down!");
                     speed = speed - brakeForce;
                 }
             }
