@@ -147,7 +147,7 @@ public class GameManager : MonoBehaviour
         rankingText.text = $"Rank: {_humanPlayer.ranking}/{_players.Count}";
         finishedText.text = "Finished " + positionToText(_humanPlayer.ranking);
 
-        if (finishedPlayers.Count == _players.Count)
+        if (_humanPlayer.hasFinished)
         {
             endRace();
         }
