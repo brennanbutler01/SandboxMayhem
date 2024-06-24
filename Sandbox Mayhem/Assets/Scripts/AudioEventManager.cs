@@ -15,6 +15,7 @@ public class AudioEventManager : MonoBehaviour
     public AudioClip raceMusicAudio;
     public AudioClip drivingOnDirtAudio;
     public AudioClip engineAudio;
+    public AudioClip coinCollectionAudio;
     
     private AudioSource engineAudioSource;
     private AudioSource drivingOnDirtAudioSource; //Tracking
@@ -22,12 +23,14 @@ public class AudioEventManager : MonoBehaviour
     private UnityAction<Vector3> collisionEventListener;
     private UnityAction<GameObject> raceCountdownEventListener;
     private UnityAction<GameObject> raceMusicEventListener;
+    private UnityAction<GameObject> coinCollectionEventListener;
 
     private void Awake()
     {
         collisionEventListener = new UnityAction<Vector3>(collisionEventHandler);
         raceCountdownEventListener = new UnityAction<GameObject>(raceCountdownEventHandler);
         raceMusicEventListener = new UnityAction<GameObject>(raceMusicEventHandler);
+        coinCollectionEventListener = new UnityAction<GameObject>(coinCollectionEventHandler);
 
         //float masterVolume = PlayerPrefs.GetFloat("MasterVol");
         //mixer.SetFloat("MasterVol", masterVolume);
@@ -59,6 +62,7 @@ public class AudioEventManager : MonoBehaviour
         EventManager.StartListening<CarCollisionEvent, Vector3>(collisionEventListener);
         EventManager.StartListening<RaceCountdownEvent, GameObject>(raceCountdownEventListener);
         EventManager.StartListening<RaceMusicEvent, GameObject>(raceMusicEventListener);
+        EventManager.StartListening<CoinCollectionEvent, GameObject>(coinCollectionEventListener);
     }
 
     private void OnDisable()
@@ -66,6 +70,7 @@ public class AudioEventManager : MonoBehaviour
         EventManager.StopListening<CarCollisionEvent, Vector3>(collisionEventListener);
         EventManager.StopListening<RaceCountdownEvent, GameObject>(raceCountdownEventListener);
         EventManager.StopListening<RaceMusicEvent, GameObject>(raceMusicEventListener);
+        EventManager.StopListening<CoinCollectionEvent, GameObject>(coinCollectionEventListener);
     }
 
     void collisionEventHandler(Vector3 worldPos)
@@ -142,4 +147,18 @@ public class AudioEventManager : MonoBehaviour
             engineAudioSource.pitch = ENGINE_PITCH_MIN + (ENGINE_PITCH_MAX - ENGINE_PITCH_MIN)*pitch;
         }
     }
+    
+    public void coinCollectionEventHandler(GameObject go)
+    {
+        if (eventSoundScriptPrefabReference)
+        {
+            EventSoundScript snd = Instantiate(eventSoundScriptPrefabReference, go.transform.position, Quaternion.identity, null);
+        
+            snd.audioSource.clip = this.coinCollectionAudio;
+            snd.audioSource.minDistance = 5f;
+            snd.audioSource.maxDistance = 100f;
+            snd.audioSource.outputAudioMixerGroup = sfxMixer;
+            snd.audioSource.Play();
+        }
+    } 
 }

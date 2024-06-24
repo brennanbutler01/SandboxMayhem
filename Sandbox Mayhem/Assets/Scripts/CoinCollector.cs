@@ -10,7 +10,7 @@ public class CoinCollector: MonoBehaviour
         
         if (player == null) return;
         
-        player.CollectCoin();
+        player.CollectCoin(this.gameObject);
         gameObject.SetActive(false);
     }
 }

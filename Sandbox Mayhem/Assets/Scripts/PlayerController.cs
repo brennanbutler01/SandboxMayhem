@@ -38,10 +38,13 @@ public class PlayerController : MonoBehaviour
             wp?.transform.position ?? Vector3.zero);
     }
 
-    public void CollectCoin()
+    public void CollectCoin(GameObject go)
     {
         Debug.Log("Coins: " + coins);
         coins++;
+        
+        // only play sound for real players, not when ai collects 
+        if (isHuman) EventManager.TriggerEvent<CoinCollectionEvent, GameObject>(go);
     }
 
     public void Update()
