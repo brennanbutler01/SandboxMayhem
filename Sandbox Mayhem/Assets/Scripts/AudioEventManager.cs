@@ -16,6 +16,7 @@ public class AudioEventManager : MonoBehaviour
     public AudioClip drivingOnDirtAudio;
     public AudioClip engineAudio;
     public AudioClip coinCollectionAudio;
+    public AudioClip floorTrapCollisionAudio;
     
     private AudioSource engineAudioSource;
     private AudioSource drivingOnDirtAudioSource; //Tracking
@@ -24,6 +25,7 @@ public class AudioEventManager : MonoBehaviour
     private UnityAction<GameObject> raceCountdownEventListener;
     private UnityAction<GameObject> raceMusicEventListener;
     private UnityAction<GameObject> coinCollectionEventListener;
+    private UnityAction<Vector3> floorTrapCollisionEventListener;
 
     private void Awake()
     {
@@ -31,6 +33,7 @@ public class AudioEventManager : MonoBehaviour
         raceCountdownEventListener = new UnityAction<GameObject>(raceCountdownEventHandler);
         raceMusicEventListener = new UnityAction<GameObject>(raceMusicEventHandler);
         coinCollectionEventListener = new UnityAction<GameObject>(coinCollectionEventHandler);
+        floorTrapCollisionEventListener = new UnityAction<Vector3>(floorTrapCollisionEventHandler);
 
         //float masterVolume = PlayerPrefs.GetFloat("MasterVol");
         //mixer.SetFloat("MasterVol", masterVolume);
@@ -63,14 +66,16 @@ public class AudioEventManager : MonoBehaviour
         EventManager.StartListening<RaceCountdownEvent, GameObject>(raceCountdownEventListener);
         EventManager.StartListening<RaceMusicEvent, GameObject>(raceMusicEventListener);
         EventManager.StartListening<CoinCollectionEvent, GameObject>(coinCollectionEventListener);
+        EventManager.StartListening<FloorTrapCollisionEvent, Vector3>(floorTrapCollisionEventListener);
     }
-
+    
     private void OnDisable()
     {
         EventManager.StopListening<CarCollisionEvent, Vector3>(collisionEventListener);
         EventManager.StopListening<RaceCountdownEvent, GameObject>(raceCountdownEventListener);
         EventManager.StopListening<RaceMusicEvent, GameObject>(raceMusicEventListener);
         EventManager.StopListening<CoinCollectionEvent, GameObject>(coinCollectionEventListener);
+        EventManager.StopListening<FloorTrapCollisionEvent, Vector3>(floorTrapCollisionEventListener);
     }
 
     void collisionEventHandler(Vector3 worldPos)
@@ -160,5 +165,21 @@ public class AudioEventManager : MonoBehaviour
             snd.audioSource.outputAudioMixerGroup = sfxMixer;
             snd.audioSource.Play();
         }
-    } 
+    }
+
+    void floorTrapCollisionEventHandler(Vector3 worldPos)
+    {
+        
+        if (eventSoundScriptPrefabReference)
+        {
+            print("PLAYED AUDIO");
+            EventSoundScript snd = Instantiate(eventSoundScriptPrefabReference, worldPos, Quaternion.identity, null);
+
+            snd.audioSource.clip = this.floorTrapCollisionAudio;
+            snd.audioSource.minDistance = 5f;
+            snd.audioSource.maxDistance = 100f;
+            snd.audioSource.outputAudioMixerGroup = sfxMixer;
+            snd.audioSource.Play();
+        }
+    }
 }
