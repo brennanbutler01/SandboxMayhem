@@ -58,28 +58,23 @@ public class FollowWP : MonoBehaviour
             if (humanController.currentWaypoint > aiController.currentWaypoint)
             {
                 state = losing;
-                Debug.Log("AI is losing!");
             }
             else if (humanController.currentWaypoint < aiController.currentWaypoint)
             {
                 state = winning;
-                Debug.Log("AI is winning!");
             }
             else
             {
                 state = normal;
-                Debug.Log("It's too close to tell!");
             }
         }
         else if (humanController.currentLap > aiController.currentLap)
         {
             state = losing;
-            Debug.Log("AI is losing!");
         }
         else if (humanController.currentLap < aiController.currentLap)
         {
             state = winning;
-            Debug.Log("AI is winning!");
         }
     }
 

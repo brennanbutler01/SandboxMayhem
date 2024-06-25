@@ -10,6 +10,7 @@ public class KnifeTrigger : MonoBehaviour
     public bool knifeIsActive = false;
     private int numberOfPlayersInRange = 0;
     private UnityAction<string, bool> knifeTriggerEventListener;
+    public AudioEventManager audioEventManager;
     private void Awake()
     {
         anim = GetComponent<Animator>();
@@ -31,8 +32,6 @@ public class KnifeTrigger : MonoBehaviour
     private void OnEnable()
     {
         EventManager.StartListening<KnifeTriggerEvent, string, bool>(knifeTriggerEventHandler);
-        //anim.Play("Knife Fall");
-        //anim.SetBool("isRotating", true);
     }
 
     private void OnDisable()
@@ -48,6 +47,7 @@ public class KnifeTrigger : MonoBehaviour
             numberOfPlayersInRange++;
             anim.Play("Knife Fall");
             anim.SetBool("isRotating", true);
+            audioEventManager.playStopKnifeSwingAudtio(true);
         }
         else if (gameObject.name.Equals(knifeName) && !knifeShouldBeActive)
         {
@@ -55,6 +55,7 @@ public class KnifeTrigger : MonoBehaviour
             if (numberOfPlayersInRange == 0)
             {
                 anim.SetBool("isRotating", false);
+                audioEventManager.playStopKnifeSwingAudtio(false);
             }
         }
     }

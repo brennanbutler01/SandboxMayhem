@@ -14,8 +14,8 @@ public class KnifeTriggerer : MonoBehaviour
     {
         knifeTriggerList = FindObjectsOfType(typeof(KnifeTrigger)) as KnifeTrigger[];
         knifeActiveDict.Add("knife1", false);
-        //knifeActiveDict.Add("knife2", false);
-        //knifeActiveDict.Add("knife3", false);
+        knifeActiveDict.Add("knife2", false);
+        knifeActiveDict.Add("knife3", false);
     }
 
     // Update is called once per frame
