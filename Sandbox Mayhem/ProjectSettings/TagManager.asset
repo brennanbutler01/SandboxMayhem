@@ -7,6 +7,7 @@ TagManager:
   - Coin
   - Waypoint
   - Wheel
+  - Terrain
   layers:
   - Default
   - TransparentFX
