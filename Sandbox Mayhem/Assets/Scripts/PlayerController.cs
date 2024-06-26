@@ -37,15 +37,7 @@ public class PlayerController : MonoBehaviour
         return Vector3.Distance(transform.position,
             wp?.transform.position ?? Vector3.zero);
     }
-
-    public void CollectCoin(GameObject go)
-    {
-        Debug.Log("Coins: " + coins);
-        coins++;
-        
-        // only play sound for real players, not when ai collects 
-        if (isHuman) EventManager.TriggerEvent<CoinCollectionEvent, GameObject>(go);
-    }
+    
 
     public void Update()
     {   
