@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.3069224, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -33953,9 +33953,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b86942dbb9c08542af01bb190ea5716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelModel: {fileID: 1490226845}
   wheelCollider: {fileID: 0}
+  wheelModel: {fileID: 1490226845}
   steerable: 0
+  sandParticlesPrefab: {fileID: 0}
 --- !u!1 &269695862
 GameObject:
   m_ObjectHideFlags: 0
@@ -42918,9 +42919,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b86942dbb9c08542af01bb190ea5716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelModel: {fileID: 2082886486}
   wheelCollider: {fileID: 0}
+  wheelModel: {fileID: 2082886486}
   steerable: 0
+  sandParticlesPrefab: {fileID: 0}
 --- !u!1 &352074673
 GameObject:
   m_ObjectHideFlags: 0
@@ -54684,9 +54686,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b86942dbb9c08542af01bb190ea5716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelModel: {fileID: 179633234}
   wheelCollider: {fileID: 0}
+  wheelModel: {fileID: 179633234}
   steerable: 0
+  sandParticlesPrefab: {fileID: 0}
 --- !u!1001 &459884220
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -57505,9 +57508,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b86942dbb9c08542af01bb190ea5716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelModel: {fileID: 1707234601}
   wheelCollider: {fileID: 0}
+  wheelModel: {fileID: 1707234601}
   steerable: 0
+  sandParticlesPrefab: {fileID: 0}
 --- !u!1 &490432395
 GameObject:
   m_ObjectHideFlags: 0
@@ -57819,9 +57823,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b86942dbb9c08542af01bb190ea5716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelModel: {fileID: 1424531913}
   wheelCollider: {fileID: 0}
+  wheelModel: {fileID: 1424531913}
   steerable: 0
+  sandParticlesPrefab: {fileID: 0}
 --- !u!1 &495837422
 GameObject:
   m_ObjectHideFlags: 0
@@ -63619,9 +63624,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b86942dbb9c08542af01bb190ea5716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelModel: {fileID: 1061392700}
   wheelCollider: {fileID: 0}
+  wheelModel: {fileID: 1061392700}
   steerable: 0
+  sandParticlesPrefab: {fileID: 0}
 --- !u!4 &548751245 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 942762337184432749, guid: b9c7a183a7a2e004cb24435cb080a708, type: 3}
@@ -70623,9 +70629,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b86942dbb9c08542af01bb190ea5716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelModel: {fileID: 2040274492}
   wheelCollider: {fileID: 0}
+  wheelModel: {fileID: 2040274492}
   steerable: 0
+  sandParticlesPrefab: {fileID: 0}
 --- !u!1 &608431772
 GameObject:
   m_ObjectHideFlags: 0
@@ -77626,9 +77633,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b86942dbb9c08542af01bb190ea5716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelModel: {fileID: 1296677322}
   wheelCollider: {fileID: 0}
+  wheelModel: {fileID: 1296677322}
   steerable: 0
+  sandParticlesPrefab: {fileID: 0}
 --- !u!1 &662418584
 GameObject:
   m_ObjectHideFlags: 0
@@ -101936,9 +101944,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b86942dbb9c08542af01bb190ea5716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelModel: {fileID: 1481270153}
   wheelCollider: {fileID: 0}
+  wheelModel: {fileID: 1481270153}
   steerable: 0
+  sandParticlesPrefab: {fileID: 0}
 --- !u!1 &884976507
 GameObject:
   m_ObjectHideFlags: 0
@@ -121407,9 +121416,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b86942dbb9c08542af01bb190ea5716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelModel: {fileID: 1493258059}
   wheelCollider: {fileID: 0}
+  wheelModel: {fileID: 1493258059}
   steerable: 0
+  sandParticlesPrefab: {fileID: 0}
 --- !u!1001 &1062574463
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -131435,9 +131445,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b86942dbb9c08542af01bb190ea5716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelModel: {fileID: 1156072551}
   wheelCollider: {fileID: 0}
+  wheelModel: {fileID: 1156072551}
   steerable: 0
+  sandParticlesPrefab: {fileID: 0}
 --- !u!114 &1156462337
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -141152,9 +141163,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b86942dbb9c08542af01bb190ea5716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelModel: {fileID: 215247393}
   wheelCollider: {fileID: 0}
+  wheelModel: {fileID: 215247393}
   steerable: 0
+  sandParticlesPrefab: {fileID: 0}
 --- !u!1 &1241140487
 GameObject:
   m_ObjectHideFlags: 0
@@ -151425,9 +151437,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b86942dbb9c08542af01bb190ea5716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelModel: {fileID: 1966419070}
   wheelCollider: {fileID: 0}
+  wheelModel: {fileID: 1966419070}
   steerable: 0
+  sandParticlesPrefab: {fileID: 0}
 --- !u!1 &1330285457
 GameObject:
   m_ObjectHideFlags: 0
@@ -188771,9 +188784,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b86942dbb9c08542af01bb190ea5716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelModel: {fileID: 1011049239}
   wheelCollider: {fileID: 0}
+  wheelModel: {fileID: 1011049239}
   steerable: 0
+  sandParticlesPrefab: {fileID: 0}
 --- !u!4 &1673043186 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 942762337184432749, guid: b9c7a183a7a2e004cb24435cb080a708, type: 3}
@@ -211279,9 +211293,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b86942dbb9c08542af01bb190ea5716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelModel: {fileID: 947433145}
   wheelCollider: {fileID: 0}
+  wheelModel: {fileID: 947433145}
   steerable: 0
+  sandParticlesPrefab: {fileID: 0}
 --- !u!1 &1878364813
 GameObject:
   m_ObjectHideFlags: 0
@@ -216680,6 +216695,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4179146912808815629, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
+      propertyPath: sandParticlesPrefab
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 4179146912956396625, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
       propertyPath: m_Name
       value: Car
@@ -216698,7 +216717,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4179146912956396631, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 400.27
+      value: 405.16
       objectReference: {fileID: 0}
     - target: {fileID: 4179146912956396631, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -216706,7 +216725,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4179146912956396631, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 646.4
+      value: 646.37
       objectReference: {fileID: 0}
     - target: {fileID: 4179146912956396631, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -216740,6 +216759,18 @@ PrefabInstance:
       propertyPath: audioEventManager
       value: 
       objectReference: {fileID: 110253831}
+    - target: {fileID: 4179146913577912300, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
+      propertyPath: sandParticlesPrefab
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 4179146913794633141, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
+      propertyPath: sandParticlesPrefab
+      value: 
+      objectReference: {fileID: 8138325406838065682, guid: 0b04dafe76184354d93b6d2e1f3b672f, type: 3}
+    - target: {fileID: 4179146914296915187, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
+      propertyPath: sandParticlesPrefab
+      value: 
+      objectReference: {fileID: 8138325406838065682, guid: 0b04dafe76184354d93b6d2e1f3b672f, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
 --- !u!1 &1931072163
@@ -223855,9 +223886,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b86942dbb9c08542af01bb190ea5716, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wheelModel: {fileID: 1031728206}
   wheelCollider: {fileID: 0}
+  wheelModel: {fileID: 1031728206}
   steerable: 0
+  sandParticlesPrefab: {fileID: 0}
 --- !u!1 &2000312093
 GameObject:
   m_ObjectHideFlags: 0
@@ -272771,7 +272803,7 @@ GameObject:
   - component: {fileID: 2135691377}
   m_Layer: 0
   m_Name: Terrain
-  m_TagString: Untagged
+  m_TagString: Terrain
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
