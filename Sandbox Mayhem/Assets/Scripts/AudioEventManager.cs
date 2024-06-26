@@ -17,15 +17,18 @@ public class AudioEventManager : MonoBehaviour
     public AudioClip engineAudio;
     public AudioClip coinCollectionAudio;
     public AudioClip floorTrapCollisionAudio;
+    public AudioClip knifeSwingAudio;
     
     private AudioSource engineAudioSource;
     private AudioSource drivingOnDirtAudioSource; //Tracking
+    private AudioSource knifeSwingAudioSource;
 
     private UnityAction<Vector3> collisionEventListener;
     private UnityAction<GameObject> raceCountdownEventListener;
     private UnityAction<GameObject> raceMusicEventListener;
     private UnityAction<GameObject> coinCollectionEventListener;
     private UnityAction<Vector3> floorTrapCollisionEventListener;
+    //private UnityAction<GameObject> knifeSwingEventListener;
 
     private void Awake()
     {
@@ -58,6 +61,10 @@ public class AudioEventManager : MonoBehaviour
         engineAudioSource.clip = engineAudio;
         engineAudioSource.loop = true;
         engineAudioSource.Play();
+
+        knifeSwingAudioSource = gameObject.AddComponent<AudioSource>();
+        knifeSwingAudioSource.outputAudioMixerGroup = sfxMixer;
+        knifeSwingAudioSource.clip = knifeSwingAudio;
     }
 
     private void OnEnable()
@@ -181,5 +188,25 @@ public class AudioEventManager : MonoBehaviour
             snd.audioSource.outputAudioMixerGroup = sfxMixer;
             snd.audioSource.Play();
         }
+    }
+
+    public void playStopKnifeSwingAudtio(bool enable)
+    {
+        if (knifeSwingAudioSource is not null)
+        {
+            if (enable)
+            {
+                InvokeRepeating("playKnifeSwingAudio", 0f, 1.0f);
+            }
+            else if (!enable)
+            {
+                CancelInvoke("playKnifeSwingAudio");
+            }
+        }
+    }
+
+    private void playKnifeSwingAudio()
+    {
+        knifeSwingAudioSource.Play();
     }
 }
