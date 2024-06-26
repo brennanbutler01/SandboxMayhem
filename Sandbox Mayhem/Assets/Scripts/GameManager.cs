@@ -28,6 +28,9 @@ public class GameManager : MonoBehaviour
     public Text finishedText;
     public bool debug_TriggerRaceEnd = false;
 
+    public GameObject pauseScreen;
+    private CanvasGroup canvasGroup;
+
     public Text countdownText;
     public CarController playerCarController;
     public CarController[] aiCarController;
@@ -47,8 +50,11 @@ public class GameManager : MonoBehaviour
         _players = FindObjectsOfType<PlayerController>().ToList();
         var humanPlayers = _players.Where(player => player.isHuman).ToList();
 
+        canvasGroup = pauseScreen.GetComponent<CanvasGroup>();
+        pauseScreen.SetActive(false);
+
         // we do some auditing here for counts and states required for the game to function.
-    
+
         // we need at least one human player
         switch (humanPlayers.Count)
         {
@@ -116,6 +122,26 @@ public class GameManager : MonoBehaviour
         if (debug_TriggerRaceEnd)
         {
             endRace();
+        }
+
+        if (Input.GetKeyUp(KeyCode.Escape))
+        {
+            if (canvasGroup.interactable)
+            {
+                pauseScreen.SetActive(false);
+                canvasGroup.interactable = false;
+                canvasGroup.blocksRaycasts = false;
+                canvasGroup.alpha = 0f;
+                Time.timeScale = 1f;
+            }
+            else
+            {
+                pauseScreen.SetActive(true);
+                canvasGroup.interactable = true;
+                canvasGroup.blocksRaycasts = true;
+                canvasGroup.alpha = 1f;
+                Time.timeScale = 0f;
+            }
         }
     }
 
