@@ -9,6 +9,7 @@ public class CarAudioController2 : MonoBehaviour
     private string TERRAIN_OBJECT_NAME_STRING = "Terrain";
     public AudioEventManager audioEventManager;
     private PlayerController playerController;
+    private CarController carController;
     
     private void OnCollisionEnter(Collision collision)
     {
@@ -24,6 +25,7 @@ public class CarAudioController2 : MonoBehaviour
     {
         rb = GetComponent<Rigidbody>();
         playerController = GetComponent<PlayerController>();
+        carController = GetComponent<CarController>();
     }
 
     private void Update()
@@ -39,13 +41,14 @@ public class CarAudioController2 : MonoBehaviour
             {
                 audioEventManager.playStopDrivingOnDirtAudio(true);
                 triggeredOffroad = true;
+                carController.isDrivingOnDirt = true;
             }
         }
         else
         {
             triggeredOffroad = false;
-            // stop playing dirt audio
             audioEventManager.playStopDrivingOnDirtAudio(false);
+            carController.isDrivingOnDirt = false;
         }
     }
 

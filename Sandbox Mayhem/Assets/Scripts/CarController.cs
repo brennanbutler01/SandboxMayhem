@@ -25,11 +25,13 @@ public class CarController : MonoBehaviour {
     public Vector3 centerOfMassVector;
     public float downforce = 1.0f;
     public bool isMovementEnabled = true;
+    public bool isDrivingOnDirt = false;
     public AudioEventManager audioEventManager;
 
     private Rigidbody rigidBody;
     private WheelControl[] wheels;
     private PlayerController playerController;
+    private float drivingOnDirtSpeedPenalty =  6;
     
     void Start() {
         rigidBody = GetComponent<Rigidbody>();
@@ -52,14 +54,15 @@ public class CarController : MonoBehaviour {
         float forwardSpeed = Vector3.Dot(transform.forward, rigidBody.velocity);
         bool movingForward = forwardSpeed >= 0;
         bool braking = movingForward && verticalInput < 0;
-        
+
         //Steering calculations
-        float speedFactor = Mathf.InverseLerp(0, maxSpeed, forwardSpeed);
+        float adjustedMaxSpeed = maxSpeed- (isDrivingOnDirt ? 1 : 0) * drivingOnDirtSpeedPenalty;
+        float speedFactor = Mathf.InverseLerp(0, adjustedMaxSpeed, forwardSpeed);
         float steering = Mathf.Lerp(steeringAngleAtMaxSpeed, maxSteerAngle, speedFactor);
         float steerAngle = horizontalInput * steering;
         
         //Clamp speed between 0 and 100 for torque curve.
-        float normalizedSpeed = Mathf.Clamp01(Math.Abs(forwardSpeed) / maxSpeed) * 100;
+        float normalizedSpeed = Mathf.Clamp01(Math.Abs(forwardSpeed) / adjustedMaxSpeed) * 100;
         
         //Apply wheel collider physics (torque and steer angle)
         foreach (var wheel in wheels)
@@ -81,7 +84,7 @@ public class CarController : MonoBehaviour {
         }
         
         //Limit velocity. Adjust if we want to add boosts or allow higher speeds at ramps/slopes.
-        rigidBody.velocity = Vector3.ClampMagnitude(rigidBody.velocity, maxSpeed);
+        rigidBody.velocity = Vector3.ClampMagnitude(rigidBody.velocity, adjustedMaxSpeed);
         
         //Override steering to make it feel more arcade-like.
         //Only if grounded to avoid unexpected behavior, and car is moving so that it doesn't rotate in place.
