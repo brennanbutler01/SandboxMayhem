@@ -5,15 +5,12 @@ using Debug = UnityEngine.Debug;
 
 public class Speedometer : MonoBehaviour
 {
-    [SerializeField]
-    private Image speedRingImage;
-    [SerializeField]
-    private Text speedDisplayText;
-
-    [SerializeField]
-    private CarController car;
+    public Image speedRingImage;
+    public Text speedDisplayText;
+    public CarController car;
 
     private float _displaySpeed;
+    private const float MaxDisplaySpeed = 135f;
     
     // Start is called before the first frame update
     private void Start()
@@ -31,7 +28,7 @@ public class Speedometer : MonoBehaviour
     private void Update()
     {
         // abs all speeds so we don't show negatives when going backwards
-        _displaySpeed = Mathf.Abs(car.speed / car.maxSpeed);
+        _displaySpeed = Mathf.Abs(car.speed / MaxDisplaySpeed);
         speedRingImage.fillAmount = _displaySpeed;
         speedDisplayText.text = Mathf.Abs(Mathf.Round(car.speed)).ToString(CultureInfo.CurrentCulture);
     }
