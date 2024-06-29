@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using System.Linq;
 
 public class FollowWP : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class FollowWP : MonoBehaviour
     private CarController carController;
     private PlayerController humanController;
     private PlayerController aiController;
+    private List<PlayerController> _players;
 
     public float speed = 0f;
     public float rotationSpeed = 2.0f;
@@ -45,14 +47,16 @@ public class FollowWP : MonoBehaviour
 
         wheelControls = GetComponentsInChildren<WheelControl>();
         carController = GetComponent<CarController>();
-        humanController = FindObjectOfType<HumanController>().gameObject.GetComponent<PlayerController>();
+
+        _players = FindObjectsOfType<PlayerController>().ToList();
+        var humanPlayers = _players.Where(player => player.isHuman).ToList();
+        humanController = humanPlayers[0];
         aiController = GetComponent<PlayerController>();
     }
 
     // Determine AI position relative to human to set state accordingly
     void determinePosition()
     {
-        //TODO set state
         if (humanController.currentLap == aiController.currentLap)
         {
             if (humanController.currentWaypoint > aiController.currentWaypoint)
@@ -105,10 +109,10 @@ public class FollowWP : MonoBehaviour
                 stateAccelerationBoost = 0f;
                 break;
             case losing:
-                stateAccelerationBoost = 0.1f;
+                stateAccelerationBoost = 0.05f;
                 break;
             case winning:
-                stateAccelerationBoost = -0.1f;
+                stateAccelerationBoost = -0.05f;
                 break;
             default:
                 break;
@@ -127,7 +131,7 @@ public class FollowWP : MonoBehaviour
         determinePosition();
 
         // Determine if a waypoint is close enough to collect
-        if (Vector3.Distance(this.transform.position, waypoints[firstIndex].transform.position) < 3)
+        if (Vector3.Distance(this.transform.position, waypoints[firstIndex].transform.position) < 8)
         {
             prevPosition = waypoints[firstIndex].transform.position;
             overallIndex++;
@@ -223,6 +227,11 @@ public class FollowWP : MonoBehaviour
                     speed = speed - brakeForce;
                 }
             }
+        }
+
+        if (speed < minimumSpeed)
+        {
+            speed = minimumSpeed;
         }
 
         // Apply speed to AI car
