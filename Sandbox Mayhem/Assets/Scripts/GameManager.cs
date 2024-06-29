@@ -253,8 +253,6 @@ public class GameManager : MonoBehaviour
     {
         int behaviorIndex = 0;
 
-        Debug.Log("length: " + aiCarController.Length);
-
         foreach (CarController aiCar in aiCarController)
         {
             FollowWP followWP = aiCar.gameObject.GetComponent<FollowWP>();
@@ -313,7 +311,7 @@ public class GameManager : MonoBehaviour
         aggressive.brakeForce = .9f;
         aggressive.maxSpeed = 30f;
         aggressive.maxAngle = 20f;
-        aggressive.minimumSpeed = 10f;
+        aggressive.minimumSpeed = 5f;
 
         behaviors.Add(aggressive);
 
@@ -322,7 +320,7 @@ public class GameManager : MonoBehaviour
         passive.brakeForce = 1f;
         passive.maxSpeed = 28f;
         passive.maxAngle = 22f;
-        passive.minimumSpeed = 10f;
+        passive.minimumSpeed = 5f;
 
         behaviors.Add(passive);
 
@@ -331,7 +329,7 @@ public class GameManager : MonoBehaviour
         intermediate.brakeForce = .95f;
         intermediate.maxSpeed = 29f;
         intermediate.maxAngle = 21f;
-        intermediate.minimumSpeed = 10f;
+        intermediate.minimumSpeed = 5f;
 
         behaviors.Add(intermediate);
     }
