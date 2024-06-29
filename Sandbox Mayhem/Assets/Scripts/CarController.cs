@@ -27,17 +27,22 @@ public class CarController : MonoBehaviour {
     public bool isMovementEnabled = true;
     public bool isDrivingOnDirt = false;
     public AudioEventManager audioEventManager;
+    public Material carBrakeLightWhenBrakingMaterial;
+    public GameObject carBrakeLights;
 
     private Rigidbody rigidBody;
     private WheelControl[] wheels;
     private PlayerController playerController;
     private float drivingOnDirtSpeedPenalty =  6;
+    private Material carOriginalBrakeLightMaterial;
+    
     
     void Start() {
         rigidBody = GetComponent<Rigidbody>();
         rigidBody.centerOfMass += centerOfMassVector;
         wheels = GetComponentsInChildren<WheelControl>();
         playerController = GetComponent<PlayerController>();
+        carOriginalBrakeLightMaterial = GameObject.Find("Taillights_glass_brakelights").GetComponent<MeshRenderer>().material;
     }
 
     void FixedUpdate ()
@@ -103,6 +108,18 @@ public class CarController : MonoBehaviour {
         {
             audioEventManager.setEnginePitchAudio(speedFactor);
         }
+
+        //Brake lights
+        if (verticalInput < 0)
+        {
+            // Brake lights on
+            carBrakeLights.GetComponent<MeshRenderer>().material = carBrakeLightWhenBrakingMaterial;
+        } else
+        {
+            // Brake lights off
+            carBrakeLights.GetComponent<MeshRenderer>().material = carOriginalBrakeLightMaterial;
+        }
+
     }
 
     private void OverrideSteeringPhysics(float steering)
