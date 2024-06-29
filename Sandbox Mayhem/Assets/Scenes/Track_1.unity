@@ -395302,13 +395302,29 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 655249737981536162, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
+      propertyPath: m_ForwardFriction.m_Stiffness
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 655249738296601665, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
+      propertyPath: m_ForwardFriction.m_Stiffness
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 655249738435286036, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
+      propertyPath: downforce
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 655249738435286036, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
+      propertyPath: brakeTorque
+      value: 5000
+      objectReference: {fileID: 0}
     - target: {fileID: 655249738435286036, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
       propertyPath: audioEventManager
       value: 
       objectReference: {fileID: 110253831}
     - target: {fileID: 655249738435286040, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 646.3
+      value: 646.43
       objectReference: {fileID: 0}
     - target: {fileID: 655249738435286041, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
       propertyPath: audioEventManager
