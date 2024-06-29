@@ -15,6 +15,7 @@ public class AudioEventManager : MonoBehaviour
     public AudioClip engineAudio;
     public AudioClip coinCollectionAudio;
     public AudioClip speedUpCollectionAudio;
+    public AudioClip boostZoneAudio;
     public AudioClip floorTrapCollisionAudio;
     public AudioClip knifeSwingAudio;
     
@@ -26,6 +27,7 @@ public class AudioEventManager : MonoBehaviour
     private UnityAction<GameObject> raceCountdownEventListener;
     private UnityAction<GameObject> raceMusicEventListener;
     private UnityAction<GameObject> coinCollectionEventListener;
+    private UnityAction<GameObject> boostZoneEventListener;
     private UnityAction<GameObject> speedUpCollectionEventListener;
     private UnityAction<Vector3> floorTrapCollisionEventListener;
     //private UnityAction<GameObject> knifeSwingEventListener;
@@ -38,6 +40,7 @@ public class AudioEventManager : MonoBehaviour
         coinCollectionEventListener = new UnityAction<GameObject>(_coinCollectionEventHandler);
         floorTrapCollisionEventListener = new UnityAction<Vector3>(floorTrapCollisionEventHandler);
         speedUpCollectionEventListener = new UnityAction<GameObject>(_speedUpCollectionEventHandler);
+        boostZoneEventListener = new UnityAction<GameObject>(_boostZoneEventHandler);
 
         //float masterVolume = PlayerPrefs.GetFloat("MasterVol");
         //mixer.SetFloat("MasterVol", masterVolume);
@@ -75,6 +78,7 @@ public class AudioEventManager : MonoBehaviour
         EventManager.StartListening<RaceMusicEvent, GameObject>(raceMusicEventListener);
         EventManager.StartListening<CoinCollectionEvent, GameObject>(coinCollectionEventListener);
         EventManager.StartListening<SpeedUpCollectionEvent, GameObject>(speedUpCollectionEventListener);
+        EventManager.StartListening<SpeedBoostZoneEvent, GameObject>(boostZoneEventListener);
         EventManager.StartListening<FloorTrapCollisionEvent, Vector3>(floorTrapCollisionEventListener);
     }
     
@@ -85,6 +89,7 @@ public class AudioEventManager : MonoBehaviour
         EventManager.StopListening<RaceMusicEvent, GameObject>(raceMusicEventListener);
         EventManager.StopListening<CoinCollectionEvent, GameObject>(coinCollectionEventListener);
         EventManager.StopListening<SpeedUpCollectionEvent, GameObject>(speedUpCollectionEventListener);
+        EventManager.StopListening<SpeedBoostZoneEvent, GameObject>(boostZoneEventListener);
         EventManager.StopListening<FloorTrapCollisionEvent, Vector3>(floorTrapCollisionEventListener);
     }
 
@@ -183,6 +188,19 @@ public class AudioEventManager : MonoBehaviour
         var snd = Instantiate(eventSoundScriptPrefabReference, go.transform.position, Quaternion.identity, null);
         
         snd.audioSource.clip = this.speedUpCollectionAudio;
+        snd.audioSource.minDistance = 5f;
+        snd.audioSource.maxDistance = 100f;
+        snd.audioSource.outputAudioMixerGroup = sfxMixer;
+        snd.audioSource.Play();
+    }
+
+    private void _boostZoneEventHandler(GameObject go)
+    {
+        if (!eventSoundScriptPrefabReference) return;
+
+        var snd = Instantiate(eventSoundScriptPrefabReference, go.transform.position, Quaternion.identity, null);
+
+        snd.audioSource.clip = this.boostZoneAudio;
         snd.audioSource.minDistance = 5f;
         snd.audioSource.maxDistance = 100f;
         snd.audioSource.outputAudioMixerGroup = sfxMixer;

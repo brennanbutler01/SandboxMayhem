@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
+using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 
 public class CarController : MonoBehaviour {
@@ -15,7 +16,11 @@ public class CarController : MonoBehaviour {
     //Speed
     public float speed = 0;
     public float maxSpeed = 30;
-    private float _boostFactor  = 1f;
+    // used for tracking consumable speed multiplier
+    private float _consumableBoostFactor  = 1f;
+    // used for tracking boost zone speed
+    private float _boostZoneBoostFactor = 1f;
+    private float _combinedSpeedFactor => _consumableBoostFactor * _boostZoneBoostFactor;
     
     //Steering
     public float maxSteerAngle = 30;
@@ -64,7 +69,7 @@ public class CarController : MonoBehaviour {
         bool braking = movingForward && verticalInput < 0;
 
         //Steering calculations
-        float adjustedMaxSpeed = (maxSpeed - (isDrivingOnDirt ? 1 : 0) * drivingOnDirtSpeedPenalty) * _boostFactor;
+        float adjustedMaxSpeed = (maxSpeed - (isDrivingOnDirt ? 1 : 0) * drivingOnDirtSpeedPenalty) * _combinedSpeedFactor;
         float speedFactor = Mathf.InverseLerp(0, adjustedMaxSpeed, forwardSpeed);
         float steering = Mathf.Lerp(steeringAngleAtMaxSpeed, maxSteerAngle, speedFactor);
         float steerAngle = horizontalInput * steering;
@@ -145,24 +150,35 @@ public class CarController : MonoBehaviour {
     {
         rigidBody.velocity *= newSpeedPercentage;
     }
+
+    public void ApplyBoostZone(float speedModifier)
+    {
+        _consumableBoostFactor = speedModifier;
+    }
+
+    public void RemoveBoostZone()
+    {
+        _consumableBoostFactor = 1f;
+    }
     
-    public void ActivateSpeedBoost(float speedModifier, float? duration = 3f)
+    public void ActivateConsumableSpeedBoost(float speedModifier, float? duration = 3f)
     {
         if (_speedBoostCoroutine  != null)
         { StopCoroutine(_speedBoostCoroutine);
         }
         
-        _boostFactor = speedModifier;
+        _consumableBoostFactor = speedModifier;
         triggerSpeedChange(speedModifier);
-        _speedBoostCoroutine = StartCoroutine(ResetSpeedAfterBoost(duration ?? default));
+        _speedBoostCoroutine = StartCoroutine(ResetSpeedAfterConsumableBoost(duration ?? default));
     }
 
-    private IEnumerator ResetSpeedAfterBoost(float duration)
+    // gradually reduces the speed at the end of the boost
+    private IEnumerator ResetSpeedAfterConsumableBoost(float duration)
     {
         yield return new WaitForSeconds(duration);
         
-        triggerSpeedChange(1f / _boostFactor);
-        _boostFactor = 1f;
+        triggerSpeedChange(1f / _consumableBoostFactor);
+        _consumableBoostFactor = 1f;
         
         var elapsed = 0f;
         const float cooldownDuration = 2f;
@@ -173,12 +189,12 @@ public class CarController : MonoBehaviour {
             elapsed += Time.deltaTime;
             
             // lerp to smoothly slow down
-            _boostFactor = Mathf.Lerp(_boostFactor, 1f, elapsed/cooldownDuration);
+            _consumableBoostFactor = Mathf.Lerp(_consumableBoostFactor, 1f, elapsed/cooldownDuration);
             
             yield return null;
         }
 
         triggerSpeedChange(1f);
-        _boostFactor = 1f;
+        _consumableBoostFactor = 1f;
     }
 }
