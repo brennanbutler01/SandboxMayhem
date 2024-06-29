@@ -39,9 +39,25 @@ public class WheelControl : MonoBehaviour
                 Mathf.Abs(wheelCollider.rpm) > 30 &&
                 wheelCollider.GetGroundHit(out var hit) && hit.collider.CompareTag("Terrain"))
             {
-                float effectsRotation = wheelCollider.rpm > 0 ? -180 : 0;
-                sandParticles.transform.localRotation = Quaternion.Euler(0, effectsRotation, 0);
+                float effectsRotation;
+                float localPosition;
                 
+                if (wheelCollider.rpm > 0)
+                {
+                    effectsRotation = -180;
+                    localPosition = 0;
+                }
+                else
+                {
+                    effectsRotation = 0;
+                    localPosition = -0.75f;
+                }
+                
+                var transformPosition = sandParticles.transform.localPosition;
+                transformPosition.z = localPosition;
+                sandParticles.transform.localPosition = transformPosition;
+                sandParticles.transform.localRotation = Quaternion.Euler(0, effectsRotation, 0);
+
                 if (sandParticles.isStopped)
                 {
                     sandParticles.Play();
