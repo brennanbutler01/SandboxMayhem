@@ -10,6 +10,11 @@ public class FloorTrapAudioController : MonoBehaviour
         if (playerController && playerController.isHuman)
         {
             EventManager.TriggerEvent<FloorTrapCollisionEvent, Vector3>(gameObject.transform.position);
+            CarController carController = other.gameObject.GetComponent<CarController>();
+            if (carController != null)
+            {
+                carController.triggerSpeedChange();
+            }
         }
     }
 }

@@ -120,4 +120,9 @@ public class CarController : MonoBehaviour {
     {
         return wheels.All(wheel => wheel.wheelCollider.isGrounded && wheel.wheelCollider.GetGroundHit(out var hit));
     }
+
+    public void triggerSpeedChange(float newSpeedPercentage=0.5f)
+    {
+        rigidBody.velocity *= newSpeedPercentage;
+    }
 }

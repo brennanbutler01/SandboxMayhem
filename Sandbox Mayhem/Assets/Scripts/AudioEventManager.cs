@@ -180,7 +180,6 @@ public class AudioEventManager : MonoBehaviour
         
         if (eventSoundScriptPrefabReference)
         {
-            print("PLAYED AUDIO");
             EventSoundScript snd = Instantiate(eventSoundScriptPrefabReference, worldPos, Quaternion.identity, null);
 
             snd.audioSource.clip = this.floorTrapCollisionAudio;
