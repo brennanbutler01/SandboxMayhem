@@ -153,12 +153,14 @@ public class CarController : MonoBehaviour {
 
     public void ApplyBoostZone(float speedModifier)
     {
-        _consumableBoostFactor = speedModifier;
+        _boostZoneBoostFactor = speedModifier;
+        if (!playerController.isHuman) triggerSpeedChange(Mathf.Clamp(_boostZoneBoostFactor, 1f, 1.03f));
     }
 
     public void RemoveBoostZone()
     {
-        _consumableBoostFactor = 1f;
+        _boostZoneBoostFactor = 1f;
+        if (!playerController.isHuman) triggerSpeedChange(1f);
     }
     
     public void ActivateConsumableSpeedBoost(float speedModifier, float? duration = 3f)
