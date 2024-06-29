@@ -65,8 +65,10 @@ public class CarController : MonoBehaviour {
         float horizontalInput = Input.GetAxis("Horizontal");
         
         float forwardSpeed = Vector3.Dot(transform.forward, rigidBody.velocity);
-        bool movingForward = forwardSpeed >= 0;
-        bool braking = movingForward && verticalInput < 0;
+        float absoluteSpeed = Math.Abs(forwardSpeed);
+        
+        //Input different from current direction
+        bool braking = forwardSpeed * verticalInput < 0;
 
         //Steering calculations
         float adjustedMaxSpeed = (maxSpeed - (isDrivingOnDirt ? 1 : 0) * drivingOnDirtSpeedPenalty) * _combinedSpeedFactor;
@@ -75,7 +77,7 @@ public class CarController : MonoBehaviour {
         float steerAngle = horizontalInput * steering;
         
         //Clamp speed between 0 and 100 for torque curve.
-        float normalizedSpeed = Mathf.Clamp01(Math.Abs(forwardSpeed) / adjustedMaxSpeed) * 100;
+        float normalizedSpeed = Mathf.Clamp01(absoluteSpeed / adjustedMaxSpeed) * 100;
         
         //Apply wheel collider physics (torque and steer angle)
         foreach (var wheel in wheels)
@@ -83,7 +85,7 @@ public class CarController : MonoBehaviour {
             if (braking)
             {
                 wheel.wheelCollider.motorTorque = 0;
-                wheel.wheelCollider.brakeTorque = brakeTorque * verticalInput * -1;
+                wheel.wheelCollider.brakeTorque = brakeTorque * Math.Abs(verticalInput);
             }
             else
             {
@@ -101,17 +103,17 @@ public class CarController : MonoBehaviour {
         
         //Override steering to make it feel more arcade-like.
         //Only if grounded to avoid unexpected behavior, and car is moving so that it doesn't rotate in place.
-        if (IsGrounded() && forwardSpeed > 5)
+        if (IsGrounded() && absoluteSpeed > 3.5f)
         {
-            OverrideSteeringPhysics(steerAngle);
+            OverrideSteeringPhysics(steerAngle, forwardSpeed);
         }
 
         //Speed in km/h
         speed = transform.InverseTransformDirection(rigidBody.velocity).z * 3.6f;
         
-        //Apply downforce
-        rigidBody.AddForce(-1 * speed * downforce * transform.up);
-
+        //Apply downforce to press car against the track
+        rigidBody.AddForce(-1 * Math.Abs(speed) * downforce * transform.up);
+        
         if (audioEventManager is not null)
         {
             audioEventManager.setEnginePitchAudio(speedFactor);
@@ -130,8 +132,9 @@ public class CarController : MonoBehaviour {
 
     }
 
-    private void OverrideSteeringPhysics(float steering)
+    private void OverrideSteeringPhysics(float steering, float forwardSpeed)
     {
+        steering *= Math.Sign(forwardSpeed);
         Vector3 currentAngularVelocity = rigidBody.angularVelocity;
         float targetVelocity = steering * maxAngularVelocity / maxSteerAngle;
         currentAngularVelocity.y = Mathf.MoveTowards(currentAngularVelocity.y, targetVelocity, Time.fixedDeltaTime * angularVelocitySpeed);
@@ -166,7 +169,8 @@ public class CarController : MonoBehaviour {
     public void ActivateConsumableSpeedBoost(float speedModifier, float? duration = 3f)
     {
         if (_speedBoostCoroutine  != null)
-        { StopCoroutine(_speedBoostCoroutine);
+        { 
+            StopCoroutine(_speedBoostCoroutine);
         }
         
         _consumableBoostFactor = speedModifier;
