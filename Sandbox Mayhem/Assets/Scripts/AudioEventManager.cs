@@ -1,6 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
-using Collectables.Coin;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.Events;
@@ -17,6 +14,7 @@ public class AudioEventManager : MonoBehaviour
     public AudioClip drivingOnDirtAudio;
     public AudioClip engineAudio;
     public AudioClip coinCollectionAudio;
+    public AudioClip speedUpCollectionAudio;
     public AudioClip floorTrapCollisionAudio;
     public AudioClip knifeSwingAudio;
     
@@ -28,6 +26,7 @@ public class AudioEventManager : MonoBehaviour
     private UnityAction<GameObject> raceCountdownEventListener;
     private UnityAction<GameObject> raceMusicEventListener;
     private UnityAction<GameObject> coinCollectionEventListener;
+    private UnityAction<GameObject> speedUpCollectionEventListener;
     private UnityAction<Vector3> floorTrapCollisionEventListener;
     //private UnityAction<GameObject> knifeSwingEventListener;
 
@@ -36,8 +35,9 @@ public class AudioEventManager : MonoBehaviour
         collisionEventListener = new UnityAction<Vector3>(collisionEventHandler);
         raceCountdownEventListener = new UnityAction<GameObject>(raceCountdownEventHandler);
         raceMusicEventListener = new UnityAction<GameObject>(raceMusicEventHandler);
-        coinCollectionEventListener = new UnityAction<GameObject>(coinCollectionEventHandler);
+        coinCollectionEventListener = new UnityAction<GameObject>(_coinCollectionEventHandler);
         floorTrapCollisionEventListener = new UnityAction<Vector3>(floorTrapCollisionEventHandler);
+        speedUpCollectionEventListener = new UnityAction<GameObject>(_speedUpCollectionEventHandler);
 
         //float masterVolume = PlayerPrefs.GetFloat("MasterVol");
         //mixer.SetFloat("MasterVol", masterVolume);
@@ -74,6 +74,7 @@ public class AudioEventManager : MonoBehaviour
         EventManager.StartListening<RaceCountdownEvent, GameObject>(raceCountdownEventListener);
         EventManager.StartListening<RaceMusicEvent, GameObject>(raceMusicEventListener);
         EventManager.StartListening<CoinCollectionEvent, GameObject>(coinCollectionEventListener);
+        EventManager.StartListening<SpeedUpCollectionEvent, GameObject>(speedUpCollectionEventListener);
         EventManager.StartListening<FloorTrapCollisionEvent, Vector3>(floorTrapCollisionEventListener);
     }
     
@@ -83,6 +84,7 @@ public class AudioEventManager : MonoBehaviour
         EventManager.StopListening<RaceCountdownEvent, GameObject>(raceCountdownEventListener);
         EventManager.StopListening<RaceMusicEvent, GameObject>(raceMusicEventListener);
         EventManager.StopListening<CoinCollectionEvent, GameObject>(coinCollectionEventListener);
+        EventManager.StopListening<SpeedUpCollectionEvent, GameObject>(speedUpCollectionEventListener);
         EventManager.StopListening<FloorTrapCollisionEvent, Vector3>(floorTrapCollisionEventListener);
     }
 
@@ -161,18 +163,30 @@ public class AudioEventManager : MonoBehaviour
         }
     }
     
-    public void coinCollectionEventHandler(GameObject go)
+    private void _coinCollectionEventHandler(GameObject go)
     {
-        if (eventSoundScriptPrefabReference)
-        {
-            EventSoundScript snd = Instantiate(eventSoundScriptPrefabReference, go.transform.position, Quaternion.identity, null);
+        if (!eventSoundScriptPrefabReference) return;
         
-            snd.audioSource.clip = this.coinCollectionAudio;
-            snd.audioSource.minDistance = 5f;
-            snd.audioSource.maxDistance = 100f;
-            snd.audioSource.outputAudioMixerGroup = sfxMixer;
-            snd.audioSource.Play();
-        }
+        var snd = Instantiate(eventSoundScriptPrefabReference, go.transform.position, Quaternion.identity, null);
+        
+        snd.audioSource.clip = this.coinCollectionAudio;
+        snd.audioSource.minDistance = 5f;
+        snd.audioSource.maxDistance = 100f;
+        snd.audioSource.outputAudioMixerGroup = sfxMixer;
+        snd.audioSource.Play();
+    }
+    
+    private void _speedUpCollectionEventHandler(GameObject go)
+    {
+        if (!eventSoundScriptPrefabReference) return;
+        
+        var snd = Instantiate(eventSoundScriptPrefabReference, go.transform.position, Quaternion.identity, null);
+        
+        snd.audioSource.clip = this.speedUpCollectionAudio;
+        snd.audioSource.minDistance = 5f;
+        snd.audioSource.maxDistance = 100f;
+        snd.audioSource.outputAudioMixerGroup = sfxMixer;
+        snd.audioSource.Play();
     }
 
     void floorTrapCollisionEventHandler(Vector3 worldPos)

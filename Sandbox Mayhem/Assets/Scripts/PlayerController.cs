@@ -7,7 +7,7 @@ using Debug = UnityEngine.Debug;
 public class PlayerController : MonoBehaviour
 {
     public string Id { private set; get; }
-    private CarController Car { get; set; }
+    public CarController Car { get; set; }
     public int currentLap, currentWaypoint, lastWaypoint, coins, ranking;
     private int _trailingWaypoint;
     public bool isGoingBackward, isHalfway, isHuman, lapPenalty, hasFinished;

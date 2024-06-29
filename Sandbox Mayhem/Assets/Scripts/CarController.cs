@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Linq;
 using UnityEngine;
 
@@ -14,6 +15,7 @@ public class CarController : MonoBehaviour {
     //Speed
     public float speed = 0;
     public float maxSpeed = 30;
+    private float _boostFactor  = 1f;
     
     //Steering
     public float maxSteerAngle = 30;
@@ -35,6 +37,7 @@ public class CarController : MonoBehaviour {
     private PlayerController playerController;
     private float drivingOnDirtSpeedPenalty =  6;
     private Material carOriginalBrakeLightMaterial;
+    private Coroutine _speedBoostCoroutine;
     
     
     void Start() {
@@ -61,7 +64,7 @@ public class CarController : MonoBehaviour {
         bool braking = movingForward && verticalInput < 0;
 
         //Steering calculations
-        float adjustedMaxSpeed = maxSpeed- (isDrivingOnDirt ? 1 : 0) * drivingOnDirtSpeedPenalty;
+        float adjustedMaxSpeed = (maxSpeed - (isDrivingOnDirt ? 1 : 0) * drivingOnDirtSpeedPenalty) * _boostFactor;
         float speedFactor = Mathf.InverseLerp(0, adjustedMaxSpeed, forwardSpeed);
         float steering = Mathf.Lerp(steeringAngleAtMaxSpeed, maxSteerAngle, speedFactor);
         float steerAngle = horizontalInput * steering;
@@ -141,5 +144,41 @@ public class CarController : MonoBehaviour {
     public void triggerSpeedChange(float newSpeedPercentage=0.5f)
     {
         rigidBody.velocity *= newSpeedPercentage;
+    }
+    
+    public void ActivateSpeedBoost(float speedModifier, float? duration = 3f)
+    {
+        if (_speedBoostCoroutine  != null)
+        { StopCoroutine(_speedBoostCoroutine);
+        }
+        
+        _boostFactor = speedModifier;
+        triggerSpeedChange(speedModifier);
+        _speedBoostCoroutine = StartCoroutine(ResetSpeedAfterBoost(duration ?? default));
+    }
+
+    private IEnumerator ResetSpeedAfterBoost(float duration)
+    {
+        yield return new WaitForSeconds(duration);
+        
+        triggerSpeedChange(1f / _boostFactor);
+        _boostFactor = 1f;
+        
+        var elapsed = 0f;
+        const float cooldownDuration = 2f;
+
+        // count down and slowly get slower
+        while (elapsed < cooldownDuration)
+        {
+            elapsed += Time.deltaTime;
+            
+            // lerp to smoothly slow down
+            _boostFactor = Mathf.Lerp(_boostFactor, 1f, elapsed/cooldownDuration);
+            
+            yield return null;
+        }
+
+        triggerSpeedChange(1f);
+        _boostFactor = 1f;
     }
 }
