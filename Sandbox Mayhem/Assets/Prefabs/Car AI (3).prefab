@@ -25,8 +25,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3468191739488380911}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0, y: 0.29, z: 0.45}
-  m_LocalScale: {x: 2.973942, y: 2.4221, z: 6.668901}
+  m_LocalPosition: {x: 0, y: 0.045, z: -0.001}
+  m_LocalScale: {x: 2.973942, y: 1.086448, z: 4.7570834}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5732278641030507542}
@@ -610,7 +610,10 @@ MonoBehaviour:
   centerOfMassVector: {x: 0, y: -0.3, z: 0}
   downforce: 1
   isMovementEnabled: 1
+  isDrivingOnDirt: 0
   audioEventManager: {fileID: 0}
+  carBrakeLightWhenBrakingMaterial: {fileID: 0}
+  carBrakeLights: {fileID: 0}
 --- !u!114 &7940363940722613107
 MonoBehaviour:
   m_ObjectHideFlags: 0
