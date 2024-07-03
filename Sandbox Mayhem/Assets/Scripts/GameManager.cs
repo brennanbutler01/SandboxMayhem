@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -38,7 +39,8 @@ public class GameManager : MonoBehaviour
     private float countdownElapsedTime = 0;
     private bool isCountDownInProgress = false;
     private float COUNTDOWN_BEEP_DURATION_IN_SECONDS = 0.6f; // Depends on the chosen countdown audio
-
+    private float? carTiltedElapsedTime = null;
+    
     private List<Behavior> behaviors;
     //private readonly Random random;
 
@@ -143,6 +145,7 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 0f;
             }
         }
+        checkIfPlayerCarIsTilted();
     }
 
     private void UpdateRanking()
@@ -214,7 +217,6 @@ public class GameManager : MonoBehaviour
         countdownElapsedTime += Time.deltaTime;
         for (int countdown = 3; countdown >= 0; countdown--)
         {
-            // Transition from 3 to 2 seconds
             if ((countdownInt == countdown) && (countdownElapsedTime >= (4 - countdown) * COUNTDOWN_BEEP_DURATION_IN_SECONDS))
             {
                 countdownInt -= 1;
@@ -334,4 +336,38 @@ public class GameManager : MonoBehaviour
         behaviors.Add(intermediate);
     }
 
+    private void checkIfPlayerCarIsTilted()
+    {
+        if (_humanPlayer.Car.isCarTilted())
+        {
+            if (carTiltedElapsedTime is not null)
+            {
+                carTiltedElapsedTime += Time.deltaTime;
+                
+                // Reset the car position if it has been tilted for X seconds
+                if (carTiltedElapsedTime > 3)
+                {
+                    print("Triggered car tilted/upside down reset");
+                    resetCarPositionToWaypoint();
+                    carTiltedElapsedTime = 0;
+                }
+
+            } else
+            {
+                carTiltedElapsedTime = 0;
+            }
+        } else if (carTiltedElapsedTime is not null)
+        {
+            carTiltedElapsedTime = null;
+        }
+    }
+
+    // Resets car position to the last waypoint
+    public void resetCarPositionToWaypoint()
+    {
+        PositionWaypoint waypoint = Waypoints.Find(x => x.waypointIndex == _humanPlayer.currentWaypoint);
+        Debug.Log("Resetting player position to waypoint " + waypoint.waypointIndex);
+        
+        _humanPlayer.Car.resetCarPosition(waypoint.transform.position);
+    }
 }
