@@ -9,14 +9,15 @@ public class RobotTriggerController : MonoBehaviour
     public GameObject robot;
     public AudioClip robotAudio;
     public AudioMixerGroup sfxMixer;
-    
+    public RobotLightsController lights;
+
     private Animator anim;
     private Vector3 targetPos;
     private Vector3 initialPos;
     private RobotState state;
     
     private AudioSource robotAudioSource;
-
+    
     private enum RobotState
     {
         Waiting,
@@ -56,6 +57,7 @@ public class RobotTriggerController : MonoBehaviour
     {
         if (isHumanPlayer(other))
         {
+            lights.SetActive(true);
             targetPos = other.transform.position;
             robot.transform.LookAt(targetPos);
             anim.SetBool("PlayerNear", true);
@@ -68,6 +70,7 @@ public class RobotTriggerController : MonoBehaviour
     {
         if (isHumanPlayer(other))
         {
+            lights.SetActive(false);
             targetPos = initialPos;
             robot.transform.LookAt(targetPos);
             anim.SetBool("PlayerNear", false);
