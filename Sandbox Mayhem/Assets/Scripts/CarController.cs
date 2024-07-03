@@ -203,4 +203,25 @@ public class CarController : MonoBehaviour {
         triggerSpeedChange(1f);
         _consumableBoostFactor = 1f;
     }
+
+    public bool isCarTilted()
+    {
+        bool result = false;
+        
+        //tilted sideways or upside down
+        result = result || (Math.Abs(transform.rotation.z) >= 0.4f);
+
+        //tilted front or back
+        result = result || (Math.Abs(transform.rotation.x) >= 0.4f);
+
+        return result;
+    }
+
+    public void resetCarPosition(Vector3 position)
+    {
+        transform.position = position;
+        transform.rotation = Quaternion.Euler(0, 90, 0);
+        rigidBody.angularVelocity = Vector3.zero;
+        rigidBody.velocity = Vector3.zero;
+    }
 }

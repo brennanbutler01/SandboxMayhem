@@ -8,6 +8,7 @@ public class PauseMenuScript : MonoBehaviour
     private string currentScene;
     private UnityEngine.SceneManagement.Scene scene;
     private CanvasGroup canvasGroup;
+    private GameManager gameManager;
     public GameObject optionsScreen;
 
 
@@ -16,6 +17,7 @@ public class PauseMenuScript : MonoBehaviour
         canvasGroup = GetComponent<CanvasGroup>();
         scene = SceneManager.GetActiveScene();
         optionsScreen.SetActive(false);
+        gameManager = FindObjectOfType<GameManager>();
 
         if (canvasGroup == null)
             Debug.LogError("PauseMenuScript must be associated with a CanvasGroup");
@@ -30,6 +32,12 @@ public class PauseMenuScript : MonoBehaviour
             canvasGroup.alpha = 0f;
             Time.timeScale = 1f;
         }
+    }
+
+    public void ResetCar()
+    {
+        gameManager.resetCarPositionToWaypoint();
+        Continue();
     }
 
     public void RestartRace()
