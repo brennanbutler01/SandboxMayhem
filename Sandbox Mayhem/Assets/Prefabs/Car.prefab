@@ -1027,7 +1027,7 @@ MonoBehaviour:
   isMovementEnabled: 1
   isDrivingOnDirt: 0
   audioEventManager: {fileID: 0}
-  carBrakeLightWhenBrakingMaterial: {fileID: 2100000, guid: 93e3dcba2c6791848ab1fa4e93333e0a, type: 2}
+  carBrakeLightWhenBrakingMaterial: {fileID: 2100000, guid: b7306cea9f9e1d142bb1c1b0d53d3595, type: 2}
   carBrakeLights: {fileID: 8665411355198415100}
 --- !u!114 &3524249037412506460
 MonoBehaviour:
