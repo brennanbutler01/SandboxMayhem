@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     public int currentLap, currentWaypoint, lastWaypoint, coins, ranking;
     private int _trailingWaypoint;
     public bool isGoingBackward, isHalfway, isHuman, lapPenalty, hasFinished;
+    private GameObject[] uiCoins;
     private void Start()
     {
         coins = 0;
@@ -26,6 +27,7 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogError("PlayerController requires a car controller");
         }
+        uiCoins = GameObject.FindGameObjectsWithTag("UICoin");
 
     }
 
@@ -58,6 +60,21 @@ public class PlayerController : MonoBehaviour
         if (lastWaypoint < _trailingWaypoint)
         {
             isGoingBackward = true;
+        }
+        if (isHuman)
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                if (i < (coins % 5))
+                {
+                    uiCoins[i].SetActive(true);
+                }
+                else
+                {
+                    uiCoins[i].SetActive(false);
+                }
+            
+            }
         }
     }
 
