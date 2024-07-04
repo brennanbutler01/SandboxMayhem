@@ -8,6 +8,8 @@ TagManager:
   - Waypoint
   - Wheel
   - Terrain
+  - UICoin
+  - CoinBoostActiveText
   layers:
   - Default
   - TransparentFX

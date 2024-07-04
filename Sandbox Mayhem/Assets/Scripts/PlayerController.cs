@@ -11,6 +11,10 @@ public class PlayerController : MonoBehaviour
     public int currentLap, currentWaypoint, lastWaypoint, coins, ranking;
     private int _trailingWaypoint;
     public bool isGoingBackward, isHalfway, isHuman, lapPenalty, hasFinished;
+    private GameObject[] uiCoins;
+    private GameObject coinBoostActiveText;
+    private bool alreadyBoosting = false;
+    private bool allCoinsShowing = false;
     private void Start()
     {
         coins = 0;
@@ -26,7 +30,8 @@ public class PlayerController : MonoBehaviour
         {
             Debug.LogError("PlayerController requires a car controller");
         }
-
+        uiCoins = GameObject.FindGameObjectsWithTag("UICoin").OrderBy(x => x.name).ToArray();
+        coinBoostActiveText = GameObject.FindGameObjectWithTag("CoinBoostActiveText");
     }
 
     public float GetDistanceToNextWaypoint(int index)
@@ -59,6 +64,42 @@ public class PlayerController : MonoBehaviour
         {
             isGoingBackward = true;
         }
+
+        // Show/hide coins in UI depending on each coin collected
+        // Only run if collector is human and all coins are not already showing
+        if (isHuman && !allCoinsShowing)
+        {
+            coinBoostActiveText.SetActive(false);
+            if (coins % 5 != 0 || coins == 0)
+            {
+                alreadyBoosting = false;
+                for (int i = 0; i < 5; i++)
+                {
+                    if (i < (coins % 5))
+                    {
+                        uiCoins[i].SetActive(true);
+                    }
+                    else
+                    {
+                        uiCoins[i].SetActive(false);
+                    }
+
+                }
+            }
+            // If player has 5 coins and isn't in a coin boost state
+            // Show all coins and coin boost text and enter a coin boost state
+            else if (!alreadyBoosting)
+            {
+                allCoinsShowing = true;
+                coinBoostActiveText.SetActive(true);
+                for (int i = 0; i < 5; i++)
+                {
+                    uiCoins[i].SetActive(true);
+                }
+                StartCoroutine(_hideUICoins());
+                alreadyBoosting = true;
+            }                    
+        }
     }
 
     private IEnumerator _setTrailingWaypoint()
@@ -66,5 +107,19 @@ public class PlayerController : MonoBehaviour
         // after a second, we will set our trailing wp
         yield return new WaitForSeconds(1);
         _trailingWaypoint = lastWaypoint;
+    }
+
+    // Show coins for 3 seconds, the duration of the coin boost
+    // At the end, leave the coin boost state and hide coin boost text
+    private IEnumerator _hideUICoins()
+    {
+        yield return new WaitForSeconds(3);
+        for (int i = 0; i < 5; i++)
+        {
+            uiCoins[i].SetActive(false);
+        }
+        StopCoroutine(_hideUICoins());
+        allCoinsShowing = false;
+        coinBoostActiveText.SetActive(false);
     }
 }
