@@ -18,6 +18,7 @@ public class AudioEventManager : MonoBehaviour
     public AudioClip boostZoneAudio;
     public AudioClip floorTrapCollisionAudio;
     public AudioClip knifeSwingAudio;
+    public AudioClip woodBreakAudio;
     
     private AudioSource engineAudioSource;
     private AudioSource drivingOnDirtAudioSource; //Tracking
@@ -30,6 +31,8 @@ public class AudioEventManager : MonoBehaviour
     private UnityAction<GameObject> boostZoneEventListener;
     private UnityAction<GameObject> speedUpCollectionEventListener;
     private UnityAction<Vector3> floorTrapCollisionEventListener;
+    private UnityAction<GameObject> boxBreakEventListener;
+
     //private UnityAction<GameObject> knifeSwingEventListener;
 
     private void Awake()
@@ -41,6 +44,7 @@ public class AudioEventManager : MonoBehaviour
         floorTrapCollisionEventListener = new UnityAction<Vector3>(floorTrapCollisionEventHandler);
         speedUpCollectionEventListener = new UnityAction<GameObject>(_speedUpCollectionEventHandler);
         boostZoneEventListener = new UnityAction<GameObject>(_boostZoneEventHandler);
+        boxBreakEventListener = new UnityAction<GameObject>(BoxBreakEventHandler);
 
         //float masterVolume = PlayerPrefs.GetFloat("MasterVol");
         //mixer.SetFloat("MasterVol", masterVolume);
@@ -80,6 +84,7 @@ public class AudioEventManager : MonoBehaviour
         EventManager.StartListening<SpeedUpCollectionEvent, GameObject>(speedUpCollectionEventListener);
         EventManager.StartListening<SpeedBoostZoneEvent, GameObject>(boostZoneEventListener);
         EventManager.StartListening<FloorTrapCollisionEvent, Vector3>(floorTrapCollisionEventListener);
+        EventManager.StartListening<BoxBreakEvent, GameObject>(boxBreakEventListener);
     }
     
     private void OnDisable()
@@ -91,6 +96,7 @@ public class AudioEventManager : MonoBehaviour
         EventManager.StopListening<SpeedUpCollectionEvent, GameObject>(speedUpCollectionEventListener);
         EventManager.StopListening<SpeedBoostZoneEvent, GameObject>(boostZoneEventListener);
         EventManager.StopListening<FloorTrapCollisionEvent, Vector3>(floorTrapCollisionEventListener);
+        EventManager.StopListening<BoxBreakEvent, GameObject>(boxBreakEventListener);
     }
 
     void collisionEventHandler(Vector3 worldPos)
@@ -240,5 +246,19 @@ public class AudioEventManager : MonoBehaviour
     private void playKnifeSwingAudio()
     {
         knifeSwingAudioSource.Play();
+    }
+
+    public void BoxBreakEventHandler(GameObject box)
+    {
+        if (eventSoundScriptPrefabReference)
+        {
+            EventSoundScript snd = Instantiate(eventSoundScriptPrefabReference, box.transform.position, Quaternion.identity, null);
+
+            snd.audioSource.clip = woodBreakAudio;
+            snd.audioSource.minDistance = 5f;
+            snd.audioSource.maxDistance = 100f;
+            snd.audioSource.outputAudioMixerGroup = sfxMixer;
+            snd.audioSource.Play();
+        }
     }
 }
