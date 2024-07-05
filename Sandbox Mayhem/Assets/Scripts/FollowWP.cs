@@ -101,7 +101,7 @@ public class FollowWP : MonoBehaviour
         {
             var main = ps.main;
             main.stopAction = ParticleSystemStopAction.Destroy;
-            main.duration = particleLifetime;
+            main.duration = particleLifetime; 
             ps.Play();
         }
 
