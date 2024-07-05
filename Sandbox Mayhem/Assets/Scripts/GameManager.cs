@@ -134,6 +134,7 @@ public class GameManager : MonoBehaviour
                 canvasGroup.interactable = false;
                 canvasGroup.blocksRaycasts = false;
                 canvasGroup.alpha = 0f;
+                AudioListener.volume = 1;
                 Time.timeScale = 1f;
             }
             else
@@ -142,6 +143,7 @@ public class GameManager : MonoBehaviour
                 canvasGroup.interactable = true;
                 canvasGroup.blocksRaycasts = true;
                 canvasGroup.alpha = 1f;
+                AudioListener.volume = 0;
                 Time.timeScale = 0f;
             }
         }
