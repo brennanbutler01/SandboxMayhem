@@ -26,12 +26,12 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5798119488725874132}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -1.222, z: 0}
-  m_LocalScale: {x: 2.7112, y: 0.13853706, z: 2.7112}
+  m_LocalPosition: {x: 0, y: -1.288, z: 0}
+  m_LocalScale: {x: 2.7341352, y: 0.28449973, z: 2.7112}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7200458609576204538}
-  m_RootOrder: 3
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &6905043877250597417
 MeshFilter:
@@ -49,8 +49,8 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5798119488725874132}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
   m_MotionVectors: 1
@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: d3a4b84cb36ca2048acfc5d030b0cfe8, type: 2}
+  - {fileID: 2100000, guid: f1d8bf96fe6ac3444925240b6358742f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -305,10 +305,10 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 5326895703039609967}
+  - {fileID: 7200458610134535286}
   - {fileID: 7200458610931733151}
   - {fileID: 7200458610756598717}
-  - {fileID: 7200458610134535286}
-  - {fileID: 5326895703039609967}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -343,7 +343,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7200458609576204538}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7200458610134535285
 MeshFilter:
@@ -525,7 +525,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 7200458609576204538}
-  m_RootOrder: 1
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &7200458610756598713
 MeshFilter:
@@ -637,7 +637,7 @@ Transform:
   - {fileID: 7200458609492723192}
   - {fileID: 7200458609310554523}
   m_Father: {fileID: 7200458609576204538}
-  m_RootOrder: 0
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &7200458610931733148
 Animator:
@@ -683,5 +683,5 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 0.4, y: 1.4, z: 1.4}
+  m_Size: {x: 0.2, y: 0.8, z: 0.8}
   m_Center: {x: 0, y: 0, z: 0}
