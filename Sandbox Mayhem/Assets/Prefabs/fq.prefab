@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 2269476044315672138}
   - component: {fileID: 2269476044315672141}
   m_Layer: 0
-  m_Name: AIState - Losing
+  m_Name: fq
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
