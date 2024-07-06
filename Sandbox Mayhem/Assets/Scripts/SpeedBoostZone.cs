@@ -7,8 +7,7 @@ public class SpeedBoostZone : MonoBehaviour
     private float _boostMultiplier = 2f;
     private const float MaxBoostMultiplier = 5f;
     private const float BoostIncreaseRate = .5f;
-    public float height = 5f; // Height of the vertical plane
-    public float scrollSpeed = 1f;
+    public float scrollSpeed = .5f;
 
     private Material _material;
 
@@ -16,12 +15,6 @@ public class SpeedBoostZone : MonoBehaviour
     {
         var component = GetComponent<Renderer>();
         _material = component.material;
-
-        var boxCollider = GetComponent<BoxCollider>();
-        if (boxCollider == null) return;
-        
-        boxCollider.size = new Vector3(transform.localScale.x, height, 0.1f);
-        boxCollider.center = new Vector3(0, height / 2, 0);
     }
 
     private void Update()
@@ -70,14 +63,9 @@ public class SpeedBoostZone : MonoBehaviour
         var carController = other.GetComponent<CarController>();
         if (carController == null) return;
 
-        if (other.CompareTag("Player"))
-        {
-            Debug.Log("Leaving zone...");
-            StartCoroutine(_reset(carController));
-
-        }
+        if (!other.CompareTag("Player")) return;
+        
+        Debug.Log("Leaving zone...");
+        StartCoroutine(_reset(carController));
     }
-
- 
-
 }

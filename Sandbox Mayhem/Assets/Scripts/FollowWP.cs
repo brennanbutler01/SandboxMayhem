@@ -297,9 +297,9 @@ public class FollowWP : MonoBehaviour
 
         // Check for possible collisions in front
         Vector3 fwd = transform.TransformDirection(Vector3.forward);
-        Debug.DrawRay(transform.position, fwd * 5, Color.green);
+        Debug.DrawRay(transform.position, fwd * 7, Color.green);
 
-        if (Physics.Raycast(transform.position, fwd, out objectHit, 5))
+        if (Physics.Raycast(transform.position, fwd, out objectHit, 7))
         {
             //Do something if hit object is a car
             if (objectHit.collider.name.Contains("Car"))
