@@ -67184,6 +67184,11 @@ Transform:
   m_Father: {fileID: 48592771}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &596062160 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2486050104241937699, guid: f2572cc9eb7849c4e84cee7e45809009, type: 3}
+  m_PrefabInstance: {fileID: 6169399567528649581}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &598421999
 GameObject:
   m_ObjectHideFlags: 0
@@ -200060,6 +200065,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 942762337184432749, guid: b9c7a183a7a2e004cb24435cb080a708, type: 3}
   m_PrefabInstance: {fileID: 1796450376}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1796545694 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2164450433711506073, guid: daea32341c3290e4c91c3e92e26fa230, type: 3}
+  m_PrefabInstance: {fileID: 3685240537475272916}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1796568596
 GameObject:
   m_ObjectHideFlags: 0
@@ -261741,6 +261751,11 @@ Transform:
   m_Father: {fileID: 43533249}
   m_RootOrder: 459
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &2076190799 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 9115106219217445993, guid: d2d8f59c60de7d74e980714a55822cdc, type: 3}
+  m_PrefabInstance: {fileID: 515432128405753928}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2076228938
 GameObject:
   m_ObjectHideFlags: 0
@@ -407270,6 +407285,26 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3239892777031777454, guid: d2d8f59c60de7d74e980714a55822cdc, type: 3}
+      propertyPath: particleHolder
+      value: 
+      objectReference: {fileID: 2076190799}
+    - target: {fileID: 3239892777031777454, guid: d2d8f59c60de7d74e980714a55822cdc, type: 3}
+      propertyPath: stateParticles
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3239892777031777454, guid: d2d8f59c60de7d74e980714a55822cdc, type: 3}
+      propertyPath: losingParticlePrefab
+      value: 
+      objectReference: {fileID: 2269476044315672140, guid: 7b7f0fd85a30340c691bff55a351176b, type: 3}
+    - target: {fileID: 3239892777031777454, guid: d2d8f59c60de7d74e980714a55822cdc, type: 3}
+      propertyPath: normalParticlePrefab
+      value: 
+      objectReference: {fileID: 4179359813335937354, guid: 32a8d50d3f0404ce4989f7758a64ec77, type: 3}
+    - target: {fileID: 3239892777031777454, guid: d2d8f59c60de7d74e980714a55822cdc, type: 3}
+      propertyPath: winningParticlePrefab
+      value: 
+      objectReference: {fileID: 5115541954056253819, guid: 545866ba41aa74af684ec2b18f625d8e, type: 3}
     - target: {fileID: 4279286038857743668, guid: d2d8f59c60de7d74e980714a55822cdc, type: 3}
       propertyPath: audioEventManager
       value: 
@@ -407613,6 +407648,26 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -3100527131123936465, guid: daea32341c3290e4c91c3e92e26fa230, type: 3}
+      propertyPath: particleHolder
+      value: 
+      objectReference: {fileID: 1796545694}
+    - target: {fileID: -3100527131123936465, guid: daea32341c3290e4c91c3e92e26fa230, type: 3}
+      propertyPath: stateParticles
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: -3100527131123936465, guid: daea32341c3290e4c91c3e92e26fa230, type: 3}
+      propertyPath: losingParticlePrefab
+      value: 
+      objectReference: {fileID: 2269476044315672140, guid: 7b7f0fd85a30340c691bff55a351176b, type: 3}
+    - target: {fileID: -3100527131123936465, guid: daea32341c3290e4c91c3e92e26fa230, type: 3}
+      propertyPath: normalParticlePrefab
+      value: 
+      objectReference: {fileID: 4179359813335937354, guid: 32a8d50d3f0404ce4989f7758a64ec77, type: 3}
+    - target: {fileID: -3100527131123936465, guid: daea32341c3290e4c91c3e92e26fa230, type: 3}
+      propertyPath: winningParticlePrefab
+      value: 
+      objectReference: {fileID: 5115541954056253819, guid: 545866ba41aa74af684ec2b18f625d8e, type: 3}
     - target: {fileID: 3685240536768739665, guid: daea32341c3290e4c91c3e92e26fa230, type: 3}
       propertyPath: m_Name
       value: Car AI (1)
@@ -408095,6 +408150,22 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3006282231285215243, guid: db9386e927bd05f42a798cc6c259c300, type: 3}
+      propertyPath: stateParticles
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 3006282231285215243, guid: db9386e927bd05f42a798cc6c259c300, type: 3}
+      propertyPath: losingParticlePrefab
+      value: 
+      objectReference: {fileID: 2269476044315672140, guid: 7b7f0fd85a30340c691bff55a351176b, type: 3}
+    - target: {fileID: 3006282231285215243, guid: db9386e927bd05f42a798cc6c259c300, type: 3}
+      propertyPath: normalParticlePrefab
+      value: 
+      objectReference: {fileID: 4179359813335937354, guid: 32a8d50d3f0404ce4989f7758a64ec77, type: 3}
+    - target: {fileID: 3006282231285215243, guid: db9386e927bd05f42a798cc6c259c300, type: 3}
+      propertyPath: winningParticlePrefab
+      value: 
+      objectReference: {fileID: 5115541954056253819, guid: 545866ba41aa74af684ec2b18f625d8e, type: 3}
     - target: {fileID: 5732278641030507542, guid: db9386e927bd05f42a798cc6c259c300, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -408192,6 +408263,26 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 144522762541081429, guid: f2572cc9eb7849c4e84cee7e45809009, type: 3}
+      propertyPath: particleHolder
+      value: 
+      objectReference: {fileID: 596062160}
+    - target: {fileID: 144522762541081429, guid: f2572cc9eb7849c4e84cee7e45809009, type: 3}
+      propertyPath: stateParticles
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 144522762541081429, guid: f2572cc9eb7849c4e84cee7e45809009, type: 3}
+      propertyPath: losingParticlePrefab
+      value: 
+      objectReference: {fileID: 2269476044315672140, guid: 7b7f0fd85a30340c691bff55a351176b, type: 3}
+    - target: {fileID: 144522762541081429, guid: f2572cc9eb7849c4e84cee7e45809009, type: 3}
+      propertyPath: normalParticlePrefab
+      value: 
+      objectReference: {fileID: 4179359813335937354, guid: 32a8d50d3f0404ce4989f7758a64ec77, type: 3}
+    - target: {fileID: 144522762541081429, guid: f2572cc9eb7849c4e84cee7e45809009, type: 3}
+      propertyPath: winningParticlePrefab
+      value: 
+      objectReference: {fileID: 5115541954056253819, guid: 545866ba41aa74af684ec2b18f625d8e, type: 3}
     - target: {fileID: 6169399568014046708, guid: f2572cc9eb7849c4e84cee7e45809009, type: 3}
       propertyPath: m_RootOrder
       value: 3

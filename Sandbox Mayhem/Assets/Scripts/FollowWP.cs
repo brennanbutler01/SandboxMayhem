@@ -16,6 +16,16 @@ public class FollowWP : MonoBehaviour
     private PlayerController humanController;
     private PlayerController aiController;
     private List<PlayerController> _players;
+    public GameObject normalParticlePrefab;
+    public GameObject winningParticlePrefab;
+    public GameObject losingParticlePrefab;
+    private GameObject _currentParticleSystem;
+    public Transform particleHolder;
+    public float particleLifetime = 2f;
+    private float _particleEndTime;
+    private float _stateTimer = 0f;
+    private float _stateChangeThreshold = 2f;
+    
 
     public float speed = 0f;
     public float rotationSpeed = 2.0f;
@@ -34,6 +44,7 @@ public class FollowWP : MonoBehaviour
     private const string losing = "losing";
     private const string winning = "winning";
     private string state = normal;
+    private string _oldState;
 
     // Start is called before the first frame update
     void Start()
@@ -52,6 +63,52 @@ public class FollowWP : MonoBehaviour
         var humanPlayers = _players.Where(player => player.isHuman).ToList();
         humanController = humanPlayers[0];
         aiController = GetComponent<PlayerController>();
+
+        SwitchParticleSystem(state);
+
+        if (particleHolder != null) return;
+        particleHolder = transform.Find("ParticleHolder");
+        if (particleHolder == null)
+        {
+            Debug.LogError("ParticleHolder not found to attach ai state particles.");
+        }
+    }
+   
+    private void SwitchParticleSystem(string newState)
+    {
+        var newParticlePrefab = newState switch
+        {
+            normal => normalParticlePrefab,
+            winning => winningParticlePrefab,
+            losing => losingParticlePrefab,
+            _ => null
+        };
+
+        if (newParticlePrefab == null) return;
+    
+        if (_currentParticleSystem != null)
+        {
+            var currentPS = _currentParticleSystem.GetComponent<ParticleSystem>();
+            if (currentPS != null)
+            {
+                currentPS.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            }
+            Destroy(_currentParticleSystem);
+        }
+
+        _currentParticleSystem = Instantiate(newParticlePrefab, particleHolder.position, particleHolder.rotation, particleHolder);
+    
+        var ps = _currentParticleSystem.GetComponent<ParticleSystem>();
+        if (ps != null)
+        {
+            ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            var main = ps.main;
+            main.stopAction = ParticleSystemStopAction.Destroy;
+            main.duration = particleLifetime; 
+            ps.Play();
+        }
+
+        _particleEndTime = Time.time + particleLifetime;
     }
 
     // Determine AI position relative to human to set state accordingly
@@ -103,6 +160,24 @@ public class FollowWP : MonoBehaviour
 
     void checkState()
     {
+        // If we were previously in the winning state, we want to be more resistant to state changes
+        if (_oldState == winning && state != winning)
+        {
+            if (_stateTimer < _stateChangeThreshold)
+            {
+                state = winning;
+                _stateTimer += Time.fixedDeltaTime;
+            }
+            else
+            {
+                _stateTimer = 0f;
+            }
+        }
+        else if (state == winning)
+        {
+            _stateTimer = 0f;
+        }
+
         switch (state)
         {
             case normal:
@@ -117,6 +192,12 @@ public class FollowWP : MonoBehaviour
             default:
                 break;
         }
+        
+        if (state != _oldState || Time.time >= _particleEndTime)
+        {
+            SwitchParticleSystem(state);
+        }
+       
     }
 
     void FixedUpdate()
@@ -128,6 +209,7 @@ public class FollowWP : MonoBehaviour
         }
 
         rotateWheels();
+        _oldState = state;
         determinePosition();
 
         // Determine if a waypoint is close enough to collect
