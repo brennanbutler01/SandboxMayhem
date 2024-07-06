@@ -23,6 +23,9 @@ public class FollowWP : MonoBehaviour
     public Transform particleHolder;
     public float particleLifetime = 2f;
     private float _particleEndTime;
+    private float _stateTimer = 0f;
+    private float _stateChangeThreshold = 2f;
+    
 
     public float speed = 0f;
     public float rotationSpeed = 2.0f;
@@ -157,6 +160,24 @@ public class FollowWP : MonoBehaviour
 
     void checkState()
     {
+        // If we were previously in the winning state, we want to be more resistant to state changes
+        if (_oldState == winning && state != winning)
+        {
+            if (_stateTimer < _stateChangeThreshold)
+            {
+                state = winning;
+                _stateTimer += Time.fixedDeltaTime;
+            }
+            else
+            {
+                _stateTimer = 0f;
+            }
+        }
+        else if (state == winning)
+        {
+            _stateTimer = 0f;
+        }
+
         switch (state)
         {
             case normal:
