@@ -71,7 +71,10 @@ public class CarController : MonoBehaviour {
         bool braking = forwardSpeed * verticalInput < 0;
 
         //Steering calculations
-        float adjustedMaxSpeed = (maxSpeed - (isDrivingOnDirt ? 1 : 0) * drivingOnDirtSpeedPenalty) * _combinedSpeedFactor;
+        float adjustedMaxSpeed =  Mathf.Min(
+                                     (maxSpeed - (isDrivingOnDirt ? 1 : 0) * drivingOnDirtSpeedPenalty) * _combinedSpeedFactor,
+                                     maxSpeed * 2f  // This sets the absolute maximum speed to 200% of maxSpeed
+                                 );
         float speedFactor = Mathf.InverseLerp(0, adjustedMaxSpeed, forwardSpeed);
         float steering = Mathf.Lerp(steeringAngleAtMaxSpeed, maxSteerAngle, speedFactor);
         float steerAngle = horizontalInput * steering;

@@ -30,12 +30,14 @@ public class PauseMenuScript : MonoBehaviour
             canvasGroup.interactable = false;
             canvasGroup.blocksRaycasts = false;
             canvasGroup.alpha = 0f;
+            AudioListener.volume = 1;
             Time.timeScale = 1f;
         }
     }
 
     public void ResetCar()
     {
+        AudioListener.volume = 1;
         gameManager.resetCarPositionToWaypoint();
         Continue();
     }
@@ -46,6 +48,7 @@ public class PauseMenuScript : MonoBehaviour
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
         canvasGroup.alpha = 0f;
+        AudioListener.volume = 1;
         Time.timeScale = 1f;
     }
 
@@ -65,6 +68,7 @@ public class PauseMenuScript : MonoBehaviour
         canvasGroup.interactable = false;
         canvasGroup.blocksRaycasts = false;
         canvasGroup.alpha = 0f;
+        AudioListener.volume = 1;
         Time.timeScale = 1f;
     }
 

@@ -10,7 +10,7 @@ public class Speedometer : MonoBehaviour
     public CarController car;
 
     private float _displaySpeed;
-    private const float MaxDisplaySpeed = 180f;
+    private const float MaxDisplaySpeed = 220f;
     
     // Start is called before the first frame update
     private void Start()
