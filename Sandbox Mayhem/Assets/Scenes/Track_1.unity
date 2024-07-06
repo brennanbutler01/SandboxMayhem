@@ -67448,6 +67448,11 @@ Transform:
   m_Father: {fileID: 48592771}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &596062160 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2486050104241937699, guid: f2572cc9eb7849c4e84cee7e45809009, type: 3}
+  m_PrefabInstance: {fileID: 6169399567528649581}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &598421999
 GameObject:
   m_ObjectHideFlags: 0
@@ -408912,6 +408917,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 144522762541081429, guid: f2572cc9eb7849c4e84cee7e45809009, type: 3}
+      propertyPath: particleHolder
+      value: 
+      objectReference: {fileID: 596062160}
     - target: {fileID: 144522762541081429, guid: f2572cc9eb7849c4e84cee7e45809009, type: 3}
       propertyPath: stateParticles
       value: 

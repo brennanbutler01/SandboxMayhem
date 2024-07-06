@@ -643,7 +643,7 @@ MonoBehaviour:
   normalParticlePrefab: {fileID: 0}
   winningParticlePrefab: {fileID: 0}
   losingParticlePrefab: {fileID: 0}
-  particleHolder: {fileID: 0}
+  particleHolder: {fileID: 6193107727130020427}
   particleLifetime: 2
   speed: 0
   rotationSpeed: 2
@@ -1341,11 +1341,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4651184550909110294, guid: 76924c63d92084db08f3f332de40b5c5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4651184550909110294, guid: 76924c63d92084db08f3f332de40b5c5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4651184550909110294, guid: 76924c63d92084db08f3f332de40b5c5, type: 3}
       propertyPath: m_LocalRotation.w
