@@ -16,7 +16,6 @@ public class FollowWP : MonoBehaviour
     private PlayerController humanController;
     private PlayerController aiController;
     private List<PlayerController> _players;
-    public ParticleSystem stateParticles;
     public GameObject normalParticlePrefab;
     public GameObject winningParticlePrefab;
     public GameObject losingParticlePrefab;
@@ -24,7 +23,6 @@ public class FollowWP : MonoBehaviour
     public Transform particleHolder;
     public float particleLifetime = 2f;
     private float _particleEndTime;
-    private ParticleSystemRenderer _particleSystemRenderer;
 
     public float speed = 0f;
     public float rotationSpeed = 2.0f;
@@ -63,8 +61,6 @@ public class FollowWP : MonoBehaviour
         humanController = humanPlayers[0];
         aiController = GetComponent<PlayerController>();
 
-        if (stateParticles == null) return;
-        _particleSystemRenderer = stateParticles.GetComponent<ParticleSystemRenderer>();
         SwitchParticleSystem(state);
 
         if (particleHolder != null) return;
@@ -75,7 +71,6 @@ public class FollowWP : MonoBehaviour
         }
     }
    
-    // switch particles based on the state of the ai and spawn the particle system behind the car
     private void SwitchParticleSystem(string newState)
     {
         var newParticlePrefab = newState switch
@@ -87,18 +82,23 @@ public class FollowWP : MonoBehaviour
         };
 
         if (newParticlePrefab == null) return;
-        
+    
         if (_currentParticleSystem != null)
         {
+            var currentPS = _currentParticleSystem.GetComponent<ParticleSystem>();
+            if (currentPS != null)
+            {
+                currentPS.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
+            }
             Destroy(_currentParticleSystem);
         }
 
         _currentParticleSystem = Instantiate(newParticlePrefab, particleHolder.position, particleHolder.rotation, particleHolder);
-        
-        // Set up particle system for automatic cleanup
+    
         var ps = _currentParticleSystem.GetComponent<ParticleSystem>();
         if (ps != null)
         {
+            ps.Stop(true, ParticleSystemStopBehavior.StopEmittingAndClear);
             var main = ps.main;
             main.stopAction = ParticleSystemStopAction.Destroy;
             main.duration = particleLifetime; 
