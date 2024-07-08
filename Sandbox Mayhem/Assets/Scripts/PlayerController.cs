@@ -6,15 +6,23 @@ using Debug = UnityEngine.Debug;
 
 public class PlayerController : MonoBehaviour
 {
+    public enum Weapon
+    {
+        None, 
+        Dart
+    }
     public string Id { private set; get; }
     public CarController Car { get; set; }
     public int currentLap, currentWaypoint, lastWaypoint, coins, ranking;
     private int _trailingWaypoint;
     public bool isGoingBackward, isHalfway, isHuman, lapPenalty, hasFinished;
+    public Transform weaponSpawn;
+    public Weapon currentWeapon;
     private GameObject[] uiCoins;
     private GameObject coinBoostActiveText;
     private bool alreadyBoosting = false;
     private bool allCoinsShowing = false;
+    
     private void Start()
     {
         coins = 0;
@@ -42,10 +50,20 @@ public class PlayerController : MonoBehaviour
         return Vector3.Distance(transform.position,
             wp?.transform.position ?? Vector3.zero);
     }
-    
+
+    public void SetDart()
+    {
+        currentWeapon = Weapon.Dart;
+    }
+
+    public void RemoveWeapon()
+    {
+        currentWeapon = Weapon.None;
+    }
 
     public void Update()
-    {   
+    {
+        HandleWeaponsInput();
         
         // if we started going forward
         if (currentWaypoint > lastWaypoint)
@@ -99,6 +117,17 @@ public class PlayerController : MonoBehaviour
                 StartCoroutine(_hideUICoins());
                 alreadyBoosting = true;
             }                    
+        }
+    }
+
+    private void HandleWeaponsInput()
+    {
+        if (Input.GetButtonDown("Fire") && isHuman)
+        {
+            if (currentWeapon == Weapon.Dart)
+            {
+                EventManager.TriggerEvent<FireDartEvent, PlayerController>(this);
+            }
         }
     }
 

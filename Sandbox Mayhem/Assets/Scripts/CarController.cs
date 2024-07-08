@@ -3,6 +3,7 @@ using System.Collections;
 using System.Linq;
 using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
+using Weapons;
 
 public class CarController : MonoBehaviour {
     // Torque
@@ -20,7 +21,9 @@ public class CarController : MonoBehaviour {
     private float _consumableBoostFactor  = 1f;
     // used for tracking boost zone speed
     private float _boostZoneBoostFactor = 1f;
-    private float _combinedSpeedFactor => _consumableBoostFactor * _boostZoneBoostFactor;
+    // used for tracking dart slowdown
+    private float _dartSlowFactor = 1f;
+    private float _combinedSpeedFactor => _consumableBoostFactor * _boostZoneBoostFactor * _dartSlowFactor;
     
     //Steering
     public float maxSteerAngle = 30;
@@ -43,7 +46,7 @@ public class CarController : MonoBehaviour {
     private float drivingOnDirtSpeedPenalty =  6;
     private Material carOriginalBrakeLightMaterial;
     private Coroutine _speedBoostCoroutine;
-    
+    private FollowWP aiController;
     
     void Start() {
         rigidBody = GetComponent<Rigidbody>();
@@ -51,6 +54,7 @@ public class CarController : MonoBehaviour {
         wheels = GetComponentsInChildren<WheelControl>();
         playerController = GetComponent<PlayerController>();
         carOriginalBrakeLightMaterial = GameObject.Find("Taillights_glass_brakelights").GetComponent<MeshRenderer>().material;
+        aiController = GetComponent<FollowWP>();
     }
 
     void FixedUpdate ()
@@ -179,6 +183,35 @@ public class CarController : MonoBehaviour {
         _consumableBoostFactor = speedModifier;
         triggerSpeedChange(speedModifier);
         _speedBoostCoroutine = StartCoroutine(ResetSpeedAfterConsumableBoost(duration ?? default));
+    }
+
+    public void ApplyDartSpeedPenalty(DartController dart, float speedModifier = 0.5f, float duration = 4f)
+    {
+        StartCoroutine(ApplyDartSpeedPenaltyCoroutine(dart, speedModifier, duration));
+    }
+
+    private IEnumerator ApplyDartSpeedPenaltyCoroutine(DartController dart, float speedModifier, float duration)
+    {
+        // Apply changes
+        _dartSlowFactor = speedModifier;
+        triggerSpeedChange(speedModifier);
+
+        if (aiController)
+        {
+            aiController.maxSpeed *= speedModifier / 2; // Slow down AI 
+        }
+        
+        yield return new WaitForSeconds(duration);
+
+        // Reset changes
+        dart.RemoveDart();
+        triggerSpeedChange(1f);
+        _dartSlowFactor = 1f;
+        
+        if (aiController)
+        {
+            aiController.maxSpeed = maxSpeed;
+        }
     }
 
     // gradually reduces the speed at the end of the boost
