@@ -19,12 +19,11 @@ namespace Weapons
         public Transform barrel;
         public Transform tip;
         
-        public void Start()
+        public void Awake()
         {
             rigidBody = GetComponent<Rigidbody>();
-            var dart = transform.Find("dart");
-            barrel = dart.Find("Barrel");
-            tip = dart.Find("Tip");
+            barrel = transform.Find("Barrel");
+            tip = transform.Find("Tip");
         }
 
         public void Update()
@@ -79,11 +78,6 @@ namespace Weapons
 
         private void OnCollisionEnter(Collision other)
         {
-            if (other.transform.root == player.transform)
-            {
-                return;
-            }
-            
             if (other.gameObject.CompareTag("Player"))
             {
                 transform.SetParent(other.collider.transform);

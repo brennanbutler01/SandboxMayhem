@@ -29,7 +29,14 @@ namespace Weapons
             {
                 Transform spawn = trigger.weaponSpawn;
                 GameObject projectile = Instantiate(dartPrefab, spawn.position, spawn.rotation);
-
+                
+                // Ignore collisions with player
+                var projectileCollider = projectile.GetComponentInChildren<Collider>();
+                foreach (var triggerCollider in trigger.GetComponentsInChildren<Collider>())
+                {
+                    Physics.IgnoreCollision(projectileCollider, triggerCollider);
+                }
+                
                 DartController dartController = projectile.GetComponent<DartController>();
                 dartController.SetTarget(trigger.transform.forward);
                 dartController.SetSpeed(trigger.GetComponent<Rigidbody>().velocity.magnitude);
