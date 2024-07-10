@@ -6,8 +6,8 @@ namespace Weapons
     public class WeaponsEventManager : MonoBehaviour
     {
         public GameObject dartPrefab;
-        private UnityAction<PlayerController> dartEventListener;
-
+        private UnityAction<IPlayer> dartEventListener;
+        
         private void Awake()
         {
             dartEventListener = fireDartEventHandler;
@@ -15,15 +15,15 @@ namespace Weapons
 
         private void OnEnable()
         {
-            EventManager.StartListening<FireDartEvent, PlayerController>(dartEventListener);
+            EventManager.StartListening<FireDartEvent, IPlayer>(dartEventListener);
         }
         
         private void OnDisable()
         {
-            EventManager.StopListening<FireDartEvent, PlayerController>(dartEventListener);
+            EventManager.StopListening<FireDartEvent, IPlayer>(dartEventListener);
         }
 
-        void fireDartEventHandler(PlayerController trigger)
+        void fireDartEventHandler(IPlayer trigger)
         {
             if (dartPrefab)
             {
@@ -32,15 +32,14 @@ namespace Weapons
                 
                 // Ignore collisions with player
                 var projectileCollider = projectile.GetComponentInChildren<Collider>();
-                foreach (var triggerCollider in trigger.GetComponentsInChildren<Collider>())
+                foreach (var triggerCollider in trigger.transform.GetComponentsInChildren<Collider>())
                 {
                     Physics.IgnoreCollision(projectileCollider, triggerCollider);
                 }
                 
                 DartController dartController = projectile.GetComponent<DartController>();
                 dartController.SetTarget(trigger.transform.forward);
-                dartController.SetSpeed(trigger.GetComponent<Rigidbody>().velocity.magnitude);
-                dartController.player = trigger;
+                dartController.SetSpeed(trigger.transform.GetComponent<Rigidbody>().velocity.magnitude);
             }
             trigger.RemoveWeapon();
         }

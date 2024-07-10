@@ -45,6 +45,37 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!1 &3594048423920486243
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8462171477686869741}
+  m_Layer: 0
+  m_Name: WeaponSpawn
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8462171477686869741
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3594048423920486243}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.00002419949, y: 0, z: 2.4029849}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 5732278641030507542}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &4853965552859316145
 GameObject:
   m_ObjectHideFlags: 0
@@ -461,8 +492,8 @@ GameObject:
   - component: {fileID: 3274677019949383923}
   - component: {fileID: 5910012345762056315}
   - component: {fileID: 101034519895218986}
-  - component: {fileID: 7940363940722613107}
   - component: {fileID: 3006282231285215243}
+  - component: {fileID: 5629578390488907222}
   m_Layer: 0
   m_Name: Car AI (3)
   m_TagString: Player
@@ -486,6 +517,7 @@ Transform:
   - {fileID: 3930432287124356773}
   - {fileID: 2770440402390228646}
   - {fileID: 8113548663127447511}
+  - {fileID: 8462171477686869741}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -614,18 +646,6 @@ MonoBehaviour:
   audioEventManager: {fileID: 0}
   carBrakeLightWhenBrakingMaterial: {fileID: 0}
   carBrakeLights: {fileID: 0}
---- !u!114 &7940363940722613107
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7309640766079406148}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8d9450a7e4150ba4595e5328809120c3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &3006282231285215243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -655,6 +675,19 @@ MonoBehaviour:
   extraAccelerationForce: 0
   stateAccelerationBoost: 0
   climbSpeed: 0
+--- !u!114 &5629578390488907222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7309640766079406148}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4cab7ab785d44a419e6851a16897fec7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <weaponSpawn>k__BackingField: {fileID: 8462171477686869741}
 --- !u!1 &8111453773740151067
 GameObject:
   m_ObjectHideFlags: 0

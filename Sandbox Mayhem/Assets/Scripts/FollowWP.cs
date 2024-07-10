@@ -26,7 +26,6 @@ public class FollowWP : MonoBehaviour
     private float _stateTimer = 0f;
     private float _stateChangeThreshold = 2f;
     
-
     public float speed = 0f;
     public float rotationSpeed = 2.0f;
     public float minimumSpeed = 10f;
@@ -211,7 +210,6 @@ public class FollowWP : MonoBehaviour
         rotateWheels();
         _oldState = state;
         determinePosition();
-        handleWeapons();
         
         // Determine if a waypoint is close enough to collect
         if (Vector3.Distance(this.transform.position, waypoints[firstIndex].transform.position) < 8)
@@ -319,20 +317,5 @@ public class FollowWP : MonoBehaviour
 
         // Apply speed to AI car
         this.transform.Translate(0, climbSpeed, speed * Time.deltaTime);
-    }
-
-    private void handleWeapons()
-    {
-        if (aiController.currentWeapon == PlayerController.Weapon.Dart)
-        {
-            RaycastHit hit;
-            if (Physics.Raycast(aiController.weaponSpawn.position, aiController.weaponSpawn.forward, out hit, 60f))
-            {
-                if (hit.collider.gameObject == humanController.gameObject)
-                {
-                    EventManager.TriggerEvent<FireDartEvent, PlayerController>(aiController);
-                }
-            }    
-        }
     }
 }

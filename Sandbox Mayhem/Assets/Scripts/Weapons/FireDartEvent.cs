@@ -1,4 +1,4 @@
 using UnityEngine;
 using UnityEngine.Events;
 
-public class FireDartEvent : UnityEvent<PlayerController> { }
+public class FireDartEvent : UnityEvent<IPlayer> { }
