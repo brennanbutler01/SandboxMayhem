@@ -12,7 +12,6 @@ namespace Weapons
         private Rigidbody rigidBody;
         private bool stuck = false;
 
-        public PlayerController player;
         public float defaultSpeed = 40f;
         public Material fadeMaterialBarrel;
         public Material fadeMaterialTip;
