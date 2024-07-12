@@ -14,7 +14,7 @@ GameObject:
   - component: {fileID: 7972353316986472366}
   - component: {fileID: 1763737914664845188}
   m_Layer: 7
-  m_Name: Cube
+  m_Name: WaypointMarker
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
