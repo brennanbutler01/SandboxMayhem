@@ -357558,6 +357558,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3239892777031777454, guid: d2d8f59c60de7d74e980714a55822cdc, type: 3}
+      propertyPath: rotationSpeed
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4279286038857743668, guid: d2d8f59c60de7d74e980714a55822cdc, type: 3}
       propertyPath: audioEventManager
       value: 
@@ -363047,6 +363051,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -3100527131123936465, guid: daea32341c3290e4c91c3e92e26fa230, type: 3}
+      propertyPath: rotationSpeed
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 3685240536768739665, guid: daea32341c3290e4c91c3e92e26fa230, type: 3}
       propertyPath: m_Name
       value: Car AI (1)
@@ -363513,6 +363521,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 3006282231285215243, guid: db9386e927bd05f42a798cc6c259c300, type: 3}
+      propertyPath: rotationSpeed
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5732278641030507542, guid: db9386e927bd05f42a798cc6c259c300, type: 3}
       propertyPath: m_RootOrder
       value: 4
@@ -363609,6 +363621,10 @@ PrefabInstance:
     - target: {fileID: 144522762541081429, guid: f2572cc9eb7849c4e84cee7e45809009, type: 3}
       propertyPath: m_Enabled
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 144522762541081429, guid: f2572cc9eb7849c4e84cee7e45809009, type: 3}
+      propertyPath: rotationSpeed
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 6169399568014046708, guid: f2572cc9eb7849c4e84cee7e45809009, type: 3}
       propertyPath: m_RootOrder
