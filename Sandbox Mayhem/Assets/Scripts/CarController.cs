@@ -253,10 +253,10 @@ public class CarController : MonoBehaviour {
         return result;
     }
 
-    public void resetCarPosition(Vector3 position)
+    public void resetCarPosition(Vector3 position, float directionInDeg)
     {
         transform.position = position;
-        transform.rotation = Quaternion.Euler(0, 90, 0);
+        transform.rotation = Quaternion.Euler(0, directionInDeg + 90, 0);
         rigidBody.angularVelocity = Vector3.zero;
         rigidBody.velocity = Vector3.zero;
     }

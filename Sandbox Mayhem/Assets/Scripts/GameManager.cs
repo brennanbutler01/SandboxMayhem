@@ -367,9 +367,23 @@ public class GameManager : MonoBehaviour
     // Resets car position to the last waypoint
     public void resetCarPositionToWaypoint()
     {
-        PositionWaypoint waypoint = Waypoints.Find(x => x.waypointIndex == _humanPlayer.currentWaypoint);
-        Debug.Log("Resetting player position to waypoint " + waypoint.waypointIndex);
+        int currentWaypointIndex = _humanPlayer.currentWaypoint;
+        int nextWaypointIndex = ((currentWaypointIndex + 1) < Waypoints.Count) ? currentWaypointIndex + 1 : 0;
+
+        PositionWaypoint currentWaypoint = Waypoints.Find(x => x.waypointIndex == currentWaypointIndex);
+        PositionWaypoint nextWaypoint = Waypoints.Find(x => x.waypointIndex == nextWaypointIndex);
+
+        // Getting the car to face the next waypoint (otherwise it will face 0 deg direction which may be a fence or something else).
+        //float angle = Vector2.Angle(_humanPlayer.transform.position, nextWaypoint.transform.position);
+        float angle = Vector3.SignedAngle(currentWaypoint.transform.position - nextWaypoint.transform.position, Vector3.left, Vector3.down);
+
+        //float angle = Vector3.SignedAngle(nextWaypoint.transform.position - currentWaypoint.transform.position, Vector3.forward, Vector3.up);
+        //float angle2 = Vector3.SignedAngle(_humanPlayer.transform.position - currentWaypoint.transform.position, Vector3.forward, Vector3.up);
+        //float angle3 = Vector3.SignedAngle(_humanPlayer.transform.position - nextWaypoint.transform.position, Vector3.forward, Vector3.up);
+        //Vector3 test = new Vector3(-0.9,6.4848,8.41);
+        //REFERENCE: angle = Vector3.SignedAngle(_humanPlayer.transform.position - Waypoints.Find(x => x.waypointIndex == 0).transform.position, Vector3.left, Vector3.down);
+        Debug.Log("Resetting player position to waypoint " + currentWaypointIndex + " and angle " + Math.Round(angle));
         
-        _humanPlayer.Car.resetCarPosition(waypoint.transform.position);
+       _humanPlayer.Car.resetCarPosition(currentWaypoint.transform.position, angle);
     }
 }
