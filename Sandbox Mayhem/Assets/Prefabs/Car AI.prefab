@@ -1657,10 +1657,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   waypoints: []
-  normalParticlePrefab: {fileID: 0}
-  winningParticlePrefab: {fileID: 0}
-  losingParticlePrefab: {fileID: 0}
-  particleHolder: {fileID: 0}
+  normalParticlePrefab: {fileID: 4179359813335937354, guid: 32a8d50d3f0404ce4989f7758a64ec77, type: 3}
+  winningParticlePrefab: {fileID: 5115541954056253819, guid: 545866ba41aa74af684ec2b18f625d8e, type: 3}
+  losingParticlePrefab: {fileID: 2269476044315672140, guid: 7b7f0fd85a30340c691bff55a351176b, type: 3}
+  particleHolder: {fileID: 4651184550909110294, guid: 76924c63d92084db08f3f332de40b5c5, type: 3}
   particleLifetime: 2
   speed: 0
   rotationSpeed: 2
