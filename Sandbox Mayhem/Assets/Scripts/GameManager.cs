@@ -22,7 +22,7 @@ public class GameManager : MonoBehaviour
     private PlayerController _humanPlayer;
     public static int TotalLaps = 3;
     public static int HalfwayTriggerIndex;
-    public Text lapsText,  wrongWayText,  rankingText,  pointsText;
+    public Text lapsText, wrongWayText, rankingText, pointsText;
     public bool isGameOver;
     public Text leaderboardText;
     public GameObject leaderboard;
@@ -36,16 +36,25 @@ public class GameManager : MonoBehaviour
     public CarController playerCarController;
     public CarController[] aiCarController;
     private int countdownInt = 3;
+    private int defCountdownInt;
     private float countdownElapsedTime = 0;
+    private float defcountdownElapsedTime;
     private bool isCountDownInProgress = false;
+    private bool defisCountDownInProgress;
     private float COUNTDOWN_BEEP_DURATION_IN_SECONDS = 0.6f; // Depends on the chosen countdown audio
     private float? carTiltedElapsedTime = null;
-    
+
     private List<Behavior> behaviors;
     //private readonly Random random;
 
-    private void Start()
+    public void Start()
     {
+        Debug.Log("Game Manager Started");
+
+        defCountdownInt = countdownInt;
+        defcountdownElapsedTime = countdownElapsedTime;
+        defisCountDownInProgress = isCountDownInProgress;
+
         pointsText.text = "Points: 0";
         isGameOver = false;
         Waypoints = FindObjectsOfType<PositionWaypoint>().ToList();
@@ -76,7 +85,7 @@ public class GameManager : MonoBehaviour
             Debug.LogError("Add Waypoints to the track to race!");
             return;
         }
-        
+
         Debug.Log($"Race initialized with {Waypoints.Count} Waypoints ");
 
         // should just have one component marked as halfway trigger - this activates 'laps'  
@@ -101,20 +110,22 @@ public class GameManager : MonoBehaviour
         finishedText.enabled = false;
         InvokeRepeating(nameof(UpdateRanking), 1f, 0.1f);
 
-        enableAllCars(false);
-        startCountdown();
-        setBehaviors();
-        applyBehaviors();
+        ResetRace();
+        //enableAllCars(false);
+        //startCountdown();
+        //setBehaviors();
+        //applyBehaviors();
     }
 
     private void Update()
     {
+        Debug.Log("Game Manager Update Run");
         if (!isGameOver)
         {
             pointsText.text = "Points: " + _humanPlayer.coins;
             lapsText.text = $"Lap: {_humanPlayer.currentLap}/{TotalLaps}";
             wrongWayText.text = _humanPlayer.isGoingBackward ? "Going backwards! \n Turn around." : "";
-           
+
             if (isCountDownInProgress)
             {
                 updateCountdown();
@@ -147,7 +158,32 @@ public class GameManager : MonoBehaviour
                 Time.timeScale = 0f;
             }
         }
+
+        if (Input.GetKeyUp(KeyCode.L))
+        {
+            endRace();
+        }
         checkIfPlayerCarIsTilted();
+    }
+
+    private void ResetRace()
+    {
+        //countdownInt = defCountdownInt;
+        //countdownElapsedTime = defcountdownElapsedTime;
+        //isCountDownInProgress = defisCountDownInProgress;
+        //isGameOver = false;
+        //finishedText.enabled = false;
+        //pauseScreen.SetActive(false);
+        //wrongWayText.text = "";
+        //leaderboardText.text = "";
+        //rankingText.text = "";
+        //leaderboard.SetActive(false);
+        //finishedText.enabled = false;
+
+        enableAllCars(false);
+        startCountdown();
+        setBehaviors();
+        applyBehaviors();
     }
 
     private void UpdateRanking()
@@ -172,7 +208,7 @@ public class GameManager : MonoBehaviour
         {
             rankedUnfinishedPlayers[i].ranking = startRank + i;
         }
-        
+
 
         // Update the ranking text for the human player
         rankingText.text = $"Rank: {_humanPlayer.ranking}/{_players.Count}";
@@ -345,7 +381,7 @@ public class GameManager : MonoBehaviour
             if (carTiltedElapsedTime is not null)
             {
                 carTiltedElapsedTime += Time.deltaTime;
-                
+
                 // Reset the car position if it has been tilted for X seconds
                 if (carTiltedElapsedTime > 3)
                 {
@@ -354,11 +390,13 @@ public class GameManager : MonoBehaviour
                     carTiltedElapsedTime = 0;
                 }
 
-            } else
+            }
+            else
             {
                 carTiltedElapsedTime = 0;
             }
-        } else if (carTiltedElapsedTime is not null)
+        }
+        else if (carTiltedElapsedTime is not null)
         {
             carTiltedElapsedTime = null;
         }

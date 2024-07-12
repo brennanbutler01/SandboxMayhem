@@ -7382,6 +7382,10 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 896763771837960788, guid: 1e639881eb42a485ebf46f576397a95a, type: 3}
+      propertyPath: button_label
+      value: 
+      objectReference: {fileID: 69866266}
     - target: {fileID: 1314586583925291583, guid: 1e639881eb42a485ebf46f576397a95a, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.5
@@ -7622,6 +7626,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 69866264}
   m_CullTransparentMesh: 1
+--- !u!114 &69866266 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7826726415939871092, guid: 1e639881eb42a485ebf46f576397a95a, type: 3}
+  m_PrefabInstance: {fileID: 69866262}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &69866267 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 6487792501316644363, guid: 1e639881eb42a485ebf46f576397a95a, type: 3}
