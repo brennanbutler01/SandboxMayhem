@@ -14,5 +14,6 @@ public interface IPlayer
 
     public void RemoveWeapon();
     public void SetDart();
+    public void DecreaseSpeedToZero(float duration);
 
 }

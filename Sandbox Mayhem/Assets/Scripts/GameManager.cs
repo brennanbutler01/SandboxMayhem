@@ -17,9 +17,11 @@ struct Behavior
 
 public class GameManager : MonoBehaviour
 {
-    private List<PlayerController> _players;
+    private List<PlayerController> _playerControllers;
     public static List<PositionWaypoint> Waypoints;
     private PlayerController _humanPlayer;
+    private PlayerAnimationController animationController;
+    private CameraController cameraController;
     public static int TotalLaps = 3;
     public static int HalfwayTriggerIndex;
     public Text lapsText, wrongWayText, rankingText, pointsText;
@@ -35,6 +37,7 @@ public class GameManager : MonoBehaviour
     public Text countdownText;
     public CarController playerCarController;
     public CarController[] aiCarController;
+    private IPlayer[] players;
     private int countdownInt = 3;
     private int defCountdownInt;
     private float countdownElapsedTime = 0;
@@ -58,9 +61,11 @@ public class GameManager : MonoBehaviour
         pointsText.text = "Points: 0";
         isGameOver = false;
         Waypoints = FindObjectsOfType<PositionWaypoint>().ToList();
-        _players = FindObjectsOfType<PlayerController>().ToList();
-        var humanPlayers = _players.Where(player => player.isHuman).ToList();
-
+        _playerControllers = FindObjectsOfType<PlayerController>().ToList();
+        var humanPlayers = _playerControllers.Where(player => player.isHuman).ToList();
+        animationController = FindObjectOfType<PlayerAnimationController>();
+        cameraController = FindObjectOfType<CameraController>();
+        players = FindObjectsOfType<MonoBehaviour>().OfType<IPlayer>().ToArray();
         canvasGroup = pauseScreen.GetComponent<CanvasGroup>();
         pauseScreen.SetActive(false);
 
@@ -192,8 +197,8 @@ public class GameManager : MonoBehaviour
         {
             return;
         }
-        var finishedPlayers = _players.Where(x => x.hasFinished).OrderBy(x => x.ranking).ToList();
-        var unfinishedPlayers = _players.Where(x => !x.hasFinished).ToList();
+        var finishedPlayers = _playerControllers.Where(x => x.hasFinished).OrderBy(x => x.ranking).ToList();
+        var unfinishedPlayers = _playerControllers.Where(x => !x.hasFinished).ToList();
 
         var startRank = finishedPlayers.Count + 1;
 
@@ -211,7 +216,7 @@ public class GameManager : MonoBehaviour
 
 
         // Update the ranking text for the human player
-        rankingText.text = $"Rank: {_humanPlayer.ranking}/{_players.Count}";
+        rankingText.text = $"Rank: {_humanPlayer.ranking}/{_playerControllers.Count}";
         finishedText.text = "Finished " + positionToText(_humanPlayer.ranking);
 
         if (_humanPlayer.hasFinished)
@@ -324,21 +329,35 @@ public class GameManager : MonoBehaviour
     {
         isGameOver = true;
         finishedText.enabled = true;
-
-        Invoke("showLeaderboardAndFreezeGame", 3);
+        
+        foreach (var player in players)
+        {
+            player.DecreaseSpeedToZero(3);
+        }
+        
+        if (_humanPlayer.ranking == 1)
+        {
+            animationController.Victory();
+        }
+        else
+        {
+            animationController.Defeat();
+        }
+        
+        Invoke("showLeaderboardAndEndGame", 3);
     }
 
-    private void showLeaderboardAndFreezeGame()
+    private void showLeaderboardAndEndGame()
     {
+        cameraController.RotateCamera();
+        
         finishedText.text = "";
         finishedText.enabled = false;
 
         // Show leaderboard
         leaderboard.SetActive(true);
-        leaderboardText.text = _players.OrderBy(x => x.ranking)
+        leaderboardText.text = _playerControllers.OrderBy(x => x.ranking)
                 .Aggregate("", (current, player) => current + $"{player.ranking} - {(player.isHuman ? "Human" : "AI")}\n");
-
-        Time.timeScale = 0f;
     }
 
     // Create acceleration and braking values for AI opponents

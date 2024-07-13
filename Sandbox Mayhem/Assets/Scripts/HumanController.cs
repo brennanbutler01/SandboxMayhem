@@ -1,8 +1,10 @@
+using System.Collections;
 using UnityEngine;
 
 public class HumanController : MonoBehaviour, IPlayer
 {
     private GameObject weaponText;
+    private CarController carController;
     public Weapon currentWeapon { get; set; }
     
     [field: SerializeField]
@@ -10,6 +12,7 @@ public class HumanController : MonoBehaviour, IPlayer
 
     void Start()
     {
+        carController = GetComponent<CarController>();
         weaponText = GameObject.FindGameObjectWithTag("WeaponText");
         weaponText.SetActive(false);
     }
@@ -42,9 +45,23 @@ public class HumanController : MonoBehaviour, IPlayer
         weaponText.SetActive(false);
     }
 
-
-    public Transform WeaponSpawn()
+    public void DecreaseSpeedToZero(float duration)
     {
-        throw new System.NotImplementedException();
+        carController.isGameOver = true;
+        RemoveWeapon();
+        StartCoroutine(DecreaseSpeedToZeroCoroutine(duration));
+    }
+
+    private IEnumerator DecreaseSpeedToZeroCoroutine(float duration)
+    {
+        var elapsed = 0f;
+        var initialMaxSpeed = carController.maxSpeed;
+        while (elapsed < duration)
+        {
+            carController.maxSpeed = Mathf.Lerp(initialMaxSpeed, 0, elapsed/duration);
+            elapsed += Time.deltaTime;
+
+            yield return null;
+        }
     }
 }
