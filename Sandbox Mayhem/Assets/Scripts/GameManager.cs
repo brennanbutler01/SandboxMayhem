@@ -124,7 +124,7 @@ public class GameManager : MonoBehaviour
 
     private void Update()
     {
-        Debug.Log("Game Manager Update Run");
+        // Debug.Log("Game Manager Update Run");
         if (!isGameOver)
         {
             pointsText.text = "Points: " + _humanPlayer.coins;

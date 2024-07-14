@@ -48,7 +48,7 @@ public class SpeedBoostZone : MonoBehaviour
         // increase over time to the maximum
         _boostMultiplier = Mathf.Min(_boostMultiplier + BoostIncreaseRate * Time.deltaTime, MaxBoostMultiplier);
         carController.ApplyBoostZone(_boostMultiplier);
-        Debug.Log("Increasing the boost");
+        // Debug.Log("Increasing the boost");
     }
     
     private IEnumerator _reset(CarController carController)
@@ -65,7 +65,7 @@ public class SpeedBoostZone : MonoBehaviour
 
         if (!other.CompareTag("Player")) return;
         
-        Debug.Log("Leaving zone...");
+        // Debug.Log("Leaving zone...");
         StartCoroutine(_reset(carController));
     }
 }
