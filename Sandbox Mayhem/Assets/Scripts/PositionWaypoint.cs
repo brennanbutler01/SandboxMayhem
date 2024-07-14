@@ -18,13 +18,16 @@ public class PositionWaypoint : MonoBehaviour
             player.isHalfway = false;
             player.lapPenalty = false;
             player.isGoingBackward = false;
+            
             if (player.currentLap == GameManager.TotalLaps)
             {
-                player.hasFinished = true;
-                Debug.Log($"Player {player.Id} finished - rank is {player.ranking}");
+                player.FinishRace();
                 return;
             }
+            
+            player.CompleteLap();
             player.currentLap++;
+            player.StartNewLap();
             Debug.Log("Increased lap");
         }
         

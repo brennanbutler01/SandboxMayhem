@@ -7,7 +7,7 @@ public class CoinCollectable: CollectableBase
         var player = collector.GetComponent<PlayerController>();
         if (player == null) return;
     
-        Debug.Log("Coins: " + player.coins);
+        // Debug.Log("Coins: " + player.coins);
         player.coins++;
     
         // only play sound for real players, not when AI collects 

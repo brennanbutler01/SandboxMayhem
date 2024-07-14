@@ -10,7 +10,7 @@ public class SpeedUpCollectable : CollectableBase
         var boostSpeed = isHuman ? 1.5f : 2.5f;
         var boostDuration = isHuman ? 3f : 6f;
         player.Car.ActivateConsumableSpeedBoost(boostSpeed, boostDuration);
-        Debug.Log("Speeding up...");
+        // Debug.Log("Speeding up...");
 
         if (player.isHuman)
         {

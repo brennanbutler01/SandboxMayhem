@@ -15,6 +15,9 @@ public class PlayerController : MonoBehaviour
     private GameObject coinBoostActiveText;
     private bool alreadyBoosting = false;
     private bool allCoinsShowing = false;
+    private float _bestLapTime = float.MaxValue;
+    private float _currentLapStartTime;
+    private GhostCarManager _ghostCarManager;
 
     private void Start()
     {
@@ -33,8 +36,55 @@ public class PlayerController : MonoBehaviour
         }
         uiCoins = GameObject.FindGameObjectsWithTag("UICoin").OrderBy(x => x.name).ToArray();
         coinBoostActiveText = GameObject.FindGameObjectWithTag("CoinBoostActiveText");
+        _ghostCarManager = GetComponent<GhostCarManager>();
+        if (isHuman && _ghostCarManager == null)
+        {
+            Debug.LogError("GhostCarManager not found on player object");
+        }
     }
 
+    public void StartNewLap()
+    {
+        if (!isHuman || currentLap == 0) return;
+        if (currentLap == 1)
+        {
+            _ghostCarManager.StartRecording(transform);
+            Debug.Log("Starting first lap, recording ghost data");
+        }
+        else
+        {
+            _ghostCarManager.StopRecording();
+            _ghostCarManager.SaveBestLap();
+            _ghostCarManager.StartPlayback();
+            _ghostCarManager.StartRecording(transform);
+            Debug.Log($"Starting lap {currentLap}, ghost car should be visible");
+        }
+    }
+
+    public void CompleteLap()
+    {
+        if (!isHuman) return;
+        var lapTime = Time.time - _currentLapStartTime;
+        _ghostCarManager.StopRecording();
+
+        if (lapTime < _bestLapTime)
+        {
+            _bestLapTime = lapTime;
+            _ghostCarManager.SaveBestLap();
+        }
+        
+        Debug.Log($"Completed Lap {currentLap} in {lapTime} seconds. Best {_bestLapTime}");
+    }
+
+    public void FinishRace()
+    {
+        hasFinished = true;
+        if (!isHuman) return;
+        _ghostCarManager.StopPlayback();
+        _ghostCarManager.StopRecording();
+        Debug.Log($"Player {Id} finished - rank is {ranking}");
+    }
+    
     public float GetDistanceToNextWaypoint(int index)
     {
         // Debug.LogError($"index - {index} - count - {GameManager.Waypoints.Count}");

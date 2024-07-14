@@ -30,10 +30,10 @@ public class RespawnManager : MonoBehaviour
 
     private IEnumerator _respawnCoroutine(GameObject go, float respawnTime)
     {
-        Debug.Log($"Inactivating - {go.name} for {respawnTime}s");
+        // Debug.Log($"Inactivating - {go.name} for {respawnTime}s");
         go.SetActive(false);
         yield return new WaitForSeconds(respawnTime);
         go.SetActive(true);
-        Debug.Log($"Respawning {go.name}");
+        // Debug.Log($"Respawning {go.name}");
     }
 }
