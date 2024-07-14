@@ -36,6 +36,7 @@ public class CarController : MonoBehaviour {
     public float downforce = 1.0f;
     public bool isMovementEnabled = true;
     public bool isDrivingOnDirt = false;
+    public bool isGameOver = false;
     public AudioEventManager audioEventManager;
     public Material carBrakeLightWhenBrakingMaterial;
     public GameObject carBrakeLights;
@@ -57,7 +58,7 @@ public class CarController : MonoBehaviour {
         aiController = GetComponent<FollowWP>();
     }
 
-    void FixedUpdate ()
+    void FixedUpdate()
     {
         if (!playerController.isHuman || !isMovementEnabled)
         {
@@ -65,11 +66,17 @@ public class CarController : MonoBehaviour {
         }
 
         //Inputs
-        float verticalInput = Input.GetAxis("Vertical");
+        float verticalInput = isGameOver ? -1 : Input.GetAxis("Vertical");
         float horizontalInput = Input.GetAxis("Horizontal");
         
         float forwardSpeed = Vector3.Dot(transform.forward, rigidBody.velocity);
         float absoluteSpeed = Math.Abs(forwardSpeed);
+
+        //Won and already stopped, don't allow more inputs
+        if (isGameOver && absoluteSpeed < 3.5f)
+        {
+            return;
+        } 
         
         //Input different from current direction
         bool braking = forwardSpeed * verticalInput < 0;
@@ -163,18 +170,32 @@ public class CarController : MonoBehaviour {
 
     public void ApplyBoostZone(float speedModifier)
     {
+        if (!isMovementEnabled)
+        {
+            return;
+        }
+        
         _boostZoneBoostFactor = speedModifier;
         if (!playerController.isHuman) triggerSpeedChange(Mathf.Clamp(_boostZoneBoostFactor, 1f, 1.03f));
     }
 
     public void RemoveBoostZone()
     {
+        if (!isMovementEnabled)
+        {
+            return;
+        }
         _boostZoneBoostFactor = 1f;
         if (!playerController.isHuman) triggerSpeedChange(1f);
     }
     
     public void ActivateConsumableSpeedBoost(float speedModifier, float? duration = 3f)
     {
+        if (!isMovementEnabled)
+        {
+            return;
+        }
+        
         if (_speedBoostCoroutine  != null)
         { 
             StopCoroutine(_speedBoostCoroutine);
@@ -187,6 +208,11 @@ public class CarController : MonoBehaviour {
 
     public void ApplyDartSpeedPenalty(DartController dart, float speedModifier = 0.5f, float duration = 4f)
     {
+        if (!isMovementEnabled)
+        {
+            return;
+        }
+        
         StartCoroutine(ApplyDartSpeedPenaltyCoroutine(dart, speedModifier, duration));
     }
 

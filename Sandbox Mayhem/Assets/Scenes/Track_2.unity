@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0032049608, g: 0.006370222, b: 0.01444489, a: 1}
+  m_IndirectSpecularColor: {r: 0.003204829, g: 0.0063439845, b: 0.014498586, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -123,9 +123,9 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1 &100726 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 655249738052292537, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
+--- !u!4 &100727 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 655249738052292538, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
   m_PrefabInstance: {fileID: 4179146914028540931}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &545248
@@ -68987,6 +68987,11 @@ Transform:
   m_Father: {fileID: 1697813344}
   m_RootOrder: 80
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &690682446 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4976711019183613746, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
+  m_PrefabInstance: {fileID: 4179146914028540931}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &690828890
 GameObject:
   m_ObjectHideFlags: 0
@@ -130235,6 +130240,11 @@ Transform:
   m_Father: {fileID: 2127788294}
   m_RootOrder: 288
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1158056982 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7889334034105795731, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
+  m_PrefabInstance: {fileID: 4179146914028540931}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1159054926
 GameObject:
   m_ObjectHideFlags: 0
@@ -323614,9 +323624,9 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 942762337184432749, guid: b9c7a183a7a2e004cb24435cb080a708, type: 3}
   m_PrefabInstance: {fileID: 1840368684}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1840544708 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 655249738064137911, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
+--- !u!4 &1840544709 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 655249738064137904, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
   m_PrefabInstance: {fileID: 4179146914028540931}
   m_PrefabAsset: {fileID: 0}
 --- !u!1 &1840561305
@@ -357940,13 +357950,17 @@ PrefabInstance:
       value: Main Camera
       objectReference: {fileID: 0}
     - target: {fileID: 3969821814015571728, guid: b53803668aafd1f468feb0a61e3ecb5b, type: 3}
+      propertyPath: car
+      value: 
+      objectReference: {fileID: 2059894567}
+    - target: {fileID: 3969821814015571728, guid: b53803668aafd1f468feb0a61e3ecb5b, type: 3}
       propertyPath: lookTarget
       value: 
-      objectReference: {fileID: 100726}
+      objectReference: {fileID: 100727}
     - target: {fileID: 3969821814015571728, guid: b53803668aafd1f468feb0a61e3ecb5b, type: 3}
       propertyPath: cameraTarget
       value: 
-      objectReference: {fileID: 1840544708}
+      objectReference: {fileID: 1840544709}
     - target: {fileID: 3969821814015571729, guid: b53803668aafd1f468feb0a61e3ecb5b, type: 3}
       propertyPath: m_RootOrder
       value: 0
@@ -358068,6 +358082,30 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 2432890458375909450, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.9989435
+      objectReference: {fileID: 0}
+    - target: {fileID: 2432890458375909450, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2432890458375909450, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2432890458375909450, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.04595571
+      objectReference: {fileID: 0}
+    - target: {fileID: 4157868793945540098, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
+      propertyPath: happySmile
+      value: 
+      objectReference: {fileID: 690682446}
+    - target: {fileID: 4157868793945540098, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
+      propertyPath: defaultSmile
+      value: 
+      objectReference: {fileID: 1158056982}
     - target: {fileID: 4179146912956396625, guid: 1589c150d6a5f5c4183b7894a0c5a69f, type: 3}
       propertyPath: m_Name
       value: Car (old)

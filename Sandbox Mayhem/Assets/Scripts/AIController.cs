@@ -1,10 +1,21 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections;
+using UnityEngine;
 
 public class AIController : MonoBehaviour, IPlayer
 {
     [field: SerializeField]
     public Transform weaponSpawn { get; private set; }
     public Weapon currentWeapon { get; set; }
+
+    private CarController carController;
+    private Rigidbody rigidBody;
+    
+    public void Start()
+    {
+        carController = GetComponent<CarController>();
+        rigidBody = GetComponent<Rigidbody>();
+    }
 
     public void RemoveWeapon()
     {
@@ -33,6 +44,26 @@ public class AIController : MonoBehaviour, IPlayer
                     EventManager.TriggerEvent<FireDartEvent, IPlayer>(this);
                 }
             }    
+        }
+    }
+    
+    public void DecreaseSpeedToZero(float duration)
+    {
+        carController.isGameOver = true;
+        carController.isMovementEnabled = false;
+        StartCoroutine(DecreaseSpeedToZeroCoroutine(duration));
+    }
+
+    private IEnumerator DecreaseSpeedToZeroCoroutine(float duration)
+    {
+        var elapsed = 0f;
+        var initialVelocity = rigidBody.velocity;
+        while (elapsed < duration)
+        {
+            rigidBody.velocity = Vector3.Lerp(initialVelocity, Vector3.zero, elapsed/duration);
+            elapsed += Time.deltaTime;
+
+            yield return null;
         }
     }
 }
