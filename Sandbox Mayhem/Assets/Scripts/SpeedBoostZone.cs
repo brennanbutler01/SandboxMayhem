@@ -68,7 +68,7 @@ public class SpeedBoostZone : MonoBehaviour
 
         if (!other.CompareTag("Player")) return;
         
-        Debug.Log("Leaving zone...");
+        // Debug.Log("Leaving zone...");
         StartCoroutine(_reset(carController));
     }
 }
