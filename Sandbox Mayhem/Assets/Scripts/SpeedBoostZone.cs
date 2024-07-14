@@ -51,7 +51,7 @@ public class SpeedBoostZone : MonoBehaviour
         {
             carController.ApplyBoostZone(_boostMultiplier);
         }
-        Debug.Log("Increasing the boost");
+        // Debug.Log("Increasing the boost");
     }
     
     private IEnumerator _reset(CarController carController)
