@@ -35,8 +35,8 @@ public class SpeedBoostZone : MonoBehaviour
         if (player.isHuman)
         {
             EventManager.TriggerEvent<SpeedBoostZoneEvent, GameObject>(other.gameObject);
+            carController.ApplyBoostZone(_boostMultiplier);
         }
-        carController.ApplyBoostZone(_boostMultiplier);
     }
 
     private void OnTriggerStay(Collider other)
@@ -47,7 +47,11 @@ public class SpeedBoostZone : MonoBehaviour
         if (!other.CompareTag("Player")) return;
         // increase over time to the maximum
         _boostMultiplier = Mathf.Min(_boostMultiplier + BoostIncreaseRate * Time.deltaTime, MaxBoostMultiplier);
+        if (carController.GetComponent<PlayerController>().isHuman)
+        {
+
         carController.ApplyBoostZone(_boostMultiplier);
+        }
         Debug.Log("Increasing the boost");
     }
     
