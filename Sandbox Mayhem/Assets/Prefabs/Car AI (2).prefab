@@ -1006,7 +1006,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a81b483b2eb6d40859b19a0dab7cfffb, type: 2}
+  - {fileID: 2100000, guid: 4a060a8bfed1f406cb3d43045f15c415, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -1257,6 +1257,7 @@ MonoBehaviour:
   downforce: 1
   isMovementEnabled: 1
   isDrivingOnDirt: 0
+  isGameOver: 0
   audioEventManager: {fileID: 0}
   carBrakeLightWhenBrakingMaterial: {fileID: 0}
   carBrakeLights: {fileID: 0}
