@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
     public GameObject leaderboard;
     public Text finishedText;
     public bool debug_TriggerRaceEnd = false;
+    public GameObject firstPositionMarker;
 
     public GameObject pauseScreen;
     private CanvasGroup canvasGroup;
@@ -68,7 +69,7 @@ public class GameManager : MonoBehaviour
         players = FindObjectsOfType<MonoBehaviour>().OfType<IPlayer>().ToArray();
         canvasGroup = pauseScreen.GetComponent<CanvasGroup>();
         pauseScreen.SetActive(false);
-
+        
         // we do some auditing here for counts and states required for the game to function.
 
         // we need at least one human player
@@ -219,9 +220,31 @@ public class GameManager : MonoBehaviour
         rankingText.text = $"Rank: {_humanPlayer.ranking}/{_playerControllers.Count}";
         finishedText.text = "Finished " + positionToText(_humanPlayer.ranking);
 
+        moveFirstPositionMarker();
+
         if (_humanPlayer.hasFinished)
         {
             endRace();
+        }
+    }
+
+    private void moveFirstPositionMarker()
+    {
+        if (firstPositionMarker != null)
+        {
+            for (var i = 0; i < _playerControllers.Count; i++)
+            {
+                if (_playerControllers[i].ranking == 1)
+                {
+                    Vector3 markerPosition = _playerControllers[i].transform.position;
+                    //Vector3 rotationY = new Vector3(45, 45, 45);
+                    markerPosition.y += 10;
+                    firstPositionMarker.transform.position = markerPosition;
+                    //firstPositionMarker.transform.Rotate(rotationY * Time.deltaTime);
+                    firstPositionMarker.transform.parent = _playerControllers[i].transform;
+                    break;
+                }
+            }
         }
     }
 
