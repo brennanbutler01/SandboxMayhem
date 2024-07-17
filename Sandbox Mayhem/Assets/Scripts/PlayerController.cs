@@ -8,11 +8,12 @@ public class PlayerController : MonoBehaviour
 {
     public string Id { private set; get; }
     public CarController Car { get; set; }
-    public int currentLap, currentWaypoint, lastWaypoint, coins, ranking;
+    public int currentLap, currentWaypoint, lastWaypoint, coins, ranking, boostCoins;
     private int _trailingWaypoint;
-    public bool isGoingBackward, isHalfway, isHuman, lapPenalty, hasFinished;
+    public bool isGoingBackward, isHalfway, isHuman, lapPenalty, hasFinished, hasEnoughCoinsForBoost;
     private GameObject[] uiCoins;
-    private GameObject coinBoostActiveText;
+    private GameObject speedBoostActiveText;
+    private GameObject speedBoostAvailableText;
     private bool alreadyBoosting = false;
     private bool allCoinsShowing = false;
     private float _bestLapTime = float.MaxValue;
@@ -35,7 +36,8 @@ public class PlayerController : MonoBehaviour
             Debug.LogError("PlayerController requires a car controller");
         }
         uiCoins = GameObject.FindGameObjectsWithTag("UICoin").OrderBy(x => x.name).ToArray();
-        coinBoostActiveText = GameObject.FindGameObjectWithTag("CoinBoostActiveText");
+        speedBoostActiveText = GameObject.FindGameObjectWithTag("CoinBoostActiveText");
+        speedBoostAvailableText = GameObject.FindGameObjectWithTag("SpeedBoostAvailableText");
         _ghostCarManager = GetComponent<GhostCarManager>();
         if (isHuman && _ghostCarManager == null)
         {
@@ -116,38 +118,65 @@ public class PlayerController : MonoBehaviour
 
         // Show/hide coins in UI depending on each coin collected
         // Only run if collector is human and all coins are not already showing
-        if (isHuman && !allCoinsShowing)
+        if (isHuman)
         {
-            coinBoostActiveText.SetActive(false);
-            if (coins % 5 != 0 || coins == 0)
+            if (!allCoinsShowing)
             {
-                alreadyBoosting = false;
-                for (int i = 0; i < 5; i++)
+                speedBoostActiveText.SetActive(false);
+                speedBoostAvailableText.SetActive(false);
+                if (boostCoins < 5)
                 {
-                    if (i < (coins % 5))
+                    alreadyBoosting = false;
+                    for (int i = 0; i < 5; i++)
+                    {
+                        if (i < (boostCoins % 5))
+                        {
+                            uiCoins[i].SetActive(true);
+                        }
+                        else
+                        {
+                            uiCoins[i].SetActive(false);
+                        }
+
+                    }
+                }
+            }
+
+            // If player has 5 coins and isn't in a coin boost state
+            // Show all coins and available boost text and enable available boost  
+            if (hasEnoughCoinsForBoost)
+            {
+                if (!alreadyBoosting)
+                {
+                    allCoinsShowing = true;
+                    speedBoostAvailableText.SetActive(true);
+                    for (int i = 0; i < 5; i++)
                     {
                         uiCoins[i].SetActive(true);
                     }
-                    else
-                    {
-                        uiCoins[i].SetActive(false);
-                    }
-
                 }
             }
-            // If player has 5 coins and isn't in a coin boost state
-            // Show all coins and coin boost text and enter a coin boost state
-            else if (!alreadyBoosting)
+
+            // If player has enough coins to boost and they press the boost key
+            // Activate speed boost and activate speed boost active text
+            if (hasEnoughCoinsForBoost && Input.GetKeyUp(KeyCode.E))
             {
-                allCoinsShowing = true;
-                coinBoostActiveText.SetActive(true);
-                for (int i = 0; i < 5; i++)
+                Car.ActivateConsumableSpeedBoost(1.5f, 3f);
+                hasEnoughCoinsForBoost = false;
+                if (!alreadyBoosting)
                 {
-                    uiCoins[i].SetActive(true);
+                    allCoinsShowing = true;
+                    speedBoostAvailableText.SetActive(false);
+                    speedBoostActiveText.SetActive(true);
+                    for (int i = 0; i < 5; i++)
+                    {
+                        uiCoins[i].SetActive(true);
+                    }
+                    StartCoroutine(_hideUICoins());
+                    alreadyBoosting = true;
                 }
-                StartCoroutine(_hideUICoins());
-                alreadyBoosting = true;
-            }                    
+            }
+                 
         }
     }
 
@@ -159,7 +188,7 @@ public class PlayerController : MonoBehaviour
     }
 
     // Show coins for 3 seconds, the duration of the coin boost
-    // At the end, leave the coin boost state and hide coin boost text
+    // At the end, leave the coin boost state and hide speed boost text
     private IEnumerator _hideUICoins()
     {
         yield return new WaitForSeconds(3);
@@ -169,6 +198,8 @@ public class PlayerController : MonoBehaviour
         }
         StopCoroutine(_hideUICoins());
         allCoinsShowing = false;
-        coinBoostActiveText.SetActive(false);
+        speedBoostActiveText.SetActive(false);
+        boostCoins = 0;
+        hasEnoughCoinsForBoost = false;
     }
 }

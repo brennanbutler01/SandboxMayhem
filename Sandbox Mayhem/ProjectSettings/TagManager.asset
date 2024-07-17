@@ -11,6 +11,7 @@ TagManager:
   - UICoin
   - CoinBoostActiveText
   - WeaponText
+  - SpeedBoostAvailableText
   layers:
   - Default
   - TransparentFX
