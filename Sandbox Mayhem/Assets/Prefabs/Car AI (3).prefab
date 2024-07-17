@@ -208,7 +208,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4a060a8bfed1f406cb3d43045f15c415, type: 2}
+  - {fileID: 2100000, guid: 3eaaad3cf615a45aaa7e135d29e141df, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -554,11 +554,13 @@ MonoBehaviour:
   lastWaypoint: 0
   coins: 0
   ranking: 0
+  boostCoins: 0
   isGoingBackward: 0
   isHalfway: 0
   isHuman: 0
   lapPenalty: 0
   hasFinished: 0
+  hasEnoughCoinsForBoost: 0
 --- !u!136 &3274677019949383923
 CapsuleCollider:
   m_ObjectHideFlags: 0

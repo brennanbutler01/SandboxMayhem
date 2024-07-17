@@ -1271,11 +1271,13 @@ MonoBehaviour:
   lastWaypoint: 0
   coins: 0
   ranking: 0
+  boostCoins: 0
   isGoingBackward: 0
   isHalfway: 0
   isHuman: 0
   lapPenalty: 0
   hasFinished: 0
+  hasEnoughCoinsForBoost: 0
 --- !u!136 &3685240536768739677
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1360,6 +1362,7 @@ MonoBehaviour:
   downforce: 1
   isMovementEnabled: 1
   isDrivingOnDirt: 0
+  isGameOver: 0
   audioEventManager: {fileID: 0}
   carBrakeLightWhenBrakingMaterial: {fileID: 0}
   carBrakeLights: {fileID: 0}
@@ -1498,7 +1501,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 4a060a8bfed1f406cb3d43045f15c415, type: 2}
+  - {fileID: 2100000, guid: 8422dca19c60c4572b9444f3d7a5b9cf, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
