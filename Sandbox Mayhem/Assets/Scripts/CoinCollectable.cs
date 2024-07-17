@@ -9,6 +9,10 @@ public class CoinCollectable: CollectableBase
     
         // Debug.Log("Coins: " + player.coins);
         player.coins++;
+        if (player.boostCoins < 5)
+        {
+            player.boostCoins++;
+        }
     
         // only play sound for real players, not when AI collects 
         if (player.isHuman)
@@ -21,9 +25,18 @@ public class CoinCollectable: CollectableBase
             var isHuman = player.isHuman;
             var boostSpeed = isHuman ? 1.5f : 2.5f;
             var boostDuration = isHuman ? 3f : 6f;
-            player.Car.ActivateConsumableSpeedBoost(boostSpeed, boostDuration);
+
+            if (!isHuman)
+            {
+                player.Car.ActivateConsumableSpeedBoost(boostSpeed, boostDuration);
+            }
         }
-        
+
+        if (player.boostCoins == 5 && !player.hasEnoughCoinsForBoost)
+        {
+            player.hasEnoughCoinsForBoost = true;
+        }
+
         // respawn the item
         Respawn();
     }
