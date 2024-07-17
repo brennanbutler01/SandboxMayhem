@@ -118,7 +118,7 @@ public class PlayerController : MonoBehaviour
 
         // Show/hide coins in UI depending on each coin collected
         // Only run if collector is human and all coins are not already showing
-        if (isHuman && !allCoinsShowing)
+        if (isHuman)
         {
             if (!allCoinsShowing)
             {
