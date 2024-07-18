@@ -8,6 +8,7 @@ public class MainMenu : MonoBehaviour
     public string firstLevel;
     public GameObject optionsScreen;
     public GameObject creditsScreen;
+    public GameObject firstIntroScreen;
 
     // Start is called before the first frame update
     void Start()
@@ -18,7 +19,8 @@ public class MainMenu : MonoBehaviour
 
     public void StartGame()
     {
-        SceneManager.LoadScene(firstLevel);
+        //SceneManager.LoadScene(firstLevel);
+        firstIntroScreen.SetActive(true);
     }
 
     public void OpenOptions()
