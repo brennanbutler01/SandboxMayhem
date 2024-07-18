@@ -256,7 +256,7 @@ public class AudioEventManager : MonoBehaviour
 
             snd.audioSource.clip = woodBreakAudio;
             snd.audioSource.minDistance = 5f;
-            snd.audioSource.maxDistance = 100f;
+            snd.audioSource.maxDistance = 50f;
             snd.audioSource.outputAudioMixerGroup = sfxMixer;
             snd.audioSource.Play();
         }

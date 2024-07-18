@@ -32,6 +32,11 @@ public class HumanController : MonoBehaviour, IPlayer
             }
         }
     }
+
+    public void BoxCollision(GameObject box)
+    {
+        EventManager.TriggerEvent<BoxBreakEvent, GameObject>(box);
+    }
     
     public void SetDart()
     {
