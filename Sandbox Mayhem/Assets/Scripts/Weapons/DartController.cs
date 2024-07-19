@@ -72,7 +72,11 @@ namespace Weapons
                 elapsed += Time.deltaTime;
                 yield return null;
             }
-            Destroy(gameObject);
+
+            if (gameObject)
+            {
+                Destroy(gameObject);
+            }
         }
 
         private void OnCollisionEnter(Collision other)
