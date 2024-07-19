@@ -165,6 +165,10 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyUp(KeyCode.L))
+        {
+            endRace();
+        }
         checkIfPlayerCarIsTilted();
     }
 
