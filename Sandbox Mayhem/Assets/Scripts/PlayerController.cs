@@ -159,7 +159,7 @@ public class PlayerController : MonoBehaviour
 
             // If player has enough coins to boost and they press the boost key
             // Activate speed boost and activate speed boost active text
-            if (hasEnoughCoinsForBoost && Input.GetKeyUp(KeyCode.E))
+            if (hasEnoughCoinsForBoost && Input.GetButtonDown("Boost"))
             {
                 Car.ActivateConsumableSpeedBoost(1.5f, 3f);
                 hasEnoughCoinsForBoost = false;

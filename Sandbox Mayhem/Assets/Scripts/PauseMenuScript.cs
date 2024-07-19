@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(CanvasGroup))]
@@ -10,8 +11,9 @@ public class PauseMenuScript : MonoBehaviour
     private CanvasGroup canvasGroup;
     private GameManager gameManager;
     public GameObject optionsScreen;
-
-
+    public GameObject pauseStart;
+    public GameObject optionsStart;
+    
     void Start()
     {
         canvasGroup = GetComponent<CanvasGroup>();
@@ -55,11 +57,13 @@ public class PauseMenuScript : MonoBehaviour
     public void OpenOptions()
     {
         optionsScreen.SetActive(true);
+        EventSystem.current.SetSelectedGameObject(optionsStart);
     }
 
     public void CloseOptions()
     {
         optionsScreen.SetActive(false);
+        EventSystem.current.SetSelectedGameObject(pauseStart);
     }
 
     public void LoadMainMenu()

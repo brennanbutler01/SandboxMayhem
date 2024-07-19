@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 struct Behavior
@@ -33,6 +34,7 @@ public class GameManager : MonoBehaviour
     public GameObject firstPositionMarker;
 
     public GameObject pauseScreen;
+    public GameObject pauseStart;
     private CanvasGroup canvasGroup;
 
     public Text countdownText;
@@ -143,7 +145,7 @@ public class GameManager : MonoBehaviour
             endRace();
         }
 
-        if (Input.GetKeyUp(KeyCode.Escape))
+        if (Input.GetButtonDown("Escape"))
         {
             if (canvasGroup.interactable)
             {
@@ -156,6 +158,7 @@ public class GameManager : MonoBehaviour
             }
             else
             {
+                EventSystem.current.SetSelectedGameObject(pauseStart);
                 pauseScreen.SetActive(true);
                 canvasGroup.interactable = true;
                 canvasGroup.blocksRaycasts = true;
