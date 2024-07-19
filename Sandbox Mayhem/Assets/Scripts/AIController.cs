@@ -21,6 +21,8 @@ public class AIController : MonoBehaviour, IPlayer
     {
         currentWeapon = Weapon.None;
     }
+    
+    public void BoxCollision(GameObject box) { }
 
     public void SetDart()
     {

@@ -6,7 +6,7 @@ public class BoxCollectable : CollectableBase
     {
         var playerController = collector.GetComponent<IPlayer>();
         playerController.SetDart();
-        EventManager.TriggerEvent<BoxBreakEvent, GameObject>(gameObject);
+        playerController.BoxCollision(gameObject);
         Respawn();
     }
 }
