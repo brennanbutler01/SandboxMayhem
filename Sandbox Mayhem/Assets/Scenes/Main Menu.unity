@@ -15745,7 +15745,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 1872477846}
+    m_SelectOnUp: {fileID: 1276670749}
     m_SelectOnDown: {fileID: 1631318232}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
@@ -174421,7 +174421,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3267057620054460674, guid: 2152ea78ef9ef034babfdcb70f951124, type: 3}
       propertyPath: m_Navigation.m_Mode
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3267057620054460674, guid: 2152ea78ef9ef034babfdcb70f951124, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
@@ -174541,7 +174541,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7186860180279245598, guid: 2152ea78ef9ef034babfdcb70f951124, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -276.5987
+      value: -114.7
       objectReference: {fileID: 0}
     - target: {fileID: 7186860180279245598, guid: 2152ea78ef9ef034babfdcb70f951124, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -174562,6 +174562,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7186860180279245598, guid: 2152ea78ef9ef034babfdcb70f951124, type: 3}
   m_PrefabInstance: {fileID: 1276670747}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1276670749 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3267057620054460674, guid: 2152ea78ef9ef034babfdcb70f951124, type: 3}
+  m_PrefabInstance: {fileID: 1276670747}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1277160212
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -225506,7 +225517,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1719006651}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -946930092448238667, guid: cf1af733d3e32d345aebab21f13ce860, type: 2}
   m_audioClip: {fileID: 8300000, guid: 32e503cd54f6b804e8be0358df8cd6fe, type: 3}
@@ -381831,7 +381842,7 @@ PrefabInstance:
     - target: {fileID: 3267057620054460674, guid: 2152ea78ef9ef034babfdcb70f951124, type: 3}
       propertyPath: m_Navigation.m_SelectOnDown
       value: 
-      objectReference: {fileID: 133415964}
+      objectReference: {fileID: 1276670749}
     - target: {fileID: 3267057620054460674, guid: 2152ea78ef9ef034babfdcb70f951124, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
@@ -381966,7 +381977,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7186860180279245598, guid: 2152ea78ef9ef034babfdcb70f951124, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -114.58621
+      value: 48.86
       objectReference: {fileID: 0}
     - target: {fileID: 7186860180279245598, guid: 2152ea78ef9ef034babfdcb70f951124, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
