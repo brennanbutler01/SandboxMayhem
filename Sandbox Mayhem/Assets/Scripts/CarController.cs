@@ -225,6 +225,7 @@ public class CarController : MonoBehaviour {
         if (aiController)
         {
             aiController.maxSpeed *= speedModifier / 2; // Slow down AI 
+            aiController.speed *= speedModifier;
         }
         
         yield return new WaitForSeconds(duration);
