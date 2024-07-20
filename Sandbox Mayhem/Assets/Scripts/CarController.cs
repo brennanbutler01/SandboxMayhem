@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Linq;
-using Unity.VisualScripting.Dependencies.NCalc;
 using UnityEngine;
 using Weapons;
 
@@ -224,8 +223,9 @@ public class CarController : MonoBehaviour {
 
         if (aiController)
         {
-            aiController.maxSpeed *= speedModifier / 2; // Slow down AI 
-            aiController.speed *= speedModifier;
+            // Slow down AI
+            aiController.maxSpeed *= speedModifier / 2;  
+            aiController.speed *= speedModifier; 
         }
         
         yield return new WaitForSeconds(duration);

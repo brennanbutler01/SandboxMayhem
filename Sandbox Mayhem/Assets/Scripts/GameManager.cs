@@ -119,15 +119,10 @@ public class GameManager : MonoBehaviour
         InvokeRepeating(nameof(UpdateRanking), 1f, 0.1f);
 
         ResetRace();
-        //enableAllCars(false);
-        //startCountdown();
-        //setBehaviors();
-        //applyBehaviors();
     }
 
     private void Update()
     {
-        // Debug.Log("Game Manager Update Run");
         if (!isGameOver)
         {
             pointsText.text = "Points: " + _humanPlayer.coins;
@@ -173,18 +168,6 @@ public class GameManager : MonoBehaviour
 
     private void ResetRace()
     {
-        //countdownInt = defCountdownInt;
-        //countdownElapsedTime = defcountdownElapsedTime;
-        //isCountDownInProgress = defisCountDownInProgress;
-        //isGameOver = false;
-        //finishedText.enabled = false;
-        //pauseScreen.SetActive(false);
-        //wrongWayText.text = "";
-        //leaderboardText.text = "";
-        //rankingText.text = "";
-        //leaderboard.SetActive(false);
-        //finishedText.enabled = false;
-
         enableAllCars(false);
         startCountdown();
         setBehaviors();
@@ -453,14 +436,8 @@ public class GameManager : MonoBehaviour
         PositionWaypoint nextWaypoint = Waypoints.Find(x => x.waypointIndex == nextWaypointIndex);
 
         // Getting the car to face the next waypoint (otherwise it will face 0 deg direction which may be a fence or something else).
-        //float angle = Vector2.Angle(_humanPlayer.transform.position, nextWaypoint.transform.position);
         float angle = Vector3.SignedAngle(currentWaypoint.transform.position - nextWaypoint.transform.position, Vector3.left, Vector3.down);
 
-        //float angle = Vector3.SignedAngle(nextWaypoint.transform.position - currentWaypoint.transform.position, Vector3.forward, Vector3.up);
-        //float angle2 = Vector3.SignedAngle(_humanPlayer.transform.position - currentWaypoint.transform.position, Vector3.forward, Vector3.up);
-        //float angle3 = Vector3.SignedAngle(_humanPlayer.transform.position - nextWaypoint.transform.position, Vector3.forward, Vector3.up);
-        //Vector3 test = new Vector3(-0.9,6.4848,8.41);
-        //REFERENCE: angle = Vector3.SignedAngle(_humanPlayer.transform.position - Waypoints.Find(x => x.waypointIndex == 0).transform.position, Vector3.left, Vector3.down);
         Debug.Log("Resetting player position to waypoint " + currentWaypointIndex + " and angle " + Math.Round(angle));
         
        _humanPlayer.Car.resetCarPosition(currentWaypoint.transform.position, angle);
