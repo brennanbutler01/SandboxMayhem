@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.003204829, g: 0.0063439845, b: 0.014498586, a: 1}
+  m_IndirectSpecularColor: {r: 0.0031937354, g: 0.006340966, b: 0.014489645, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -174541,7 +174541,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7186860180279245598, guid: 2152ea78ef9ef034babfdcb70f951124, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -276.5987
+      value: -114.7
       objectReference: {fileID: 0}
     - target: {fileID: 7186860180279245598, guid: 2152ea78ef9ef034babfdcb70f951124, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -225506,7 +225506,7 @@ AudioSource:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1719006651}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: -946930092448238667, guid: cf1af733d3e32d345aebab21f13ce860, type: 2}
   m_audioClip: {fileID: 8300000, guid: 32e503cd54f6b804e8be0358df8cd6fe, type: 3}
@@ -381966,7 +381966,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7186860180279245598, guid: 2152ea78ef9ef034babfdcb70f951124, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -114.58621
+      value: 48.86
       objectReference: {fileID: 0}
     - target: {fileID: 7186860180279245598, guid: 2152ea78ef9ef034babfdcb70f951124, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
