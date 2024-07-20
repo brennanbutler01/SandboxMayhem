@@ -7,7 +7,6 @@ public class CoinCollectable: CollectableBase
         var player = collector.GetComponent<PlayerController>();
         if (player == null) return;
     
-        // Debug.Log("Coins: " + player.coins);
         player.coins++;
         if (player.boostCoins < 5)
         {
