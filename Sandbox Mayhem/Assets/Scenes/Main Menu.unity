@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.0031937354, g: 0.006340966, b: 0.014489645, a: 1}
+  m_IndirectSpecularColor: {r: 0.003204829, g: 0.0063439845, b: 0.014498586, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -15745,7 +15745,7 @@ MonoBehaviour:
   m_Navigation:
     m_Mode: 4
     m_WrapAround: 0
-    m_SelectOnUp: {fileID: 1872477846}
+    m_SelectOnUp: {fileID: 1276670749}
     m_SelectOnDown: {fileID: 1631318232}
     m_SelectOnLeft: {fileID: 0}
     m_SelectOnRight: {fileID: 0}
@@ -174421,7 +174421,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 3267057620054460674, guid: 2152ea78ef9ef034babfdcb70f951124, type: 3}
       propertyPath: m_Navigation.m_Mode
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 3267057620054460674, guid: 2152ea78ef9ef034babfdcb70f951124, type: 3}
       propertyPath: m_Navigation.m_SelectOnUp
@@ -174562,6 +174562,17 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 7186860180279245598, guid: 2152ea78ef9ef034babfdcb70f951124, type: 3}
   m_PrefabInstance: {fileID: 1276670747}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1276670749 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3267057620054460674, guid: 2152ea78ef9ef034babfdcb70f951124, type: 3}
+  m_PrefabInstance: {fileID: 1276670747}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1277160212
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -381831,7 +381842,7 @@ PrefabInstance:
     - target: {fileID: 3267057620054460674, guid: 2152ea78ef9ef034babfdcb70f951124, type: 3}
       propertyPath: m_Navigation.m_SelectOnDown
       value: 
-      objectReference: {fileID: 133415964}
+      objectReference: {fileID: 1276670749}
     - target: {fileID: 3267057620054460674, guid: 2152ea78ef9ef034babfdcb70f951124, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
       value: 1
